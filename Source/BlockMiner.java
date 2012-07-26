@@ -5,15 +5,15 @@ import java.util.Random;
 
 
 public class BlockMiner extends Block { 
-	
-	public int fuse;
-	
-	protected BlockMiner(int i, int j) {
+    
+    public int fuse;
+    
+    protected BlockMiner(int i, int j) {
         super(i, j, Material.tnt);
-        fuse = 0;
-    }	
-	
-	public int tickRate()
+        fuse = 80;
+    }    
+    
+    public int tickRate()
     {
     //How often it refreshes.  If you return 20, that's one second.
             return 10;
@@ -41,37 +41,37 @@ public class BlockMiner extends Block {
              fuse = 80;
             }
     }
-	
-	public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
+    
+    public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-		//
+        //
     }
-	
-	 public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
-	    {
-	    }
-		    	    
-	public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
+    
+     public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
+        {
+        }
+                    
+    public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
-		explode(world, i, j, k);
+        explode(world, i, j, k);
     }
-	
-	public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
-	{
-		explode(world, i, j, k);
-		fuse = 80;
-		ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Miner Block Activating!");
-		return blockConstructorCalled;
-	}
-	
-	public void explode(World world, int x, int y, int z)
-	{
-		if(fuse == 80){
-		world.createExplosion(null, x, y, z, 4);
-					}
-	}
-	
-	/**
+    
+    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
+    {
+        explode(world, i, j, k);
+        fuse = 80;
+        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Miner Block Activating!");
+        return blockConstructorCalled;
+    }
+    
+    public void explode(World world, int x, int y, int z)
+    {
+        if(fuse == 80){
+        world.createExplosion(null, x, y, z, 4);
+                    }
+    }
+    
+    /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
     protected void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)

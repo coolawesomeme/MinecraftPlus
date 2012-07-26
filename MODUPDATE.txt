@@ -1,0 +1,4 @@
+update: false
+modver2: b6
+mcver2: 1.2.5
+addtext:

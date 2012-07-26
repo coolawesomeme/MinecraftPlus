@@ -26,7 +26,7 @@ public class BlockBoosterBlock extends Block {
     
     public int getBlockTextureFromSide(int i)
     {
-    	if (i == 0)
+        if (i == 0)
         {
                 return mod_MinecraftPlus.BoosterBlock;
         }

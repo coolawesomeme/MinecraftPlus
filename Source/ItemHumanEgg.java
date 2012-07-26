@@ -14,7 +14,7 @@ public class ItemHumanEgg extends Item
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     { 
-    	if(!world.isRemote)
+        if(!world.isRemote)
         {
             entityplayer.addChatMessage("\u00A7bHuman Spawned!");
             EntityLiving entityliving = (EntityLiving)EntityList.createEntityByName("Human", entityplayer.worldObj);

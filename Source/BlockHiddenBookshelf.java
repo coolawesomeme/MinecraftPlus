@@ -12,6 +12,25 @@ public class BlockHiddenBookshelf extends Block
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int i)
     {
         return null;
+        
+    }
+    
+    public boolean isOpaqueCube(World world, int i, int j, int k)
+    {
+      int a = world.getBlockId(i, j - 1, k);
+      int b = world.getBlockId(i, j + 1, k);
+      int c = world.getBlockId(i - 1, j, k);
+      int d = world.getBlockId(i + 1, j, k);
+      int e = world.getBlockId(i, j, k - 1);
+      int f = world.getBlockId(i, j, k + 1);
+        
+      if(a == mod_MinecraftPlus.BlockHiddenBookshelf.blockID || b == mod_MinecraftPlus.BlockHiddenBookshelf.blockID || c == mod_MinecraftPlus.BlockHiddenBookshelf.blockID || d == mod_MinecraftPlus.BlockHiddenBookshelf.blockID || e == mod_MinecraftPlus.BlockHiddenBookshelf.blockID || f == mod_MinecraftPlus.BlockHiddenBookshelf.blockID){
+           return true;
+       }
+       
+      else{
+        return false;
+      }
     }
     
     /**

@@ -6,8 +6,11 @@ import java.util.Random;
 public enum PlusArmorMaterial
 {
     EMBRONIUM("EMBRONIUM", 25, 29, new int[] {
-    		3, 8, 6, 3
-    		}, 9);
+            3, 8, 6, 3
+            }, 9),
+    IRONMAN("IRONMAN", 25, 29, new int[] {
+            3, 8, 6, 3
+            }, 9),;
     
     private int maxDamageFactor;
     private int damageReductionAmountArray[];
@@ -34,6 +37,5 @@ public enum PlusArmorMaterial
     {
         return enchantability;
     }
- 
    
     }

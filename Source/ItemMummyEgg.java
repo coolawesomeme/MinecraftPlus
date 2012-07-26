@@ -14,8 +14,13 @@ public class ItemMummyEgg extends Item
 
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-      if(world.difficultySetting == 1 || world.difficultySetting == 2 || world.difficultySetting == 3){  
-    	if(!world.isRemote)
+    
+    if(world.difficultySetting == 0){
+            entityplayer.addChatMessage("\u00a76Mummies cannot be spawned in Peaceful difficulty!");
+        }
+        
+    else{  
+        if(!world.isRemote)
         {
             entityplayer.addChatMessage("\u00a76Mummy Spawned!");
             EntityLiving entityliving = (EntityLiving)EntityList.createEntityByName("Mummy", entityplayer.worldObj);
@@ -24,9 +29,6 @@ public class ItemMummyEgg extends Item
             itemstack.damageItem(1, entityplayer);
             entityplayer.swingItem();
         }
-      }
-      else{
-    	  entityplayer.addChatMessage("\u00a76Mummies cannot be spawned in Peaceful difficulty!");
       }
       
         return true;

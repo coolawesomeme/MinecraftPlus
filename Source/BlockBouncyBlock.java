@@ -48,10 +48,10 @@ super(i, j, Material.wood);
                 }
         }
         public void onEntityWalking(World world, int x, int y, int z,
-        		Entity entity)
-        		    {
-        		            entity.motionY += 2.0;
-        		    }
+                Entity entity)
+                    {
+                            entity.motionY += 2.0;
+                    }
         
         public int getBlockTextureFromSideAndMetadata(int i, int j)
         {
@@ -80,7 +80,7 @@ super(i, j, Material.wood);
          */
         public int getBlockTextureFromSide(int i)
         {
-        	if (i == 0)
+            if (i == 0)
             {
                     return mod_MinecraftPlus.EmptyBottom;
             }

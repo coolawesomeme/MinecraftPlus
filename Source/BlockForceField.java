@@ -5,11 +5,11 @@ import java.util.Random;
 
 
 public class BlockForceField extends Block { 
-	protected BlockForceField(int i, int j) {
+    protected BlockForceField(int i, int j) {
         super(i, j, Material.wood);
-    }	
-	
-	public int tickRate()
+    }    
+    
+    public int tickRate()
     {
     //How often it refreshes.  If you return 20, that's one second.
             return 10;
@@ -36,344 +36,344 @@ public class BlockForceField extends Block {
              blockCreate(world, i, j, k);
             }
     }
-	
-	public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
+    
+    public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-		blockRemove(world, i, j, k);
-		ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
+        blockRemove(world, i, j, k);
+        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
     }
-	
-	 public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
-	    {
-		 blockRemove(world, i, j, k);
-		 ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
-	    }
-		    	    
-	public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
+    
+     public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
+        {
+         blockRemove(world, i, j, k);
+         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
+        }
+                    
+    public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
-		blockRemove(world, i, j, k);
-		ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
-		ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
+        blockRemove(world, i, j, k);
+        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
+        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
     }
-	
-	public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
-	{
-		blockCreate(world, i, j, k);
-		ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield Activating!");
-		return blockConstructorCalled;
-	}
-	
-	public void blockRemove(World world, int x, int y, int z)
-	{
-		//4 points
-				world.setBlockWithNotify(x + 8, y, z, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				// 2 blocks around four points
-				world.setBlockWithNotify(x + 1, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 1, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 1, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 1, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 1, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 1, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 1, mod_MinecraftPlus.BlockNull.blockID);
-				//Left
-				world.setBlockWithNotify(x - 8, y, z - 1, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 7, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 6, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 5, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 4, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 3, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z - 2, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 7, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 6, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 5, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 4, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 3, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 8, y, z + 2, mod_MinecraftPlus.BlockNull.blockID);
-				//Right
-				world.setBlockWithNotify(x + 8, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 7, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 6, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 5, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 4, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 3, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 2, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 7, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 6, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 5, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 4, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 3, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 2, mod_MinecraftPlus.BlockNull.blockID);
-				//Top
-				world.setBlockWithNotify(x - 8, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 7, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 6, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 5, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 4, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 3, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 2, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 7, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 6, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 5, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 4, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 3, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 2, y, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-				//Bottom
-				world.setBlockWithNotify(x - 8, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 7, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 6, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 5, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 4, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 3, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x - 2, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 8, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 7, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 6, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 5, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 4, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 3, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				world.setBlockWithNotify(x + 2, y, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-				
-				//Second Layer
-						//4 points
-								world.setBlockWithNotify(x + 8, y + 1, z, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								// 2 blocks around four points
-								world.setBlockWithNotify(x + 1, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 1, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 1, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 1, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 1, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 1, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 1, mod_MinecraftPlus.BlockNull.blockID);
-								//Left
-								world.setBlockWithNotify(x - 8, y + 1, z - 1, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 7, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 6, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 5, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 4, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 3, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z - 2, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 7, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 6, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 5, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 4, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 3, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 8, y + 1, z + 2, mod_MinecraftPlus.BlockNull.blockID);
-								//Right
-								world.setBlockWithNotify(x + 8, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 7, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 6, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 5, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 4, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 3, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 2, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 7, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 6, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 5, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 4, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 3, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 2, mod_MinecraftPlus.BlockNull.blockID);
-								//Top
-								world.setBlockWithNotify(x - 8, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 7, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 6, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 5, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 4, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 3, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 2, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 7, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 6, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 5, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 4, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 3, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 2, y + 1, z + 8, mod_MinecraftPlus.BlockNull.blockID);
-								//Bottom
-								world.setBlockWithNotify(x - 8, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 7, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 6, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 5, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 4, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 3, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x - 2, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 8, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 7, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 6, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 5, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 4, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 3, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-								world.setBlockWithNotify(x + 2, y + 1, z - 8, mod_MinecraftPlus.BlockNull.blockID);
-			}
-	
-	public void blockCreate(World world, int x, int y, int z)
-	{
-		//4 points
-		world.setBlockWithNotify(x + 8, y, z, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		// 2 blocks around four points
-		world.setBlockWithNotify(x + 1, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 1, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 1, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 1, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 1, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 1, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 1, mod_MinecraftPlus.BlockShield.blockID);
-		//Left
-		world.setBlockWithNotify(x - 8, y, z - 1, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 7, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 6, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 5, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 4, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 3, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z - 2, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 7, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 6, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 5, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 4, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 3, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 8, y, z + 2, mod_MinecraftPlus.BlockShield.blockID);
-		//Right
-		world.setBlockWithNotify(x + 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 7, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 6, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 5, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 4, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 3, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 2, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 7, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 6, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 5, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 4, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 3, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 2, mod_MinecraftPlus.BlockShield.blockID);
-		//Top
-		world.setBlockWithNotify(x - 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 7, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 6, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 5, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 4, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 3, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 2, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 7, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 6, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 5, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 4, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 3, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 2, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-		//Bottom
-		world.setBlockWithNotify(x - 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 7, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 6, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 5, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 4, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 3, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x - 2, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 7, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 6, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 5, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 4, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 3, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		world.setBlockWithNotify(x + 2, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-		
-		//Second Layer
-				//4 points
-						world.setBlockWithNotify(x + 8, y + 1, z, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						// 2 blocks around four points
-						world.setBlockWithNotify(x + 1, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 1, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 1, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 1, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 1, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 1, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 1, mod_MinecraftPlus.BlockShield.blockID);
-						//Left
-						world.setBlockWithNotify(x - 8, y + 1, z - 1, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 7, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 6, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 5, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 4, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 3, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z - 2, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 7, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 6, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 5, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 4, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 3, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 8, y + 1, z + 2, mod_MinecraftPlus.BlockShield.blockID);
-						//Right
-						world.setBlockWithNotify(x + 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 7, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 6, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 5, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 4, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 3, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 2, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 7, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 6, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 5, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 4, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 3, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 2, mod_MinecraftPlus.BlockShield.blockID);
-						//Top
-						world.setBlockWithNotify(x - 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 7, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 6, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 5, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 4, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 3, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 2, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 7, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 6, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 5, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 4, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 3, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 2, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
-						//Bottom
-						world.setBlockWithNotify(x - 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 7, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 6, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 5, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 4, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 3, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x - 2, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 7, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 6, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 5, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 4, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 3, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-						world.setBlockWithNotify(x + 2, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-			}
+    
+    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
+    {
+        blockCreate(world, i, j, k);
+        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield Activating!");
+        return blockConstructorCalled;
+    }
+    
+    public void blockRemove(World world, int x, int y, int z)
+    {
+        //4 points
+                world.setBlockWithNotify(x + 8, y, z, 0);
+                world.setBlockWithNotify(x - 8, y, z, 0);
+                world.setBlockWithNotify(x, y, z + 8, 0);
+                world.setBlockWithNotify(x, y, z - 8, 0);
+                // 2 blocks around four points
+                world.setBlockWithNotify(x + 1, y, z + 8, 0);
+                world.setBlockWithNotify(x - 1, y, z + 8, 0);
+                world.setBlockWithNotify(x + 1, y, z - 8, 0);
+                world.setBlockWithNotify(x - 1, y, z - 8, 0);
+                world.setBlockWithNotify(x + 8, y, z + 1, 0);
+                world.setBlockWithNotify(x - 8, y, z + 1, 0);
+                world.setBlockWithNotify(x + 8, y, z - 1, 0);
+                //Left
+                world.setBlockWithNotify(x - 8, y, z - 1, 0);
+                world.setBlockWithNotify(x - 8, y, z - 8, 0);
+                world.setBlockWithNotify(x - 8, y, z - 7, 0);
+                world.setBlockWithNotify(x - 8, y, z - 6, 0);
+                world.setBlockWithNotify(x - 8, y, z - 5, 0);
+                world.setBlockWithNotify(x - 8, y, z - 4, 0);
+                world.setBlockWithNotify(x - 8, y, z - 3, 0);
+                world.setBlockWithNotify(x - 8, y, z - 2, 0);
+                world.setBlockWithNotify(x - 8, y, z + 8, 0);
+                world.setBlockWithNotify(x - 8, y, z + 7, 0);
+                world.setBlockWithNotify(x - 8, y, z + 6, 0);
+                world.setBlockWithNotify(x - 8, y, z + 5, 0);
+                world.setBlockWithNotify(x - 8, y, z + 4, 0);
+                world.setBlockWithNotify(x - 8, y, z + 3, 0);
+                world.setBlockWithNotify(x - 8, y, z + 2, 0);
+                //Right
+                world.setBlockWithNotify(x + 8, y, z - 8, 0);
+                world.setBlockWithNotify(x + 8, y, z - 7, 0);
+                world.setBlockWithNotify(x + 8, y, z - 6, 0);
+                world.setBlockWithNotify(x + 8, y, z - 5, 0);
+                world.setBlockWithNotify(x + 8, y, z - 4, 0);
+                world.setBlockWithNotify(x + 8, y, z - 3, 0);
+                world.setBlockWithNotify(x + 8, y, z - 2, 0);
+                world.setBlockWithNotify(x + 8, y, z + 8, 0);
+                world.setBlockWithNotify(x + 8, y, z + 7, 0);
+                world.setBlockWithNotify(x + 8, y, z + 6, 0);
+                world.setBlockWithNotify(x + 8, y, z + 5, 0);
+                world.setBlockWithNotify(x + 8, y, z + 4, 0);
+                world.setBlockWithNotify(x + 8, y, z + 3, 0);
+                world.setBlockWithNotify(x + 8, y, z + 2, 0);
+                //Top
+                world.setBlockWithNotify(x - 8, y, z + 8, 0);
+                world.setBlockWithNotify(x - 7, y, z + 8, 0);
+                world.setBlockWithNotify(x - 6, y, z + 8, 0);
+                world.setBlockWithNotify(x - 5, y, z + 8, 0);
+                world.setBlockWithNotify(x - 4, y, z + 8, 0);
+                world.setBlockWithNotify(x - 3, y, z + 8, 0);
+                world.setBlockWithNotify(x - 2, y, z + 8, 0);
+                world.setBlockWithNotify(x + 8, y, z + 8, 0);
+                world.setBlockWithNotify(x + 7, y, z + 8, 0);
+                world.setBlockWithNotify(x + 6, y, z + 8, 0);
+                world.setBlockWithNotify(x + 5, y, z + 8, 0);
+                world.setBlockWithNotify(x + 4, y, z + 8, 0);
+                world.setBlockWithNotify(x + 3, y, z + 8, 0);
+                world.setBlockWithNotify(x + 2, y, z + 8, 0);
+                //Bottom
+                world.setBlockWithNotify(x - 8, y, z - 8, 0);
+                world.setBlockWithNotify(x - 7, y, z - 8, 0);
+                world.setBlockWithNotify(x - 6, y, z - 8, 0);
+                world.setBlockWithNotify(x - 5, y, z - 8, 0);
+                world.setBlockWithNotify(x - 4, y, z - 8, 0);
+                world.setBlockWithNotify(x - 3, y, z - 8, 0);
+                world.setBlockWithNotify(x - 2, y, z - 8, 0);
+                world.setBlockWithNotify(x + 8, y, z - 8, 0);
+                world.setBlockWithNotify(x + 7, y, z - 8, 0);
+                world.setBlockWithNotify(x + 6, y, z - 8, 0);
+                world.setBlockWithNotify(x + 5, y, z - 8, 0);
+                world.setBlockWithNotify(x + 4, y, z - 8, 0);
+                world.setBlockWithNotify(x + 3, y, z - 8, 0);
+                world.setBlockWithNotify(x + 2, y, z - 8, 0);
+                
+                //Second Layer
+                        //4 points
+                                world.setBlockWithNotify(x + 8, y + 1, z, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z, 0);
+                                world.setBlockWithNotify(x, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x, y + 1, z - 8, 0);
+                                // 2 blocks around four points
+                                world.setBlockWithNotify(x + 1, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 1, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 1, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 1, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 1, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 1, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 1, 0);
+                                //Left
+                                world.setBlockWithNotify(x - 8, y + 1, z - 1, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 7, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 6, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 5, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 4, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 3, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z - 2, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 7, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 6, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 5, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 4, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 3, 0);
+                                world.setBlockWithNotify(x - 8, y + 1, z + 2, 0);
+                                //Right
+                                world.setBlockWithNotify(x + 8, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 7, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 6, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 5, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 4, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 3, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 2, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 7, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 6, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 5, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 4, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 3, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 2, 0);
+                                //Top
+                                world.setBlockWithNotify(x - 8, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 7, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 6, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 5, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 4, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 3, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x - 2, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 7, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 6, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 5, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 4, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 3, y + 1, z + 8, 0);
+                                world.setBlockWithNotify(x + 2, y + 1, z + 8, 0);
+                                //Bottom
+                                world.setBlockWithNotify(x - 8, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 7, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 6, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 5, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 4, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 3, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x - 2, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 8, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 7, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 6, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 5, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 4, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 3, y + 1, z - 8, 0);
+                                world.setBlockWithNotify(x + 2, y + 1, z - 8, 0);
+            }
+    
+    public void blockCreate(World world, int x, int y, int z)
+    {
+        //4 points
+        world.setBlockWithNotify(x + 8, y, z, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        // 2 blocks around four points
+        world.setBlockWithNotify(x + 1, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 1, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 1, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 1, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 1, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 1, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 1, mod_MinecraftPlus.BlockShield.blockID);
+        //Left
+        world.setBlockWithNotify(x - 8, y, z - 1, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 7, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 6, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 5, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 4, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 3, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z - 2, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 7, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 6, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 5, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 4, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 3, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 8, y, z + 2, mod_MinecraftPlus.BlockShield.blockID);
+        //Right
+        world.setBlockWithNotify(x + 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 7, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 6, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 5, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 4, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 3, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 2, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 7, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 6, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 5, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 4, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 3, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 2, mod_MinecraftPlus.BlockShield.blockID);
+        //Top
+        world.setBlockWithNotify(x - 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 7, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 6, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 5, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 4, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 3, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 2, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 7, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 6, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 5, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 4, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 3, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 2, y, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+        //Bottom
+        world.setBlockWithNotify(x - 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 7, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 6, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 5, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 4, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 3, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x - 2, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 8, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 7, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 6, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 5, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 4, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 3, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        world.setBlockWithNotify(x + 2, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+        
+        //Second Layer
+                //4 points
+                        world.setBlockWithNotify(x + 8, y + 1, z, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        // 2 blocks around four points
+                        world.setBlockWithNotify(x + 1, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 1, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 1, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 1, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 1, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 1, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 1, mod_MinecraftPlus.BlockShield.blockID);
+                        //Left
+                        world.setBlockWithNotify(x - 8, y + 1, z - 1, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 7, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 6, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 5, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 4, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 3, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z - 2, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 7, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 6, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 5, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 4, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 3, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 8, y + 1, z + 2, mod_MinecraftPlus.BlockShield.blockID);
+                        //Right
+                        world.setBlockWithNotify(x + 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 7, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 6, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 5, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 4, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 3, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 2, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 7, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 6, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 5, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 4, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 3, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 2, mod_MinecraftPlus.BlockShield.blockID);
+                        //Top
+                        world.setBlockWithNotify(x - 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 7, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 6, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 5, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 4, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 3, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 2, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 7, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 6, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 5, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 4, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 3, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 2, y + 1, z + 8, mod_MinecraftPlus.BlockShield.blockID);
+                        //Bottom
+                        world.setBlockWithNotify(x - 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 7, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 6, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 5, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 4, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 3, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x - 2, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 8, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 7, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 6, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 5, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 4, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 3, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+                        world.setBlockWithNotify(x + 2, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
+            }
 
-			
-	
-	public int idDropped(int i, Random random) {
+            
+    
+    public int idDropped(int i, Random random) {
         return mod_MinecraftPlus.BlockForceField.blockID;
     }
 }

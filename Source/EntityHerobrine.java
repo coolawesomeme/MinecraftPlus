@@ -5,32 +5,32 @@ This file will let you to set values to change the mummy. */
 
 public class EntityHerobrine extends EntityMob
 {
-	private static final ItemStack defaultHeldItem;
-	
-	public EntityHerobrine (World world)
-	{
-	  // Basically the attributes of the monster.
-		super (world);
-		texture = "/minecraftplus/herobrine.png";  //DO NOT CHANGE
-		moveSpeed = 1F; // The speed the monster walks
-		attackStrength = 8; // The amount of strength the monster has to attack.
-	}
+    private static final ItemStack defaultHeldItem;
+    
+    public EntityHerobrine (World world)
+    {
+      // Basically the attributes of the monster.
+        super (world);
+        texture = "/minecraftplus/herobrine.png";  //DO NOT CHANGE
+        moveSpeed = 1F; // The speed the monster walks
+        attackStrength = 8; // The amount of strength the monster has to attack.
+    }
 
     public int getMaxHealth()
     {
-	  //The health of the monster, He is 2.5 times the health of the player.
+      //The health of the monster, He is 2.5 times the health of the player.
         return 100;
     }
 
     public void onLivingUpdate()
-    {	// If then loop..... setting
+    {    // If then loop..... setting
         if (worldObj.isDaytime() && !worldObj.isRemote)
         {
             float f = getBrightness(1.0F);
             if (f > 0.5F && worldObj.canBlockSeeTheSky(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) && rand.nextFloat() * 30F < (f - 0.4F) * 2.0F)
             {
                 /*This is the code to set it on fire, leave blank because we want Herobrine to live during the day.
-            	setFire(8);*/
+                setFire(8);*/
             }
         }
         super.onLivingUpdate();
@@ -38,21 +38,21 @@ public class EntityHerobrine extends EntityMob
     
     protected void dropFewItems()
     {
-    	dropItem(Item.diamond.shiftedIndex, 2);
-    	dropItem(Item.ingotIron.shiftedIndex, 3);
-    	dropItem(Item.appleGold.shiftedIndex, 3);
-    	dropItem(Item.cookie.shiftedIndex, 2);
+        dropItem(Item.diamond.shiftedIndex, 2);
+        dropItem(Item.ingotIron.shiftedIndex, 3);
+        dropItem(Item.appleGold.shiftedIndex, 3);
+        dropItem(Item.cookie.shiftedIndex, 2);
     }
 
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.UNDEAD;
-		
+        
     }
     
     public boolean canDespawn()
     {
-    	return false;
+        return false;
     }
     
     protected String getLivingSound()

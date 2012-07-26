@@ -282,10 +282,10 @@ public class EmbroniumTorch extends Block
     
     public void onBlockPlaced (World world)
     {
-    	if (world.isRemote)
-    	{
-    	
-    	}
+        if (world.isRemote)
+        {
+        
+        }
     }
 
 }
