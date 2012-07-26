@@ -1,4 +1,3 @@
-update: false
-modver2: b6
-mcver2: 1.2.5
-addtext:
+this file is to check if there are 
+updates to the minecraft+ mod,
+if the line below has a number, there is an update
