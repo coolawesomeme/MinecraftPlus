@@ -6,6 +6,6 @@ I may be contacted at coolawesomeme@gmail.com and [here](http://www.minecraftfor
 Mod Made By:
 -------------
 
-coolawesomeme - Coder & Part Texturer
-nikblaze91 - Part Coder
-pacman003 - Texturer
+coolawesomeme - Coder & Part Texturer    
+nikblaze91 - Part Coder    
+pacman003 - Texturer    
