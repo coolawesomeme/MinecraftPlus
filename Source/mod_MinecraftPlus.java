@@ -2,7 +2,10 @@ package net.minecraft.src;
 
 // DO NOT MESS WITH THE IMPORT(S)
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
+import java.util.logging.Level;
 
 
 import net.minecraft.client.Minecraft;
@@ -236,7 +239,7 @@ public class mod_MinecraftPlus extends BaseMod
         map.put(EntityHumans.class, new RenderBiped(new ModelBiped(), 0.5F));
     }
     
-    public void initialization(Minecraft minecraft, int i, int j, int k)
+    public void initialization(Minecraft minecraft, int i, int j, int k, Level level)
     {
         Random randomGenerator = new Random();
         int c = randomGenerator.nextInt(5001);
@@ -318,6 +321,30 @@ public class mod_MinecraftPlus extends BaseMod
             
             minecraft.thePlayer.addChatMessage("Today is " + month + " " + date + suffix + ".");
             minecraft.thePlayer.addChatMessage("");
+            
+            int counter = 0;
+            try {
+                // Create a URL for the desired page
+                URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
+
+                // Read all the text returned by the server
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                String str;
+                
+                while ((str = in.readLine()) != null) {
+                   counter++;
+                }
+                in.close();
+            } catch (MalformedURLException e) {
+            	ModLoader.getLogger().log(level, "[MC+] Unable to check for update.");
+            } catch (IOException e) {
+            	ModLoader.getLogger().log(level, "[MC+] Unable to check for update.");
+            }
+            if(counter == 4){
+            minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+" + " is available at:");
+            minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
+            minecraft.thePlayer.addChatMessage("");
+            }
             notSTARTUP = true;
             
             if(c == 4501){
@@ -399,7 +426,7 @@ public class mod_MinecraftPlus extends BaseMod
     
         armorSpecial(minecraft);
         
-        initialization(minecraft, 0, 0, 0);
+        initialization(minecraft, 0, 0, 0, null);
                 
         return true;
     }
