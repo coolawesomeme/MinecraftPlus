@@ -27,6 +27,7 @@ public class mod_MinecraftPlus extends BaseMod
     public boolean notSTARTUP = false;
     public String modver = "b6";
     public String mcver = "1.2.5";
+    public String modver2 = "null";
     
     // Blocks
     public static final Block BlockEmbroniumOre = new BlockEmbroniumOre(180,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockEmbroniumOre");
@@ -326,22 +327,19 @@ public class mod_MinecraftPlus extends BaseMod
             try {
                 // Create a URL for the desired page
                 URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
-
-                // Read all the text returned by the server
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-                String str;
-                
-                while ((str = in.readLine()) != null) {
-                   counter++;
+                while ((modver2 = in.readLine()) != null) {
+                    System.out.println("Latest mod version found: Minecraft+ " + modver2 + ".");
+                    counter++;
                 }
                 in.close();
             } catch (MalformedURLException e) {
-            	ModLoader.getLogger().log(level, "[MC+] Unable to check for update.");
+            	System.out.println("[MC+] Unable to check for update.");
             } catch (IOException e) {
-            	ModLoader.getLogger().log(level, "[MC+] Unable to check for update.");
+            	System.out.println("[MC+] Unable to check for update.");
             }
-            if(counter == 4){
-            minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+" + " is available at:");
+            if(modver != modver2){
+            minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ " + "is available at:");
             minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
             minecraft.thePlayer.addChatMessage("");
             }
@@ -500,6 +498,6 @@ public class mod_MinecraftPlus extends BaseMod
               return "| For Minecraft Version: " + mcver + " |" +
                       " Mod Version: Minecraft+ " + modver + " |" + 
                       " bit.ly/MCPlus | ";
-        }
+      }
     
 }
