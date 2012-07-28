@@ -1,5 +1,5 @@
 package net.minecraft.src;
-
+ 
 /* PLEASE DO NOT CHANGE ANY VALUES IF YOU DON'T KNOW WHAT YOU ARE DOING.
 This file will let you to set values to change the mummy. */
 

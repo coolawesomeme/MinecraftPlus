@@ -1,5 +1,5 @@
 package net.minecraft.src;
-
+ 
 public class PlusItemHoe extends Item
 {
     public PlusItemHoe(int par1, PlusToolMaterial par2PlusToolMaterial)

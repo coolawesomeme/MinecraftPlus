@@ -1,5 +1,5 @@
 package net.minecraft.src;
-
+ 
 import net.minecraft.client.Minecraft;
 
 public class ItemMummyEgg extends Item

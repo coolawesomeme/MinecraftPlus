@@ -1,5 +1,5 @@
 package net.minecraft.src;
-
+ 
 public class PlusItemSpade extends PlusItemTool
 {
     private static Block blocksEffectiveAgainst[];
