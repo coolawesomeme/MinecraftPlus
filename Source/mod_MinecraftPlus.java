@@ -1,5 +1,5 @@
 package net.minecraft.src;
-
+ 
 // DO NOT MESS WITH THE IMPORT(S)
 import java.io.*;
 import java.net.MalformedURLException;
