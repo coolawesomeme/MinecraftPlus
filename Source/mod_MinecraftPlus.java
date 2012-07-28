@@ -25,9 +25,9 @@ public class mod_MinecraftPlus extends BaseMod
     
     public Minecraft minecraft;
     public boolean notSTARTUP = false;
-    public String modver = "b6";
+    public String modver = "b7";
     public String mcver = "1.2.5";
-    public String modver2 = "null";
+    public String modver2 = "missingno";
     
     // Blocks
     public static final Block BlockEmbroniumOre = new BlockEmbroniumOre(180,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockEmbroniumOre");
@@ -316,7 +316,7 @@ public class mod_MinecraftPlus extends BaseMod
             if(s == 3){
             minecraft.thePlayer.addChatMessage("Hi " + username + "!");
             }
-            if(s >= 4){
+            if(s == 4 || s == 5){
             minecraft.thePlayer.addChatMessage("Welcome " + username + "!");
             }
             
@@ -327,21 +327,26 @@ public class mod_MinecraftPlus extends BaseMod
             try {
                 // Create a URL for the desired page
                 URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
+
+                // Read all the text returned by the server
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((modver2 = in.readLine()) != null) {
                     System.out.println("Latest mod version found: Minecraft+ " + modver2 + ".");
+                    
+                    if(modver2.equals(modver)){
+                    }
+                    else{
+                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ " + "is available at:");
+                    minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
+                    minecraft.thePlayer.addChatMessage("");
+                    }
+                    
                     counter++;
                 }
+                
                 in.close();
             } catch (MalformedURLException e) {
-            	System.out.println("[MC+] Unable to check for update.");
             } catch (IOException e) {
-            	System.out.println("[MC+] Unable to check for update.");
-            }
-            if(modver != modver2){
-            minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ " + "is available at:");
-            minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
-            minecraft.thePlayer.addChatMessage("");
             }
             notSTARTUP = true;
             
