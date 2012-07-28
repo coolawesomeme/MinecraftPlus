@@ -25,7 +25,7 @@ public class mod_MinecraftPlus extends BaseMod
     
     public Minecraft minecraft;
     public boolean notSTARTUP = false;
-    public String modver = "b7";
+    public String modver = "r1b7";
     public String mcver = "1.2.5";
     public String modver2 = "missingno";
     
