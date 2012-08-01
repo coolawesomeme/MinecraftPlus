@@ -38,20 +38,58 @@ public class EntityMummy extends EntityMob
         super.onLivingUpdate();
     }
     
-    protected int getDropItemId()
+    protected void dropFewItems()
     {
-        return mod_MinecraftPlus.ItemBandage.shiftedIndex;
+    	Random randomGenerator = new Random();
+        int rarity = randomGenerator.nextInt(2);
+        int rarity2 = randomGenerator.nextInt(3);
+        int rarity3 = randomGenerator.nextInt(20);
+        
+        if(rarity == 1){
+            if(rarity2 == 1){
+    	    dropItem(Item.paper.shiftedIndex, 1);
+            }
+            if(rarity2 == 2){
+        	    dropItem(Item.paper.shiftedIndex, 2);
+                }
+            if(rarity2 == 3){
+        	    dropItem(Item.paper.shiftedIndex, 3);
+                }
+        }
+    	
+        if(rarity == 2){
+            if(rarity2 == 1){
+            dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 1);
+            }
+            if(rarity2 == 2){
+                dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 2);
+                }
+            if(rarity2 == 3){
+                dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 3);
+                }
+        }
+        else{
+            if(rarity3 == 9){
+            	if(rarity2 == 1){
+                    dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 1);
+                    dropItem(Item.paper.shiftedIndex, 1);
+                    }
+                if(rarity2 == 2){
+                        dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 2);
+                        dropItem(Item.paper.shiftedIndex, 2);
+                        }
+                if(rarity2 == 3){
+                        dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 3);
+                        dropItem(Item.paper.shiftedIndex, 3);
+                        }
+        	}
+        }
     }
 
     public EnumCreatureAttribute getCreatureAttribute()
     {
         return EnumCreatureAttribute.UNDEAD;
         
-    }
-    
-    protected boolean isAIEnabled()
-    {
-        return false;
     }
     
     protected String getLivingSound()
@@ -103,22 +141,65 @@ public class EntityMummy extends EntityMob
       if(q >= 4){
       ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Uuuuhhuhuhuhuhuhuhhhhhhhhhhh!");
       }
-        
+      
+      //Check to see what's in the current slot.
+      ItemStack currentItem = entityplayer.inventory.getCurrentItem(); 
+      int rarity = randomGenerator.nextInt(2);
+      int rarity2 = randomGenerator.nextInt(3);
+      int rarity3 = randomGenerator.nextInt(20);
+      if (!worldObj.isRemote)
+      {  
+      if(currentItem == null || currentItem.itemID == Item.shears.shiftedIndex)
+      {
+      setDead();    
+      if(rarity == 1){
+          if(rarity2 == 1){
+  	    dropItem(Item.paper.shiftedIndex, 1);
+          }
+          if(rarity2 == 2){
+      	    dropItem(Item.paper.shiftedIndex, 2);
+              }
+          if(rarity2 == 3){
+      	    dropItem(Item.paper.shiftedIndex, 3);
+              }
+      }
+  	
+      if(rarity == 2){
+          if(rarity2 == 1){
+          dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 1);
+          }
+          if(rarity2 == 2){
+              dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 2);
+              }
+          if(rarity2 == 3){
+              dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 3);
+              }
+      }
+      else{
+          if(rarity3 == 9){
+          	if(rarity2 == 1){
+                  dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 1);
+                  dropItem(Item.paper.shiftedIndex, 1);
+                  }
+              if(rarity2 == 2){
+                      dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 2);
+                      dropItem(Item.paper.shiftedIndex, 2);
+                      }
+              if(rarity2 == 3){
+                      dropItem(mod_MinecraftPlus.ItemBandage.shiftedIndex, 3);
+                      dropItem(Item.paper.shiftedIndex, 3);
+                      }
+      	}
+      }
+      EntitySkeleton entityskeleton = new EntitySkeleton(worldObj);
+      entityskeleton.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
+      entityskeleton.setEntityHealth(getHealth());
+      entityskeleton.renderYawOffset = renderYawOffset;
+      worldObj.spawnEntityInWorld(entityskeleton);
+      }
+      }
+      
         return true;
-    }
-    
-    public void onDeath(EntityPlayer entityplayer, DamageSource par1DamageSource, EntitySkeleton entityskeleton, EntityMummy entitymummy, int par2)
-    {
-        //Check to see what's in the current slot.
-        ItemStack currentItem = entityplayer.inventory.getCurrentItem(); 
-          
-            if(currentItem == null || currentItem.itemID == Item.shears.shiftedIndex)
-            {
-            setDead();
-            entityskeleton = new EntitySkeleton(worldObj);
-            entityskeleton.setLocationAndAngles(posX, posY, posZ, rotationYaw, rotationPitch);
-            worldObj.spawnEntityInWorld(entityskeleton);
-            }
     }
     
 }

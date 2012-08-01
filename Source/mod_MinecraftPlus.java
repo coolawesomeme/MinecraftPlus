@@ -25,7 +25,7 @@ public class mod_MinecraftPlus extends BaseMod
     
     public Minecraft minecraft;
     public boolean notSTARTUP = false;
-    public String modver = "r1b7";
+    public String modver = "r1b8";
     public String mcver = "1.2.5";
     public String modver2 = "missingno";
     
@@ -91,7 +91,7 @@ public class mod_MinecraftPlus extends BaseMod
     public void load()
     {
         
-        //Creative GUI
+        //Creative GUI & Some other things
         ModLoader.setInGUIHook(this, true, true);
         ModLoader.setInGameHook(this, true, true);
         
@@ -240,7 +240,7 @@ public class mod_MinecraftPlus extends BaseMod
         map.put(EntityHumans.class, new RenderBiped(new ModelBiped(), 0.5F));
     }
     
-    public void initialization(Minecraft minecraft, int i, int j, int k, Level level)
+    public void initialization(Minecraft minecraft, int i, int j, int k)
     {
         Random randomGenerator = new Random();
         int c = randomGenerator.nextInt(5001);
@@ -304,7 +304,7 @@ public class mod_MinecraftPlus extends BaseMod
         
         String username = minecraft.thePlayer.username;
         if(notSTARTUP == false){
-            int s = randomGenerator.nextInt(5);
+            int s = randomGenerator.nextInt(4);
             
             minecraft.thePlayer.addChatMessage("Minecraft+ " + modver + " \u00A72enabled" + "\u00A7f!");
             if(s == 1){
@@ -316,7 +316,7 @@ public class mod_MinecraftPlus extends BaseMod
             if(s == 3){
             minecraft.thePlayer.addChatMessage("Hi " + username + "!");
             }
-            if(s == 4 || s == 5){
+            if(s == 4){
             minecraft.thePlayer.addChatMessage("Welcome " + username + "!");
             }
             
@@ -331,14 +331,23 @@ public class mod_MinecraftPlus extends BaseMod
                 // Read all the text returned by the server
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((modver2 = in.readLine()) != null) {
+                	
+                	if(modver2.equals("null") || modver2.equals("void") || modver2.equals("missingno") || modver2.equals("")){
+                		modver2 = modver;
+                		modver2.equals(modver);
+                	}
+                	
                     System.out.println("Latest mod version found: Minecraft+ " + modver2 + ".");
                     
                     if(modver2.equals(modver)){
+                    	System.out.println("[MC+] Mod up to date!");
                     }
                     else{
-                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ " + "is available at:");
+                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + modver2 + ") " + "is available at:");
                     minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
                     minecraft.thePlayer.addChatMessage("");
+                    System.out.println("An update of " + "Minecraft+ (Version " + modver2 + ") " + "is available at:");
+                    System.out.println("http://bit.ly/MCPlus");
                     }
                     
                     counter++;
@@ -346,7 +355,9 @@ public class mod_MinecraftPlus extends BaseMod
                 
                 in.close();
             } catch (MalformedURLException e) {
+            	System.out.println("[MC+] Unable to check for updates.");
             } catch (IOException e) {
+            	System.out.println("[MC+] Unable to check for updates.");
             }
             notSTARTUP = true;
             
@@ -429,7 +440,7 @@ public class mod_MinecraftPlus extends BaseMod
     
         armorSpecial(minecraft);
         
-        initialization(minecraft, 0, 0, 0, null);
+        initialization(minecraft, 0, 0, 0);
                 
         return true;
     }
