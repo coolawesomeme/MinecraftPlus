@@ -304,9 +304,9 @@ public class mod_MinecraftPlus extends BaseMod
         
         String username = minecraft.thePlayer.username;
         if(notSTARTUP == false){
-            int s = randomGenerator.nextInt(4);
             
             minecraft.thePlayer.addChatMessage("Minecraft+ " + modver + " \u00A72enabled" + "\u00A7f!");
+            int s = randomGenerator.nextInt(4);
             if(s == 1){
             minecraft.thePlayer.addChatMessage("Hello " + username + "!");
             }

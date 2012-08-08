@@ -41,9 +41,9 @@ public class EntityMummy extends EntityMob
     protected void dropFewItems()
     {
     	Random randomGenerator = new Random();
-        int rarity = randomGenerator.nextInt(2);
+        int rarity = randomGenerator.nextInt(3);
         int rarity2 = randomGenerator.nextInt(3);
-        int rarity3 = randomGenerator.nextInt(20);
+        int rarity3 = randomGenerator.nextInt(10);
         
         if(rarity == 1){
             if(rarity2 == 1){

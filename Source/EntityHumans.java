@@ -216,7 +216,8 @@ public class EntityHumans extends EntityCreature
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("");
         }
         if(p == 24){
-        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("... Is the cake a lie?");
+        String username = ModLoader.getMinecraftInstance().thePlayer.username;
+        ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Help me, " + username + ", you're my only hope!");
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("");
         }
         if(p == 25){
