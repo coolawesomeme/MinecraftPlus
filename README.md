@@ -11,4 +11,4 @@ The **MODUPDATE2.txt** file lists the most recent internal release of the mod, w
 
 **NOTE: Entities are currently not working. This is a problem with ModLoader. Until it is fixed, mobs are disabled.**
 
-~coolawesomeme
+-coolawesomeme
