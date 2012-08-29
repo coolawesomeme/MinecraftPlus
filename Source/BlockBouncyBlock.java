@@ -26,7 +26,7 @@ super(i, j, Material.wood);
 
         public boolean shouldSideBeRendered(IBlockAccess iblockaccess, int i, int j, int k, int l)
         {
-                if (this != Block.stairSingle)
+                if (this != Block.stairsBrick || this != Block.stairsBrick.stairsNetherBrick || this != Block.stairsSandStone || this != Block.stairsStoneBrickSmooth || this != Block.stairsWoodBirch || this != Block.stairsWoodJungle || this != Block.stairsWoodSpruce)
                 {
                         super.shouldSideBeRendered(iblockaccess, i, j, k, l);
                 }

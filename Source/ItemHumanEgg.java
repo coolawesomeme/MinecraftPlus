@@ -12,18 +12,15 @@ public class ItemHumanEgg extends Item
          setMaxDamage(4);
     }
 
-    public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
-    { 
-        if(!world.isRemote)
+    public static boolean spawnCreature(World par0World, int par1, double par2, double par4, double par6, Minecraft minecraft, EntityHumans entityhuman)
+    {
+    	if(minecraft.isSingleplayer())
         {
-            entityplayer.addChatMessage("\u00A7bHuman Spawned!");
-            EntityLiving entityliving = (EntityLiving)EntityList.createEntityByName("Human", entityplayer.worldObj);
-            entityliving.setLocationAndAngles(i, j + 1, k, 0F, 0F);
-            entityplayer.worldObj.spawnEntityInWorld(entityliving);
-            itemstack.damageItem(1, entityplayer);
-            entityplayer.swingItem();
+    		par0World.spawnEntityInWorld(entityhuman);
+        	Entity var8 = EntityList.createEntityByName("Human", par0World);
+        	var8.setLocationAndAngles(par2, par4, par6, par0World.rand.nextFloat() * 360.0F, 0.0F);
         }
-      
+    
         return true;
     }
 }

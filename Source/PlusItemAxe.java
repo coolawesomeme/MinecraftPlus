@@ -1,8 +1,9 @@
 package net.minecraft.src;
- 
+
 public class PlusItemAxe extends PlusItemTool
 {
-    private static Block blocksEffectiveAgainst[];
+    /** an array of the blocks this axe is effective against */
+    private static Block[] blocksEffectiveAgainst = new Block[] {Block.planks, Block.bookShelf, Block.wood, Block.chest, Block.stoneDoubleSlab, Block.stoneSingleSlab, Block.pumpkin, Block.pumpkinLantern};
 
     protected PlusItemAxe(int par1, PlusToolMaterial par2PlusToolMaterial)
     {
@@ -15,21 +16,6 @@ public class PlusItemAxe extends PlusItemTool
      */
     public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
-        if (par2Block != null && par2Block.blockMaterial == Material.wood)
-        {
-            return efficiencyOnProperMaterial;
-        }
-        else
-        {
-            return super.getStrVsBlock(par1ItemStack, par2Block);
-        }
-    }
-
-    static
-    {
-        blocksEffectiveAgainst = (new Block[]
-                {
-                    Block.planks, Block.bookShelf, Block.wood, Block.chest, Block.stairDouble, Block.stairSingle, Block.pumpkin, Block.pumpkinLantern
-                });
+        return par2Block != null && par2Block.blockMaterial == Material.wood ? this.efficiencyOnProperMaterial : super.getStrVsBlock(par1ItemStack, par2Block);
     }
 }

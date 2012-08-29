@@ -1,5 +1,5 @@
 package net.minecraft.src;
- 
+
 import java.util.Random;
 
 public class EmbroniumTorch extends Block
@@ -7,14 +7,15 @@ public class EmbroniumTorch extends Block
     protected EmbroniumTorch(int par1, int par2)
     {
         super(par1, par2, Material.circuits);
-        setTickRandomly(true);
+        this.setTickRandomly(true);
+        this.setCreativeTab(CreativeTabs.tabDeco);
     }
 
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)
      */
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int i)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
     {
         return null;
     }
@@ -49,29 +50,15 @@ public class EmbroniumTorch extends Block
      */
     private boolean canPlaceTorchOn(World par1World, int par2, int par3, int par4)
     {
-        if (par1World.isBlockNormalCubeDefault(par2, par3, par4, true))
+        if (par1World.doesBlockHaveSolidTopSurface(par2, par3, par4))
         {
             return true;
         }
-
-        int i = par1World.getBlockId(par2, par3, par4);
-
-        if (i == Block.fence.blockID || i == Block.netherFence.blockID || i == Block.glass.blockID)
+        else
         {
-            return true;
+            int var5 = par1World.getBlockId(par2, par3, par4);
+            return var5 == Block.fence.blockID || var5 == Block.netherFence.blockID || var5 == Block.glass.blockID;
         }
-
-        if (Block.blocksList[i] != null && (Block.blocksList[i] instanceof BlockStairs))
-        {
-            int j = par1World.getBlockMetadata(par2, par3, par4);
-
-            if ((4 & j) != 0)
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -79,63 +66,42 @@ public class EmbroniumTorch extends Block
      */
     public boolean canPlaceBlockAt(World par1World, int par2, int par3, int par4)
     {
-        if (par1World.isBlockNormalCubeDefault(par2 - 1, par3, par4, true))
-        {
-            return true;
-        }
-
-        if (par1World.isBlockNormalCubeDefault(par2 + 1, par3, par4, true))
-        {
-            return true;
-        }
-
-        if (par1World.isBlockNormalCubeDefault(par2, par3, par4 - 1, true))
-        {
-            return true;
-        }
-
-        if (par1World.isBlockNormalCubeDefault(par2, par3, par4 + 1, true))
-        {
-            return true;
-        }
-
-        return canPlaceTorchOn(par1World, par2, par3 - 1, par4);
+        return par1World.isBlockNormalCubeDefault(par2 - 1, par3, par4, true) ? true : (par1World.isBlockNormalCubeDefault(par2 + 1, par3, par4, true) ? true : (par1World.isBlockNormalCubeDefault(par2, par3, par4 - 1, true) ? true : (par1World.isBlockNormalCubeDefault(par2, par3, par4 + 1, true) ? true : this.canPlaceTorchOn(par1World, par2, par3 - 1, par4))));
     }
 
     /**
-     * Called when a block is placed using an item. Used often for taking the facing and figuring out how to position
-     * the item. Args: x, y, z, facing
+     * called before onBlockPlacedBy by ItemBlock and ItemReed
      */
-    public void onBlockPlaced(World par1World, int par2, int par3, int par4, int par5)
+    public void updateBlockMetadata(World par1World, int par2, int par3, int par4, int par5, float par6, float par7, float par8)
     {
-        int i = par1World.getBlockMetadata(par2, par3, par4);
+        int var9 = par1World.getBlockMetadata(par2, par3, par4);
 
-        if (par5 == 1 && canPlaceTorchOn(par1World, par2, par3 - 1, par4))
+        if (par5 == 1 && this.canPlaceTorchOn(par1World, par2, par3 - 1, par4))
         {
-            i = 5;
+            var9 = 5;
         }
 
         if (par5 == 2 && par1World.isBlockNormalCubeDefault(par2, par3, par4 + 1, true))
         {
-            i = 4;
+            var9 = 4;
         }
 
         if (par5 == 3 && par1World.isBlockNormalCubeDefault(par2, par3, par4 - 1, true))
         {
-            i = 3;
+            var9 = 3;
         }
 
         if (par5 == 4 && par1World.isBlockNormalCubeDefault(par2 + 1, par3, par4, true))
         {
-            i = 2;
+            var9 = 2;
         }
 
         if (par5 == 5 && par1World.isBlockNormalCubeDefault(par2 - 1, par3, par4, true))
         {
-            i = 1;
+            var9 = 1;
         }
 
-        par1World.setBlockMetadataWithNotify(par2, par3, par4, i);
+        par1World.setBlockMetadataWithNotify(par2, par3, par4, var9);
     }
 
     /**
@@ -147,7 +113,7 @@ public class EmbroniumTorch extends Block
 
         if (par1World.getBlockMetadata(par2, par3, par4) == 0)
         {
-            onBlockAdded(par1World, par2, par3, par4);
+            this.onBlockAdded(par1World, par2, par3, par4);
         }
     }
 
@@ -172,12 +138,12 @@ public class EmbroniumTorch extends Block
         {
             par1World.setBlockMetadataWithNotify(par2, par3, par4, 4);
         }
-        else if (canPlaceTorchOn(par1World, par2, par3 - 1, par4))
+        else if (this.canPlaceTorchOn(par1World, par2, par3 - 1, par4))
         {
             par1World.setBlockMetadataWithNotify(par2, par3, par4, 5);
         }
 
-        dropTorchIfCantStay(par1World, par2, par3, par4);
+        this.dropTorchIfCantStay(par1World, par2, par3, par4);
     }
 
     /**
@@ -186,39 +152,39 @@ public class EmbroniumTorch extends Block
      */
     public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5)
     {
-        if (dropTorchIfCantStay(par1World, par2, par3, par4))
+        if (this.dropTorchIfCantStay(par1World, par2, par3, par4))
         {
-            int i = par1World.getBlockMetadata(par2, par3, par4);
-            boolean flag = false;
+            int var6 = par1World.getBlockMetadata(par2, par3, par4);
+            boolean var7 = false;
 
-            if (!par1World.isBlockNormalCubeDefault(par2 - 1, par3, par4, true) && i == 1)
+            if (!par1World.isBlockNormalCubeDefault(par2 - 1, par3, par4, true) && var6 == 1)
             {
-                flag = true;
+                var7 = true;
             }
 
-            if (!par1World.isBlockNormalCubeDefault(par2 + 1, par3, par4, true) && i == 2)
+            if (!par1World.isBlockNormalCubeDefault(par2 + 1, par3, par4, true) && var6 == 2)
             {
-                flag = true;
+                var7 = true;
             }
 
-            if (!par1World.isBlockNormalCubeDefault(par2, par3, par4 - 1, true) && i == 3)
+            if (!par1World.isBlockNormalCubeDefault(par2, par3, par4 - 1, true) && var6 == 3)
             {
-                flag = true;
+                var7 = true;
             }
 
-            if (!par1World.isBlockNormalCubeDefault(par2, par3, par4 + 1, true) && i == 4)
+            if (!par1World.isBlockNormalCubeDefault(par2, par3, par4 + 1, true) && var6 == 4)
             {
-                flag = true;
+                var7 = true;
             }
 
-            if (!canPlaceTorchOn(par1World, par2, par3 - 1, par4) && i == 5)
+            if (!this.canPlaceTorchOn(par1World, par2, par3 - 1, par4) && var6 == 5)
             {
-                flag = true;
+                var7 = true;
             }
 
-            if (flag)
+            if (var7)
             {
-                dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
+                this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
                 par1World.setBlockWithNotify(par2, par3, par4, 0);
             }
         }
@@ -230,11 +196,11 @@ public class EmbroniumTorch extends Block
      */
     private boolean dropTorchIfCantStay(World par1World, int par2, int par3, int par4)
     {
-        if (!canPlaceBlockAt(par1World, par2, par3, par4))
+        if (!this.canPlaceBlockAt(par1World, par2, par3, par4))
         {
-            if (par1World.getBlockId(par2, par3, par4) == blockID)
+            if (par1World.getBlockId(par2, par3, par4) == this.blockID)
             {
-                dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
+                this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
                 par1World.setBlockWithNotify(par2, par3, par4, 0);
             }
 
@@ -250,42 +216,35 @@ public class EmbroniumTorch extends Block
      * Ray traces through the blocks collision from start vector to end vector returning a ray trace hit. Args: world,
      * x, y, z, startVec, endVec
      */
-    public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3D par5Vec3D, Vec3D par6Vec3D)
+    public MovingObjectPosition collisionRayTrace(World par1World, int par2, int par3, int par4, Vec3 par5Vec3, Vec3 par6Vec3)
     {
-        int i = par1World.getBlockMetadata(par2, par3, par4) & 7;
-        float f = 0.15F;
+        int var7 = par1World.getBlockMetadata(par2, par3, par4) & 7;
+        float var8 = 0.15F;
 
-        if (i == 1)
+        if (var7 == 1)
         {
-            setBlockBounds(0.0F, 0.2F, 0.5F - f, f * 2.0F, 0.8F, 0.5F + f);
+            this.setBlockBounds(0.0F, 0.2F, 0.5F - var8, var8 * 2.0F, 0.8F, 0.5F + var8);
         }
-        else if (i == 2)
+        else if (var7 == 2)
         {
-            setBlockBounds(1.0F - f * 2.0F, 0.2F, 0.5F - f, 1.0F, 0.8F, 0.5F + f);
+            this.setBlockBounds(1.0F - var8 * 2.0F, 0.2F, 0.5F - var8, 1.0F, 0.8F, 0.5F + var8);
         }
-        else if (i == 3)
+        else if (var7 == 3)
         {
-            setBlockBounds(0.5F - f, 0.2F, 0.0F, 0.5F + f, 0.8F, f * 2.0F);
+            this.setBlockBounds(0.5F - var8, 0.2F, 0.0F, 0.5F + var8, 0.8F, var8 * 2.0F);
         }
-        else if (i == 4)
+        else if (var7 == 4)
         {
-            setBlockBounds(0.5F - f, 0.2F, 1.0F - f * 2.0F, 0.5F + f, 0.8F, 1.0F);
+            this.setBlockBounds(0.5F - var8, 0.2F, 1.0F - var8 * 2.0F, 0.5F + var8, 0.8F, 1.0F);
         }
         else
         {
-            float f1 = 0.1F;
-            setBlockBounds(0.5F - f1, 0.0F, 0.5F - f1, 0.5F + f1, 0.6F, 0.5F + f1);
+            var8 = 0.1F;
+            this.setBlockBounds(0.5F - var8, 0.0F, 0.5F - var8, 0.5F + var8, 0.6F, 0.5F + var8);
         }
 
-        return super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3D, par6Vec3D);
+        return super.collisionRayTrace(par1World, par2, par3, par4, par5Vec3, par6Vec3);
     }
+
     
-    public void onBlockPlaced (World world)
-    {
-        if (world.isRemote)
-        {
-        
-        }
-    }
-
 }

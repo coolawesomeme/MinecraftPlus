@@ -25,39 +25,40 @@ public class mod_MinecraftPlus extends BaseMod
     
     public Minecraft minecraft;
     public boolean notSTARTUP = false;
-    public String modver = "r1b8";
-    public String mcver = "1.2.5";
+    public String modver = "r1b9";
+    public String mcver = "1.3.2";
     public String modver2 = "missingno";
+    public String modver3 = "missingno";
     
     // Blocks
-    public static final Block BlockEmbroniumOre = new BlockEmbroniumOre(180,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockEmbroniumOre");
-    public static final Block BlockEmbroniumBlock = new BlockEmbroniumBlock(181,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockEmbroniumBlock");
-    public static final Block BlockBouncyBlock = new BlockBouncyBlock(182,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockBouncyBlock");
-    public static final Block BlockBoosterBlock = new BlockBoosterBlock(183,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockBoosterBlock");
-    public static final Block BlockHealBlock = new BlockHealBlock(184,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockHealBlock");
-    public static final Block BlockDamageBlock = new BlockDamageBlock(185,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockDamageBlock");
-    public static final Block EmbroniumTorch = new EmbroniumTorch(186, ModLoader.addOverride ("/terrain.png", "/minecraftplus/embroniumtorch.png")).setLightValue(1.0F).setHardness(1.0F).setBlockName("EmbroniumTorch").setRequiresSelfNotify();
-    public static final Block BlockForceField = new BlockForceField(187,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockForceField").setRequiresSelfNotify();
-    public static final Block BlockShield = new BlockPane(188, 0 , 37, Material.glass, false).setHardness(3.0F).setResistance(10.0F).setBlockName("BlockShield");        
+    public static final Block BlockEmbroniumOre = new BlockEmbroniumOre(180,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockEmbroniumOre");
+    public static final Block BlockEmbroniumBlock = new BlockEmbroniumBlock(181,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockEmbroniumBlock");
+    public static final Block BlockBouncyBlock = new BlockBouncyBlock(182,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockBouncyBlock");
+    public static final Block BlockBoosterBlock = new BlockBoosterBlock(183,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockBoosterBlock");
+    public static final Block BlockHealBlock = new BlockHealBlock(184,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockHealBlock");
+    public static final Block BlockDamageBlock = new BlockDamageBlock(185,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockDamageBlock");
+    public static final Block EmbroniumTorch = new EmbroniumTorch(186, ModLoader.addOverride ("/terrain.png", "/minecraftplus/embroniumtorch.png")).setLightValue(1.0F).setHardness(1.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("EmbroniumTorch").setRequiresSelfNotify();
+    public static final Block BlockForceField = new BlockForceField(187,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockForceField").setCreativeTab(CreativeTabs.tabRedstone).setRequiresSelfNotify();
+    public static final Block BlockShield = new BlockPane(188, 0 , 37, Material.glass, false).setHardness(3.0F).setResistance(10.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockShield");        
     public static final Block BlockNull = new BlockNull(195,0).setHardness(0.0F).setResistance(1.0F).setBlockName("BlockNull");
-    public static final Block BlockCamper = new BlockCamper(196,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockCamper").setRequiresSelfNotify();
-    public static final Block BlockiBlock = new BlockiBlock(197,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockiBlock");
-    public static final Block BlockCobbleGen = new BlockCobbleGen(198,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockCobbleGen");
-    public static final Block BlockCrater = new BlockCrater(199,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockCrater");
-    public static final Block BlockMiner = new BlockMiner(200,0).setHardness(2.0F).setResistance(5.0F).setBlockName("BlockMiner");
-    public static final Block BlockHiddenBookshelf = new BlockHiddenBookshelf(201,35).setHardness(1.5F).setResistance(5.0F).setBlockName("BlockHiddenBookshelf");
+    public static final Block BlockCamper = new BlockCamper(196,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockCamper").setRequiresSelfNotify();
+    public static final Block BlockiBlock = new BlockiBlock(197,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockiBlock");
+    public static final Block BlockCobbleGen = new BlockCobbleGen(198,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockCobbleGen");
+    public static final Block BlockCrater = new BlockCrater(199,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockCrater");
+    public static final Block BlockMiner = new BlockMiner(200,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockMiner");
+    public static final Block BlockHiddenBookshelf = new BlockHiddenBookshelf(201,35).setHardness(1.5F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockHiddenBookshelf");
     
     
     //Items
-    public static final Item ItemMummyEgg = new ItemMummyEgg(31701).setItemName("ItemMummyEgg"); //The 4701 value is the only one that you may change (It is the Item ID)
-    public static final Item ItemEmbroniumIngot = new ItemEmbroniumIngot(31702).setItemName("ItemEmbroniumIngot");  //The 4702 value is the only one that you may change (It is the Item ID)        
-    public static final Item ItemEmbroniumDust = new ItemEmbroniumDust(31705).setItemName("ItemEmbroniumDust");
-    public static final Item ItemHumanEgg = new ItemHumanEgg(31719).setItemName("ItemHumanEgg");
-    public static final Item ItemVortexCrystal = new ItemVortexCrystal(31724).setItemName("ItemVortexCrystal");
+    public static final Item ItemMummyEgg = new ItemMummyEgg(31701).setTabToDisplayOn(CreativeTabs.tabMisc).setItemName("ItemMummyEgg"); //The 4701 value is the only one that you may change (It is the Item ID)
+    public static final Item ItemEmbroniumIngot = new ItemEmbroniumIngot(31702).setTabToDisplayOn(CreativeTabs.tabMaterials).setItemName("ItemEmbroniumIngot");  //The 4702 value is the only one that you may change (It is the Item ID)        
+    public static final Item ItemEmbroniumDust = new ItemEmbroniumDust(31705).setTabToDisplayOn(CreativeTabs.tabMaterials).setItemName("ItemEmbroniumDust");
+    public static final Item ItemHumanEgg = new ItemHumanEgg(31719).setTabToDisplayOn(CreativeTabs.tabMisc).setItemName("ItemHumanEgg");
+    public static final Item ItemVortexCrystal = new ItemVortexCrystal(31724).setTabToDisplayOn(CreativeTabs.tabMaterials).setItemName("ItemVortexCrystal");
     
     //Food
-    public static final Item ItemBandage = new ItemFood(31700, 8, 1F, false).setItemName("ItemBandage"); 
-    public static final Item Cheese = new ItemFood(31703, 4, 1F, false).setItemName("Cheese").setContainerItem(Item.bucketEmpty);
+    public static final Item ItemBandage = new ItemFood(31700, 8, 1F, false).setTabToDisplayOn(CreativeTabs.tabFood).setItemName("ItemBandage"); 
+    public static final Item Cheese = new ItemFood(31703, 4, 1F, false).setTabToDisplayOn(CreativeTabs.tabFood).setItemName("Cheese").setContainerItem(Item.bucketEmpty);
     
     //Armor
     public static final Item embroniumHelmet = new PlusItemArmor(31710,PlusArmorMaterial.EMBRONIUM, ModLoader.addArmor("embroniumarmor"), 0).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumarmoricon1.png")).setItemName("embroniumHelmet");
@@ -71,11 +72,11 @@ public class mod_MinecraftPlus extends BaseMod
     public static final Item ironManBoots = new PlusItemArmor (31723, PlusArmorMaterial.IRONMAN, ModLoader.addArmor("ironmanarmor"),3).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/ironmanarmoricon4.png")).setItemName("ironManBoots");  
     
     //Toolset
-    public static final Item embroniumPickaxe = (new PlusItemPickaxe (31714, PlusToolMaterial.EMBRONIUM)).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumpickaxe.png")).setItemName("embroniumPickaxe");
-    public static final Item embroniumSpade = (new PlusItemSpade (31715, PlusToolMaterial.EMBRONIUM)).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumshovel.png")).setItemName("embroniumSpade");
-    public static final Item embroniumSword = (new PlusItemSword (31716, PlusToolMaterial.EMBRONIUM)).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumsword.png")).setItemName("embroniumSword");
-    public static final Item embroniumAxe = (new PlusItemAxe (31717, PlusToolMaterial.EMBRONIUM)).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumaxe.png")).setItemName("embroniumAxe");
-    public static final Item embroniumHoe = (new PlusItemHoe (31718, PlusToolMaterial.EMBRONIUM)).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumhoe.png")).setItemName("embroniumHoe");
+    public static final Item embroniumPickaxe = (new PlusItemPickaxe (31714, PlusToolMaterial.EMBRONIUM)).setTabToDisplayOn(CreativeTabs.tabTools).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumpickaxe.png")).setItemName("embroniumPickaxe");
+    public static final Item embroniumSpade = (new PlusItemSpade (31715, PlusToolMaterial.EMBRONIUM)).setTabToDisplayOn(CreativeTabs.tabTools).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumshovel.png")).setItemName("embroniumSpade");
+    public static final Item embroniumSword = (new PlusItemSword (31716, PlusToolMaterial.EMBRONIUM)).setTabToDisplayOn(CreativeTabs.tabCombat).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumsword.png")).setItemName("embroniumSword");
+    public static final Item embroniumAxe = (new PlusItemAxe (31717, PlusToolMaterial.EMBRONIUM)).setTabToDisplayOn(CreativeTabs.tabTools).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumaxe.png")).setItemName("embroniumAxe");
+    public static final Item embroniumHoe = (new PlusItemHoe (31718, PlusToolMaterial.EMBRONIUM)).setTabToDisplayOn(CreativeTabs.tabTools).setIconIndex(ModLoader.addOverride("/gui/items.png", "/minecraftplus/embroniumhoe.png")).setItemName("embroniumHoe");
     
     //Textures
     public static int EmptyBottom = ModLoader.addOverride("/terrain.png", "/minecraftplus/emptybottom.png");
@@ -85,16 +86,8 @@ public class mod_MinecraftPlus extends BaseMod
     public static int BoosterBlock = ModLoader.addOverride("/terrain.png", "/minecraftplus/boosterblock.png");
     public static int Shield = ModLoader.addOverride("/terrain.png", "/minecraftplus/shield.png");
     
-    //Boolean
-    public boolean addBlocks;
-    
     public void load()
-    {
-        
-        //Creative GUI & Some other things
-        ModLoader.setInGUIHook(this, true, true);
-        ModLoader.setInGameHook(this, true, true);
-        
+    {        
         //Armor
         ModLoader.addName(embroniumHelmet, "Embronium Helmet");
         ModLoader.addName(embroniumChest, "Embronium Chestplate");
@@ -217,7 +210,7 @@ public class mod_MinecraftPlus extends BaseMod
         ModLoader.addRecipe(new ItemStack(ItemBandage, 2), new Object [] {"   ", "#  ", "#  ", Character.valueOf('#'), Item.silk});  //This is the recipe for bandages (Note: They can also be collected from Mummies.)
         
         //Mobs
-        ModLoader.registerEntityID (EntityHerobrine.class, "Herobrine", ModLoader.getUniqueEntityId());  //DO NOT CHANGE
+        /*ModLoader.registerEntityID (EntityHerobrine.class, "Herobrine", ModLoader.getUniqueEntityId());  //DO NOT CHANGE
         ModLoader.addSpawn (EntityHerobrine.class, 3, 1, 1, EnumCreatureType.monster);
         ModLoader.registerEntityID (EntityHumans.class, "Human", ModLoader.getUniqueEntityId());  //DO NOT CHANGE
         ModLoader.addSpawn (EntityHumans.class, 15, 5, 15, EnumCreatureType.creature);
@@ -226,19 +219,22 @@ public class mod_MinecraftPlus extends BaseMod
                 {  
             BiomeGenBase.desert,
             BiomeGenBase.desertHills
-                });
+                });*/
         
         //Smelting
-        ModLoader.addSmelting(BlockEmbroniumOre.blockID, new ItemStack(ItemEmbroniumIngot, 1));    
+        ModLoader.addSmelting(BlockEmbroniumOre.blockID, new ItemStack(ItemEmbroniumIngot, 1), 0);
+        
+        //Startup Message & Armor Special Effects
+        ModLoader.setInGameHook(this, true, true);
     }
 
     // This makes the shape of the mobs (DON'T CHANGE)
-    public void AddRenderer (Map map)
+    /*public void AddRenderer (Map map)
     {
         map.put(EntityMummy.class, new RenderBiped(new ModelBiped(), 0.5F));
         map.put(EntityHerobrine.class, new RenderBiped(new ModelBiped(), 0.5F));
         map.put(EntityHumans.class, new RenderBiped(new ModelBiped(), 0.5F));
-    }
+    }*/
     
     public void initialization(Minecraft minecraft, int i, int j, int k)
     {
@@ -324,7 +320,7 @@ public class mod_MinecraftPlus extends BaseMod
             minecraft.thePlayer.addChatMessage("");
             
             int counter = 0;
-            try {
+            /*try {
                 // Create a URL for the desired page
                 URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
 
@@ -358,6 +354,43 @@ public class mod_MinecraftPlus extends BaseMod
             	System.out.println("[MC+] Unable to check for updates.");
             } catch (IOException e) {
             	System.out.println("[MC+] Unable to check for updates.");
+            }*/
+            // For internal testing:
+            int counter2 = 0;
+              try {
+                // Create a URL for the desired page
+                URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE2.txt");
+
+                // Read all the text returned by the server
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                while ((modver3 = in.readLine()) != null) {
+                	
+                	if(modver3.equals("null") || modver3.equals("void") || modver3.equals("missingno") || modver3.equals("")){
+                		modver3 = modver;
+                		modver3.equals(modver);
+                	}
+                	
+                    System.out.println("Latest beta mod version found: Minecraft+ " + modver2 + ".");
+                    
+                    if(modver3.equals(modver)){
+                    	System.out.println("[MC+] Mod up to date!");
+                    }
+                    else{
+                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + modver2 + ") " + "is available!");
+                    minecraft.thePlayer.addChatMessage("(Just ask coolawesomeme!)");
+                    minecraft.thePlayer.addChatMessage("");
+                    System.out.println("An update of " + "Minecraft+ (Version " + modver3 + ") " + "is available!");
+                    System.out.println("(Ask coolawesomeme!)");
+                    }
+                    
+                    counter2++;
+                }
+                
+                in.close();
+            } catch (MalformedURLException e) {
+            	System.out.println("[MC+] Unable to check for updates.");
+            } catch (IOException e) {
+            	System.out.println("[MC+] Unable to check for updates.");
             }
             notSTARTUP = true;
             
@@ -366,11 +399,11 @@ public class mod_MinecraftPlus extends BaseMod
                 minecraft.thePlayer.addChatMessage("");
                 minecraft.thePlayer.dropItem(Item.cookie.shiftedIndex, 1);
             }
-            if(c == 3846){
+            /*if(c == 3846){
                 EntityLiving entityliving = (EntityLiving)EntityList.createEntityByName("Herobrine", minecraft.thePlayer.worldObj);
                 entityliving.setLocationAndAngles(i, j + 4, k, 0F, 0F);
                 minecraft.thePlayer.worldObj.spawnEntityInWorld(entityliving);
-            }
+            }*/
             
             if (calendar.get(2) + 1 == 4 && calendar.get(5) == 5)
             {
@@ -378,6 +411,11 @@ public class mod_MinecraftPlus extends BaseMod
                 minecraft.thePlayer.addChatMessage("Today is the day Minecraft+ was published on Minecraft Forums!");
                 minecraft.thePlayer.addChatMessage("CELEBRATION!!!!!!!!!!");
                 minecraft.thePlayer.addChatMessage("");
+                try
+                { 
+                Process p=Runtime.getRuntime().exec("cmd /c start http://bit.ly/MCPlus"); 
+                } 
+                catch(IOException e1) {System.out.println(e1);} 
             }
         }
     }
@@ -389,7 +427,7 @@ public class mod_MinecraftPlus extends BaseMod
         ItemStack chest = minecraft.thePlayer.inventory.armorInventory[2];
         ItemStack helm = minecraft.thePlayer.inventory.armorInventory[3];
         
-        if(minecraft.theWorld.worldInfo.getGameType() == 0){
+        System.out.println(minecraft.theWorld.worldInfo.getGameType());
         boolean flag1 = false;
         boolean flag2 = false;
         boolean flag3 = false;
@@ -425,54 +463,12 @@ public class mod_MinecraftPlus extends BaseMod
             minecraft.thePlayer.speedInAir = 0.02F;
         }
         }
-        }
-    
     
     public boolean onTickInGame(float f, Minecraft minecraft) 
     {
-        {
-        //Creative Inventory
-        if(minecraft.currentScreen == null)
-        {
-          addBlocks = false;    
-        }
-        }
-    
-        armorSpecial(minecraft);
-        
-        initialization(minecraft, 0, 0, 0);
-                
-        return true;
-    }
-    
-    
-    public boolean onTickInGUI(float f, Minecraft minecraft, GuiScreen screen)
-    {
-        if (screen instanceof GuiContainerCreative)
-        {
-            if (addBlocks == false)
-                    {
-                      Container container = ((GuiContainer)screen).inventorySlots;
-                      List list = ((ContainerCreative)container).itemList;
-                      list.add(new ItemStack(BlockEmbroniumOre));
-                      list.add(new ItemStack(BlockEmbroniumBlock));
-                      list.add(new ItemStack(EmbroniumTorch));
-                      list.add(new ItemStack(BlockBouncyBlock));
-                      list.add(new ItemStack(BlockHealBlock));
-                      list.add(new ItemStack(BlockDamageBlock));
-                      list.add(new ItemStack(BlockBoosterBlock));
-                      list.add(new ItemStack(BlockShield));
-                      list.add(new ItemStack(BlockForceField));
-                      list.add(new ItemStack(BlockCamper));
-                      list.add(new ItemStack(BlockCobbleGen));
-                      list.add(new ItemStack(BlockCrater));
-                      list.add(new ItemStack(BlockMiner));
-                      list.add(new ItemStack(BlockiBlock));
-                      list.add(new ItemStack(BlockHiddenBookshelf));
-                    }
-            addBlocks = true;
-            }
-        return true;
+       initialization(minecraft, 0, 0, 0);
+       armorSpecial(minecraft);
+       return true;
     }
     
   //Ore Generation
@@ -511,9 +507,8 @@ public class mod_MinecraftPlus extends BaseMod
     //Version Of Mod (For ModLoader Error Reports)
     public String getVersion()
       {
-              return "| For Minecraft Version: " + mcver + " |" +
-                      " Mod Version: Minecraft+ " + modver + " |" + 
-                      " bit.ly/MCPlus | ";
+              return "Version: " + modver + " | For Minecraft Version: " + mcver + " | " + 
+                      "http://bit.ly/MCPlus | ";
       }
     
 }
