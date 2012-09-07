@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 import java.util.logging.Level;
+import java.lang.String;
 
 
 import net.minecraft.client.Minecraft;
@@ -29,6 +30,8 @@ public class mod_MinecraftPlus extends BaseMod
     public String mcver = "1.3.2";
     public String modver2 = "missingno";
     public String modver3 = "missingno";
+    public String updateMessage = "missingno";
+    public String updateMessage2 = "missingno";
     
     // Blocks
     public static final Block BlockEmbroniumOre = new BlockEmbroniumOre(180,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockEmbroniumOre");
@@ -320,43 +323,51 @@ public class mod_MinecraftPlus extends BaseMod
             minecraft.thePlayer.addChatMessage("");
             
             int counter = 0;
-            /*try {
+            try {
                 // Create a URL for the desired page
                 URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
 
                 // Read all the text returned by the server
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-                while ((modver2 = in.readLine()) != null) {
-                	
-                	if(modver2.equals("null") || modver2.equals("void") || modver2.equals("missingno") || modver2.equals("")){
-                		modver2 = modver;
-                		modver2.equals(modver);
-                	}
-                	
-                    System.out.println("Latest mod version found: Minecraft+ " + modver2 + ".");
-                    
-                    if(modver2.equals(modver)){
-                    	System.out.println("[MC+] Mod up to date!");
-                    }
-                    else{
-                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + modver2 + ") " + "is available at:");
-                    minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
-                    minecraft.thePlayer.addChatMessage("");
-                    System.out.println("An update of " + "Minecraft+ (Version " + modver2 + ") " + "is available at:");
-                    System.out.println("http://bit.ly/MCPlus");
-                    }
-                    
-                    counter++;
+            while ((modver2 = in.readLine()) != null) {
+    	        // str is one line of text; readLine() strips the newline character(s)
+    	    	String[] temp;
+    	    	 
+    	    	  // delimiter
+    	    	  String delimiter = "-";
+    	    	  // given string will be split by the argument delimiter provided.
+    	    	  temp = modver2.split(delimiter);
+            	
+            	if(temp[0].equals("null") || temp[0].equals("void") || temp[0].equals("missingno") || temp[0].equals("")){
+            		temp[0] = modver;
+            		temp[0].equals(modver);
+            	}
+            	
+                System.out.println("Latest mod version found: Minecraft+ " + temp[0] + ".");
+                
+                if(temp[0].equals(modver)){
+                	System.out.println("[MC+] Mod up to date!");
+                }
+                else{
+                minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
+                minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
+                minecraft.thePlayer.addChatMessage(temp[1]);
+                minecraft.thePlayer.addChatMessage(temp[2]);
+                minecraft.thePlayer.addChatMessage("");
+                System.out.println("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
+                System.out.println("http://bit.ly/MCPlus");
                 }
                 
-                in.close();
-            } catch (MalformedURLException e) {
-            	System.out.println("[MC+] Unable to check for updates.");
-            } catch (IOException e) {
-            	System.out.println("[MC+] Unable to check for updates.");
-            }*/
+                counter++;
+            }
+            
+            in.close();
+        } catch (Exception e) {
+        	System.out.println("[MC+] Error: " + e);
+        }
+            
             // For internal testing:
-            int counter2 = 0;
+            /*int counter2 = 0;
               try {
                 // Create a URL for the desired page
                 URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE2.txt");
@@ -364,22 +375,31 @@ public class mod_MinecraftPlus extends BaseMod
                 // Read all the text returned by the server
                 BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
                 while ((modver3 = in.readLine()) != null) {
+        	        // str is one line of text; readLine() strips the newline character(s)
+        	    	String[] temp;
+        	    	 
+        	    	  // delimiter
+        	    	  String delimiter = "-";
+        	    	  // given string will be split by the argument delimiter provided.
+        	    	  temp = modver3.split(delimiter);
                 	
-                	if(modver3.equals("null") || modver3.equals("void") || modver3.equals("missingno") || modver3.equals("")){
-                		modver3 = modver;
-                		modver3.equals(modver);
+                	if(temp[0].equals("null") || temp[0].equals("void") || temp[0].equals("missingno") || temp[0].equals("")){
+                		temp[0] = modver;
+                		temp[0].equals(modver);
                 	}
                 	
-                    System.out.println("Latest beta mod version found: Minecraft+ " + modver2 + ".");
+                    System.out.println("Latest beta mod version found: Minecraft+ " + temp[0] + ".");
                     
-                    if(modver3.equals(modver)){
+                    if(temp[0].equals(modver)){
                     	System.out.println("[MC+] Mod up to date!");
                     }
                     else{
-                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + modver2 + ") " + "is available!");
+                    minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                     minecraft.thePlayer.addChatMessage("(Just ask coolawesomeme!)");
+                    minecraft.thePlayer.addChatMessage(temp[1]);
+                    minecraft.thePlayer.addChatMessage(temp[2]);
                     minecraft.thePlayer.addChatMessage("");
-                    System.out.println("An update of " + "Minecraft+ (Version " + modver3 + ") " + "is available!");
+                    System.out.println("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                     System.out.println("(Ask coolawesomeme!)");
                     }
                     
@@ -387,11 +407,9 @@ public class mod_MinecraftPlus extends BaseMod
                 }
                 
                 in.close();
-            } catch (MalformedURLException e) {
-            	System.out.println("[MC+] Unable to check for updates.");
-            } catch (IOException e) {
-            	System.out.println("[MC+] Unable to check for updates.");
-            }
+            } catch (Exception e) {
+            	System.out.println("[MC+] Error: " + e);
+            }*/
             notSTARTUP = true;
             
             if(c == 4501){
