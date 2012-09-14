@@ -26,7 +26,9 @@ public class mod_MinecraftPlus extends BaseMod
     
     public Minecraft minecraft;
     public boolean notSTARTUP = false;
-    public String modver = "r1b9";
+    public int modverrelease = 1;
+    public int modverbuild = 10;
+    public String modver = "r" + modverrelease + "b" + modverbuild;
     public String mcver = "1.3.2";
     public String modver2 = "missingno";
     public String modver3 = "missingno";
@@ -50,6 +52,7 @@ public class mod_MinecraftPlus extends BaseMod
     public static final Block BlockCrater = new BlockCrater(199,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockCrater");
     public static final Block BlockMiner = new BlockMiner(200,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockMiner");
     public static final Block BlockHiddenBookshelf = new BlockHiddenBookshelf(201,35).setHardness(1.5F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockHiddenBookshelf");
+    public static final Block BlockTrap = new BlockTrap(202,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("BlockTrap").setRequiresSelfNotify();
     
     
     //Items
@@ -121,8 +124,13 @@ public class mod_MinecraftPlus extends BaseMod
         ModLoader.addRecipe(new ItemStack (embroniumHoe, 1), (new Object[] {"XX ", " @ "," @ ", Character.valueOf('X'), mod_MinecraftPlus.ItemEmbroniumIngot, Character.valueOf('@'), Item.stick}));
         ModLoader.addRecipe(new ItemStack (embroniumSword, 1), (new Object[] {" X ", " X "," @ ", Character.valueOf('X'), mod_MinecraftPlus.ItemEmbroniumIngot, Character.valueOf('@'), Item.stick}));
         ModLoader.addRecipe(new ItemStack (embroniumSpade, 1), (new Object[] {" X ", " @ "," @ ", Character.valueOf('X'), mod_MinecraftPlus.ItemEmbroniumIngot, Character.valueOf('@'), Item.stick}));
+        //ModLoader.addShapelessRecipe(new ItemStack(embroniumPickaxe), new Object[] { /*ingredients*/ Block.dirt});
+        //^^ For testing purposes
         
         //Blocks
+        ModLoader.addName(BlockTrap, "Trap Block");
+        ModLoader.registerBlock(BlockTrap);
+        ModLoader.addRecipe(new ItemStack(BlockHiddenBookshelf, 1), new Object [] {"$@$", "$#$", "$$$", Character.valueOf('#'), Item.redstone, Character.valueOf('@'), Item.flintAndSteel, Character.valueOf('$'), Block.stone});
         ModLoader.addName(BlockHiddenBookshelf, "Secret Bookshelf");
         ModLoader.registerBlock(BlockHiddenBookshelf);
         ModLoader.addRecipe(new ItemStack(BlockHiddenBookshelf, 1), new Object [] {"$$$", "#@#", "$$$", Character.valueOf('#'), Item.book, Character.valueOf('@'), Item.redstone, Character.valueOf('$'), Block.planks});

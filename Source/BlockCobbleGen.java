@@ -5,6 +5,9 @@ import java.util.Random;
 
 
 public class BlockCobbleGen extends Block { 
+	
+	private boolean hasBeenActivated = false;
+	
     protected BlockCobbleGen(int i, int j) {
         super(i, j, Material.wood);
     }    
@@ -34,34 +37,42 @@ public class BlockCobbleGen extends Block {
             {
              //Whatever you put here is what happens when it's powered
              blockCreate(world, i, j, k);
+             hasBeenActivated = true;
              ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator Activating!");
             }
     }
     
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
+    	if(hasBeenActivated == true){
         blockRemove(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator De-activating!");
+    	}
     }
     
      public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
         {
+    	 if(hasBeenActivated = true){
          blockRemove(world, i, j, k);
          ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator De-activating!");
+    	 }
         }
                     
     public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
+    	if(hasBeenActivated == true){
         blockRemove(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator De-activating!");
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
+    	}
     }
     
-    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
+    public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int par6, float par7, float par8, float par9)
     {
         blockCreate(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator Activating!");
-        return blockConstructorCalled;
+        hasBeenActivated = true;
+        return true;
     }
     
     public void blockRemove(World world, int x, int y, int z)

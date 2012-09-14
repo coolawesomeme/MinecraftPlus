@@ -2,7 +2,7 @@ package net.minecraft.src;
  
 public enum PlusToolMaterial
 {
-    EMBRONIUM(0, 1400, 7F, 3, 10);
+    EMBRONIUM(3, 1400, 7F, 3, 10);
 
     /**
      * The level of material this tool can harvest (3 = DIAMOND, 2 = IRON, 1 = STONE, 0 = IRON/GOLD)
@@ -27,11 +27,11 @@ public enum PlusToolMaterial
 
     private PlusToolMaterial(int par3, int par4, float par5, int par6, int par7)
     {
-        harvestLevel = par3;
-        maxUses = par4;
-        efficiencyOnProperMaterial = par5;
-        damageVsEntity = par6;
-        enchantability = par7;
+        this.harvestLevel = par3;
+        this.maxUses = par4;
+        this.efficiencyOnProperMaterial = par5;
+        this.damageVsEntity = par6;
+        this.enchantability = par7;
     }
 
     /**
@@ -39,7 +39,7 @@ public enum PlusToolMaterial
      */
     public int getMaxUses()
     {
-        return maxUses;
+        return this.maxUses;
     }
 
     /**
@@ -47,7 +47,7 @@ public enum PlusToolMaterial
      */
     public float getEfficiencyOnProperMaterial()
     {
-        return efficiencyOnProperMaterial;
+        return this.efficiencyOnProperMaterial;
     }
 
     /**
@@ -55,7 +55,7 @@ public enum PlusToolMaterial
      */
     public int getDamageVsEntity()
     {
-        return damageVsEntity;
+        return this.damageVsEntity;
     }
 
     /**
@@ -63,7 +63,7 @@ public enum PlusToolMaterial
      */
     public int getHarvestLevel()
     {
-        return harvestLevel;
+        return this.harvestLevel;
     }
 
     /**
@@ -71,6 +71,6 @@ public enum PlusToolMaterial
      */
     public int getEnchantability()
     {
-        return enchantability;
+        return this.enchantability;
     }
 }

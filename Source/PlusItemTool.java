@@ -1,9 +1,10 @@
 package net.minecraft.src;
- 
+
 public class PlusItemTool extends Item
 {
-    private Block blocksEffectiveAgainst[];
-    protected float efficiencyOnProperMaterial;
+    /** Array of blocks the tool has extra effect against. */
+    private Block[] blocksEffectiveAgainst;
+    protected float efficiencyOnProperMaterial = 4.0F;
 
     /** Damage versus entities. */
     private int damageVsEntity;
@@ -11,16 +12,16 @@ public class PlusItemTool extends Item
     /** The material this tool is made from. */
     protected PlusToolMaterial toolMaterial;
 
-    protected PlusItemTool(int par1, int par2, PlusToolMaterial par3PlusToolMaterial, Block par4ArrayOfBlock[])
+    protected PlusItemTool(int par1, int par2, PlusToolMaterial par3PlusToolMaterial, Block[] par4ArrayOfBlock)
     {
         super(par1);
-        efficiencyOnProperMaterial = 4F;
-        toolMaterial = par3PlusToolMaterial;
-        blocksEffectiveAgainst = par4ArrayOfBlock;
-        maxStackSize = 1;
-        setMaxDamage(par3PlusToolMaterial.getMaxUses());
-        efficiencyOnProperMaterial = par3PlusToolMaterial.getEfficiencyOnProperMaterial();
-        damageVsEntity = par2 + par3PlusToolMaterial.getDamageVsEntity();
+        this.toolMaterial = par3PlusToolMaterial;
+        this.blocksEffectiveAgainst = par4ArrayOfBlock;
+        this.maxStackSize = 1;
+        this.setMaxDamage(par3PlusToolMaterial.getMaxUses());
+        this.efficiencyOnProperMaterial = par3PlusToolMaterial.getEfficiencyOnProperMaterial();
+        this.damageVsEntity = par2 + par3PlusToolMaterial.getDamageVsEntity();
+        this.setTabToDisplayOn(CreativeTabs.tabTools);
     }
 
     /**
@@ -29,11 +30,16 @@ public class PlusItemTool extends Item
      */
     public float getStrVsBlock(ItemStack par1ItemStack, Block par2Block)
     {
-        for (int i = 0; i < blocksEffectiveAgainst.length; i++)
+        Block[] var3 = this.blocksEffectiveAgainst;
+        int var4 = var3.length;
+
+        for (int var5 = 0; var5 < var4; ++var5)
         {
-            if (blocksEffectiveAgainst[i] == par2Block)
+            Block var6 = var3[var5];
+
+            if (var6 == par2Block)
             {
-                return efficiencyOnProperMaterial;
+                return this.efficiencyOnProperMaterial;
             }
         }
 
@@ -50,9 +56,13 @@ public class PlusItemTool extends Item
         return true;
     }
 
-    public boolean onBlockDestroyed(ItemStack par1ItemStack, int par2, int par3, int par4, int par5, EntityLiving par6EntityLiving)
+    public boolean func_77660_a(ItemStack par1ItemStack, World par2World, int par3, int par4, int par5, int par6, EntityLiving par7EntityLiving)
     {
-        par1ItemStack.damageItem(1, par6EntityLiving);
+        if ((double)Block.blocksList[par3].getBlockHardness(par2World, par4, par5, par6) != 0.0D)
+        {
+            par1ItemStack.damageItem(1, par7EntityLiving);
+        }
+
         return true;
     }
 
@@ -61,7 +71,7 @@ public class PlusItemTool extends Item
      */
     public int getDamageVsEntity(Entity par1Entity)
     {
-        return damageVsEntity;
+        return this.damageVsEntity;
     }
 
     /**
@@ -77,6 +87,11 @@ public class PlusItemTool extends Item
      */
     public int getItemEnchantability()
     {
-        return toolMaterial.getEnchantability();
+        return this.toolMaterial.getEnchantability();
+    }
+
+    public String func_77861_e()
+    {
+        return this.toolMaterial.toString();
     }
 }
