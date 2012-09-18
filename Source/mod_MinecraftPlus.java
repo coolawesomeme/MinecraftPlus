@@ -132,7 +132,7 @@ public class mod_MinecraftPlus extends BaseMod
         //Blocks
         ModLoader.addName(BlockTrap, "Trap Block");
         ModLoader.registerBlock(BlockTrap);
-        ModLoader.addRecipe(new ItemStack(BlockHiddenBookshelf, 1), new Object [] {"$@$", "$#$", "$$$", Character.valueOf('#'), Item.redstone, Character.valueOf('@'), Item.flintAndSteel, Character.valueOf('$'), Block.stone});
+        ModLoader.addRecipe(new ItemStack(BlockTrap, 1), new Object [] {"$@$", "$#$", "$$$", Character.valueOf('#'), Item.redstone, Character.valueOf('@'), Item.flintAndSteel, Character.valueOf('$'), Block.stone});
         ModLoader.addName(BlockHiddenBookshelf, "Secret Bookshelf");
         ModLoader.registerBlock(BlockHiddenBookshelf);
         ModLoader.addRecipe(new ItemStack(BlockHiddenBookshelf, 1), new Object [] {"$$$", "#@#", "$$$", Character.valueOf('#'), Item.book, Character.valueOf('@'), Item.redstone, Character.valueOf('$'), Block.planks});
@@ -490,8 +490,11 @@ public class mod_MinecraftPlus extends BaseMod
             minecraft.thePlayer.capabilities.allowFlying = true;
         }
         else{
+        	EnumGameType getGameType = minecraft.theWorld.worldInfo.getGameType();
+        	if(getGameType != EnumGameType.CREATIVE){
             minecraft.thePlayer.capabilities.allowFlying = false;
             minecraft.thePlayer.isImmuneToFire = false;
+        	}
             minecraft.thePlayer.speedOnGround = 0.1F;
             minecraft.thePlayer.speedInAir = 0.02F;
             isPlayerWearingSpecialArmor = false;

@@ -44,6 +44,7 @@ public class BlockCamper extends Block {
     	if(hasBeenActivated == true){
         blockRemove(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent De-activating!");
+        hasBeenActivated = false;
     	}
     }
 
@@ -52,6 +53,7 @@ public class BlockCamper extends Block {
     	 if(hasBeenActivated == true){
          blockRemove(world, i, j, k);
          ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent De-activating!");
+         hasBeenActivated = false;
     	 }
         }
 
@@ -61,6 +63,7 @@ public class BlockCamper extends Block {
         blockRemove(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent De-activating!");
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
+        hasBeenActivated = false;
     	}
     }
 
@@ -68,6 +71,7 @@ public class BlockCamper extends Block {
     {
         blockCreate(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent Activating!");
+        hasBeenActivated = true;
         return true;
     }
 
