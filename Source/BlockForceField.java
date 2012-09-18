@@ -1,17 +1,14 @@
 package net.minecraft.src;
- 
 
 import java.util.Random;
 
-
 public class BlockForceField extends Block {
-	
 	private boolean hasBeenActivated = false;
-	
+
     protected BlockForceField(int i, int j) {
         super(i, j, Material.wood);
-    }    
-    
+    }
+
     public int tickRate()
     {
     //How often it refreshes.  If you return 20, that's one second.
@@ -41,7 +38,7 @@ public class BlockForceField extends Block {
              ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield Activating!");
             }
     }
-    
+
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
         if(hasBeenActivated == true){
@@ -49,7 +46,7 @@ public class BlockForceField extends Block {
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
         }
     }
-    
+
      public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
         {
     	 if(hasBeenActivated == true){
@@ -57,7 +54,7 @@ public class BlockForceField extends Block {
          ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield De-activating!");
     	 }
         }
-                    
+
     public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
     	if(hasBeenActivated == true){
@@ -66,16 +63,16 @@ public class BlockForceField extends Block {
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
     	}
     }
-    
+
     public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
         blockCreate(par1World, par2, par3, par4);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Forcefield Activating!");
         hasBeenActivated = true;
-        
+
         return true;
     }
-    
+
     public void blockRemove(World world, int x, int y, int z)
     {
         //4 points
@@ -152,7 +149,7 @@ public class BlockForceField extends Block {
                 world.setBlockWithNotify(x + 4, y, z - 8, 0);
                 world.setBlockWithNotify(x + 3, y, z - 8, 0);
                 world.setBlockWithNotify(x + 2, y, z - 8, 0);
-                
+
                 //Second Layer
                         //4 points
                                 world.setBlockWithNotify(x + 8, y + 1, z, 0);
@@ -229,7 +226,7 @@ public class BlockForceField extends Block {
                                 world.setBlockWithNotify(x + 3, y + 1, z - 8, 0);
                                 world.setBlockWithNotify(x + 2, y + 1, z - 8, 0);
             }
-    
+
     public void blockCreate(World world, int x, int y, int z)
     {
         //4 points
@@ -306,7 +303,7 @@ public class BlockForceField extends Block {
         world.setBlockWithNotify(x + 4, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
         world.setBlockWithNotify(x + 3, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
         world.setBlockWithNotify(x + 2, y, z - 8, mod_MinecraftPlus.BlockShield.blockID);
-        
+
         //Second Layer
                 //4 points
                         world.setBlockWithNotify(x + 8, y + 1, z, mod_MinecraftPlus.BlockShield.blockID);
@@ -384,8 +381,6 @@ public class BlockForceField extends Block {
                         world.setBlockWithNotify(x + 2, y + 1, z - 8, mod_MinecraftPlus.BlockShield.blockID);
             }
 
-            
-    
     public int idDropped(int i, Random random) {
         return mod_MinecraftPlus.BlockForceField.blockID;
     }

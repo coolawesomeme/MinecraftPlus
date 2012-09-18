@@ -1,17 +1,14 @@
 package net.minecraft.src;
- 
 
 import java.util.Random;
 
-
-public class BlockCamper extends Block { 
-	
+public class BlockCamper extends Block {
 	private boolean hasBeenActivated = false;
-	
+
     protected BlockCamper(int i, int j) {
         super(i, j, Material.wood);
-    }    
-    
+    }
+
     public int tickRate()
     {
     //How often it refreshes.  If you return 20, that's one second.
@@ -41,7 +38,7 @@ public class BlockCamper extends Block {
              ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent Activating!");
             }
     }
-    
+
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
     	if(hasBeenActivated == true){
@@ -49,7 +46,7 @@ public class BlockCamper extends Block {
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent De-activating!");
     	}
     }
-    
+
      public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
         {
     	 if(hasBeenActivated == true){
@@ -57,7 +54,7 @@ public class BlockCamper extends Block {
          ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent De-activating!");
     	 }
         }
-                    
+
     public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
     	if(hasBeenActivated == true){
@@ -66,14 +63,14 @@ public class BlockCamper extends Block {
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
     	}
     }
-    
+
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int par6, float par7, float par8, float par9)
     {
         blockCreate(world, i, j, k);
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Tent Activating!");
         return true;
     }
-    
+
     public void blockRemove(World world, int x, int y, int z)
     {
         //Wall - Level 1
@@ -196,7 +193,7 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x + 1, y + 3, z - 1, 0);
         world.setBlockWithNotify(x - 1, y + 3, z - 1, 0);
             }
-    
+
     public void blockCreate(World world, int x, int y, int z)
     {
         //Wall - Level 1
@@ -215,7 +212,7 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x + 1, y + 1, z - 2, Block.planks.blockID);
         world.setBlockWithNotify(x - 1, y + 1, z - 2, Block.planks.blockID);
         world.setBlockWithNotify(x, y + 1, z - 2, Block.thinGlass.blockID);
-        
+
         //Wall - Level 2
         world.setBlockWithNotify(x + 2, y + 2, z, Block.thinGlass.blockID);
         world.setBlockWithNotify(x - 2, y + 2, z, Block.thinGlass.blockID);
@@ -232,7 +229,7 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x + 1, y + 2, z - 2, Block.thinGlass.blockID);
         world.setBlockWithNotify(x - 1, y + 2, z - 2, Block.thinGlass.blockID);
         world.setBlockWithNotify(x, y + 2, z - 2, Block.thinGlass.blockID);
-        
+
         //Wall - Level 3
         world.setBlockWithNotify(x + 2, y + 3, z, Block.planks.blockID);
         world.setBlockWithNotify(x - 2, y + 3, z, Block.planks.blockID);
@@ -250,7 +247,7 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x - 1, y + 3, z - 2, Block.planks.blockID);
         world.setBlockWithNotify(x, y + 3, z + 2, Block.planks.blockID);
         world.setBlockWithNotify(x, y + 3, z - 2, Block.thinGlass.blockID);
-        
+
         //Roof
         world.setBlockAndMetadataWithNotify(x + 2, y + 4, z, Block.wood.blockID, 0);
         world.setBlockAndMetadataWithNotify(x - 2, y + 4, z, Block.wood.blockID, 0);
@@ -277,7 +274,7 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x - 1, y + 4, z + 1, Block.glass.blockID);
         world.setBlockWithNotify(x + 1, y + 4, z - 1, Block.glass.blockID);
         world.setBlockWithNotify(x - 1, y + 4, z - 1, Block.glass.blockID);
-        
+
         //Floor
         world.setBlockWithNotify(x + 1, y, z - 1, Block.workbench.blockID);
         world.setBlockAndMetadataWithNotify(x - 1, y, z - 1, Block.stoneOvenIdle.blockID, 2);
@@ -304,9 +301,9 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x + 1, y, z - 2, Block.planks.blockID);
         world.setBlockWithNotify(x - 1, y, z - 2, Block.planks.blockID);
         world.setBlockWithNotify(x + 1, y, z + 2, Block.planks.blockID);
-        
+
         //Other Blocks
-        
+
         world.setBlockAndMetadataWithNotify(x, y + 2, z + 2, Block.doorWood.blockID, 15);
         world.setBlockAndMetadataWithNotify(x, y + 1, z + 2, Block.doorWood.blockID, 3);
         world.setBlockWithNotify(x, y, z + 3, Block.planks.blockID);
@@ -320,8 +317,6 @@ public class BlockCamper extends Block {
         world.setBlockWithNotify(x - 1, y + 3, z - 1, Block.torchWood.blockID);
             }
 
-            
-    
     public int idDropped(int i, Random random) {
         return mod_MinecraftPlus.BlockCamper.blockID;
     }

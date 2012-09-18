@@ -1,18 +1,15 @@
 package net.minecraft.src;
- 
+
 import java.util.Random;
 
 public class BlockBouncyBlock extends Block
 {
-
 protected BlockBouncyBlock(int i, int j)
 {
 super(i, j, Material.wood);
                 setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);
                 setLightOpacity(0);
 }
-
-
 
         public int idDropped(int i, Random random, int j)
         {
@@ -52,7 +49,7 @@ super(i, j, Material.wood);
                     {
                             entity.motionY += 2.0;
                     }
-        
+
         public int getBlockTextureFromSideAndMetadata(int i, int j)
         {
                 return getBlockTextureFromSide(i);
@@ -73,7 +70,6 @@ super(i, j, Material.wood);
                         return mod_MinecraftPlus.BouncySides;
                 }
         }
-        
 
         /**
          * Returns the block texture based on the side being looked at.  Args: side
@@ -111,10 +107,8 @@ super(i, j, Material.wood);
             return false;
         }
 
-        
         public int getMobilityFlag()
         {
             return 1;
-        }        
-        
+        }
 }

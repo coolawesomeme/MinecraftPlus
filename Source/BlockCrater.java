@@ -1,18 +1,15 @@
 package net.minecraft.src;
- 
 
 import java.util.Random;
 
-
-public class BlockCrater extends Block { 
-    
+public class BlockCrater extends Block {
     public int fuse;
-    
+
     protected BlockCrater(int i, int j) {
         super(i, j, Material.tnt);
         fuse = 80;
-    }    
-    
+    }
+
     public int tickRate()
     {
     //How often it refreshes.  If you return 20, that's one second.
@@ -41,37 +38,36 @@ public class BlockCrater extends Block {
              fuse = 80;
             }
     }
-    
+
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
         //
     }
-    
+
      public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
         {
-
         }
-     
+
     public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
         explode(world, i, j, k);
     }
-    
-    public boolean blockActivated(World world, int i, int j, int k, EntityPlayer entityplayer)
+
+    public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int par6, float par7, float par8, float par9)
     {
         explode(world, i, j, k);
         fuse = 80;
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Explosion Activating!");
         return blockConstructorCalled;
     }
-    
+
     public void explode(World world, int x, int y, int z)
     {
         if(fuse == 80){
         world.createExplosion(null, x, y, z, 10);
                     }
     }
-    
+
     /**
      * (abstract) Protected helper method to write subclass entity data to NBT.
      */
@@ -87,9 +83,8 @@ public class BlockCrater extends Block {
     {
         fuse = par1NBTTagCompound.getByte("Fuse");
     }
-    
+
     public int idDropped(int i, Random random) {
         return mod_MinecraftPlus.BlockCrater.blockID;
     }
-
 }

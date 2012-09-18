@@ -27,13 +27,15 @@ public class mod_MinecraftPlus extends BaseMod
     public Minecraft minecraft;
     public boolean notSTARTUP = false;
     public int modverrelease = 1;
-    public int modverbuild = 10;
+    public int modverbuild = 11;
     public String modver = "r" + modverrelease + "b" + modverbuild;
     public String mcver = "1.3.2";
     public String modver2 = "missingno";
     public String modver3 = "missingno";
     public String updateMessage = "missingno";
     public String updateMessage2 = "missingno";
+    private boolean isMCPlusLoaded = false;
+    private boolean isPlayerWearingSpecialArmor = true;
     
     // Blocks
     public static final Block BlockEmbroniumOre = new BlockEmbroniumOre(180,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("BlockEmbroniumOre");
@@ -237,6 +239,8 @@ public class mod_MinecraftPlus extends BaseMod
         
         //Startup Message & Armor Special Effects
         ModLoader.setInGameHook(this, true, true);
+        
+        isMCPlusLoaded = true;
     }
 
     // This makes the shape of the mobs (DON'T CHANGE)
@@ -313,7 +317,7 @@ public class mod_MinecraftPlus extends BaseMod
         if(notSTARTUP == false){
             
             minecraft.thePlayer.addChatMessage("Minecraft+ " + modver + " \u00A72enabled" + "\u00A7f!");
-            int s = randomGenerator.nextInt(4);
+            int s = randomGenerator.nextInt(5);
             if(s == 1){
             minecraft.thePlayer.addChatMessage("Hello " + username + "!");
             }
@@ -324,6 +328,9 @@ public class mod_MinecraftPlus extends BaseMod
             minecraft.thePlayer.addChatMessage("Hi " + username + "!");
             }
             if(s == 4){
+            minecraft.thePlayer.addChatMessage("Welcome " + username + "!");
+            }
+            if(s == 5){
             minecraft.thePlayer.addChatMessage("Welcome " + username + "!");
             }
             
@@ -358,7 +365,7 @@ public class mod_MinecraftPlus extends BaseMod
                 }
                 else{
                 minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
-                minecraft.thePlayer.addChatMessage("http://bit.ly/MCPlus");
+                minecraft.thePlayer.addChatMessage("\u00A7bhttp://bit.ly/MCPlus" + "\u00A7f");
                 minecraft.thePlayer.addChatMessage(temp[1]);
                 minecraft.thePlayer.addChatMessage(temp[2]);
                 minecraft.thePlayer.addChatMessage("");
@@ -403,7 +410,7 @@ public class mod_MinecraftPlus extends BaseMod
                     }
                     else{
                     minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
-                    minecraft.thePlayer.addChatMessage("(Just ask coolawesomeme!)");
+                    minecraft.thePlayer.addChatMessage("(\u00A7bJust ask coolawesomeme\u00A7f!)");
                     minecraft.thePlayer.addChatMessage(temp[1]);
                     minecraft.thePlayer.addChatMessage(temp[2]);
                     minecraft.thePlayer.addChatMessage("");
@@ -487,6 +494,7 @@ public class mod_MinecraftPlus extends BaseMod
             minecraft.thePlayer.isImmuneToFire = false;
             minecraft.thePlayer.speedOnGround = 0.1F;
             minecraft.thePlayer.speedInAir = 0.02F;
+            isPlayerWearingSpecialArmor = false;
         }
         }
     
@@ -494,10 +502,15 @@ public class mod_MinecraftPlus extends BaseMod
     {
        initialization(minecraft, 0, 0, 0);
        armorSpecial(minecraft);
+       if(!notSTARTUP){
+       onStartup(minecraft);
+       }
        return true;
     }
     
-  //Ore Generation
+  public void onStartup(Minecraft minecraft2) {}
+
+//Ore Generation
     public void generateSurface(World world, Random rand, int chunkX, int chunkZ)
     {
             for(int i = 0; i < 18; i++)
@@ -509,7 +522,7 @@ public class mod_MinecraftPlus extends BaseMod
             }
             
             //Still being worked on.
-            int number = rand.nextInt(100);
+            int number = rand.nextInt(200);
             if(number == 10){
                     int randPosX = chunkX + rand.nextInt(15);
                     int randPosY = rand.nextInt(128);
@@ -528,6 +541,87 @@ public class mod_MinecraftPlus extends BaseMod
           return 400;
 
       return 0;
+    }
+    
+    public boolean isMinecraftPlusLoaded(){
+    	return isMCPlusLoaded;
+    }
+    
+    public boolean getIsPlayerWearingExtraordinaryArmor(){
+    	return isPlayerWearingSpecialArmor;
+    }
+    
+    public void setIsPlayerWearingExtraordinaryArmor(boolean yeserno){
+    	isPlayerWearingSpecialArmor = yeserno;
+    }
+    
+    public boolean isCoolawesomemeAwesome(){
+    	return true;
+    }
+    
+    public boolean isStartup(){
+    	return !notSTARTUP;
+    }
+    
+    public String getMonthAndDate(){
+    	Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        int month2 = calendar.get(2) + 1;
+        int date = calendar.get(5);
+        String month = "missingno";
+        String suffix = "missingno";
+        
+        if(date == 1 || date == 21 || date == 31){
+            suffix = "st";
+        }
+        if(date == 2 || date == 22){
+            suffix = "nd";
+        }
+        if(date == 3 || date == 23){
+            suffix = "rd";
+        }
+        if(date >= 4 && date <= 20 || date >= 24 && date <= 30){
+            suffix = "th";
+        }
+        
+        if(month2 == 1){
+            month = "Jan.";
+        }
+        if(month2 == 2){
+            month = "Feb.";
+        }
+        if(month2 == 3){
+            month = "Mar.";
+        }
+        if(month2 == 4){
+            month = "Apr.";
+        }
+        if(month2 == 5){
+            month = "May.";
+        }
+        if(month2 == 6){
+            month = "Jun.";
+        }
+        if(month2 == 7){
+            month = "Jul.";
+        }
+        if(month2 == 8){
+            month = "Aug.";
+        }
+        if(month2 == 9){
+            month = "Sep.";
+        }
+        if(month2 == 10){
+            month = "Oct.";
+        }
+        if(month2 == 11){
+            month = "Nov.";
+        }
+        if(month2 == 12){
+            month = "Dec.";
+        }
+    	
+		return month + " " + date + suffix;
     }
     
     //Version Of Mod (For ModLoader Error Reports)

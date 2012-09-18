@@ -1,17 +1,16 @@
 package net.minecraft.src;
- 
 
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 
-public class BlockCobbleGen extends Block { 
-	
+public class BlockCobbleGen extends Block {
 	private boolean hasBeenActivated = false;
-	
+
     protected BlockCobbleGen(int i, int j) {
         super(i, j, Material.wood);
-    }    
-    
+    }
+
     public int tickRate()
     {
     //How often it refreshes.  If you return 20, that's one second.
@@ -41,7 +40,7 @@ public class BlockCobbleGen extends Block {
              ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator Activating!");
             }
     }
-    
+
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
     	if(hasBeenActivated == true){
@@ -49,7 +48,7 @@ public class BlockCobbleGen extends Block {
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator De-activating!");
     	}
     }
-    
+
      public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
         {
     	 if(hasBeenActivated = true){
@@ -57,7 +56,7 @@ public class BlockCobbleGen extends Block {
          ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Cobblestone Generator De-activating!");
     	 }
         }
-                    
+
     public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
     	if(hasBeenActivated == true){
@@ -66,7 +65,7 @@ public class BlockCobbleGen extends Block {
         ModLoader.getMinecraftInstance().thePlayer.addChatMessage("\u00a76(Cause: Explosion)");
     	}
     }
-    
+
     public boolean onBlockActivated(World world, int i, int j, int k, EntityPlayer entityplayer, int par6, float par7, float par8, float par9)
     {
         blockCreate(world, i, j, k);
@@ -74,7 +73,7 @@ public class BlockCobbleGen extends Block {
         hasBeenActivated = true;
         return true;
     }
-    
+
     public void blockRemove(World world, int x, int y, int z)
     {
         //Generator
@@ -99,7 +98,7 @@ public class BlockCobbleGen extends Block {
         world.setBlockWithNotify(x + 1, y, z + 1, 0);
         world.setBlockWithNotify(x - 1, y, z + 1, 0);
         world.setBlockWithNotify(x, y, z + 1, 0);
-        
+
         //Wall Level 2
         world.setBlockWithNotify(x, y - 1, z + 6, 0);
         world.setBlockWithNotify(x + 1, y - 1, z + 6, 0);
@@ -122,7 +121,7 @@ public class BlockCobbleGen extends Block {
         world.setBlockWithNotify(x, y - 1, z + 5, 0);
         world.setBlockWithNotify(x, y - 2, z + 3, 0);
             }
-    
+
     public void blockCreate(World world, int x, int y, int z)
     {
         //Generator
@@ -131,7 +130,7 @@ public class BlockCobbleGen extends Block {
         world.setBlockWithNotify(x, y, z + 3, 0);
         world.setBlockWithNotify(x, y, z + 5, Block.lavaStill.blockID);
         world.setBlockWithNotify(x, y, z + 4, Block.cobblestone.blockID);
-        
+
         //Wall
         world.setBlockWithNotify(x, y, z + 6, Block.stone.blockID);
         world.setBlockWithNotify(x + 1, y, z + 6, Block.stone.blockID);
@@ -147,7 +146,7 @@ public class BlockCobbleGen extends Block {
         world.setBlockWithNotify(x + 1, y, z + 1, Block.stone.blockID);
         world.setBlockWithNotify(x - 1, y, z + 1, Block.stone.blockID);
         world.setBlockWithNotify(x, y, z + 1, Block.stone.blockID);
-        
+
         //Wall Level 2
         world.setBlockWithNotify(x, y - 1, z + 6, Block.stone.blockID);
         world.setBlockWithNotify(x + 1, y - 1, z + 6, Block.stone.blockID);
@@ -171,8 +170,6 @@ public class BlockCobbleGen extends Block {
         world.setBlockWithNotify(x, y - 2, z + 3, Block.stone.blockID);
             }
 
-            
-    
     public int idDropped(int i, Random random) {
         return mod_MinecraftPlus.BlockCobbleGen.blockID;
     }
