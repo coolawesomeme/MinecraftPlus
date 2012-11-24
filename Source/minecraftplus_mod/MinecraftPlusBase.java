@@ -56,9 +56,12 @@ import net.minecraftplus_mod.CommonProxy;
 //This is an Annotation interface that establishes what sides of the mod are required to run it. clientSideRequired should always be true, and serverSideRequired should USUALLY be false
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 //This is an Annotation interface that establishes the ModID, the name of the Mod, and the Version of the mod. 
-@Mod(modid = "MinecraftPlus", name = "Minecraft+", version = "r2b3")
+@Mod(modid = "MinecraftPlus", name = "Minecraft+", version = MinecraftPlusBase.VERSION)
 public class MinecraftPlusBase 
 {	
+	/** Version of the mod for @Mod annotation. Use if you wish, otherwise use modver.*/
+	protected static final String VERSION = "r" + "2" + "b" + "3";
+	
 	//This is an Annotation interface which establishes the location of the Client and Server Proxy's. These are needed for such things as preloading texture files, etc
 	@SidedProxy(clientSide = "net.minecraftplus_mod.ClientProxy", serverSide = "net.minecraftplus_mod.CommonProxy")
 	public static CommonProxy proxy;
@@ -67,18 +70,20 @@ public class MinecraftPlusBase
 	//Establishes an Instance of your mod, simple enough
 	@Instance("MinecraftPlus")
 	public static MinecraftPlusBase instance = new MinecraftPlusBase();
-	
-	/** Mod release version. +1 every public release. */
-	public static int modverrelease = 2;
-	
-	/** Mod build version. +1 every compile. */
-    public static int modverbuild = 3;
     
     /** Version Codename. Changed every release.*/
     public static String codename = "Caramel";
     
+    /** Mod release version. +1 every public release. */
+	public static String modverrelease = VERSION.substring(2, 2);
+	
+	private static int verlength = VERSION.length();
+	
+	/** Mod build version. +1 every compile. */
+    public static String modverbuild = VERSION.substring(4, verlength);
+    
     /** Full mod version string. */
-    public static String modver = "r" + modverrelease + "b" + modverbuild;
+    public static String modver = VERSION;
     
     /** Full mod version string + codename. */
     public static String codever = modver + " \"" + codename + "\"";
