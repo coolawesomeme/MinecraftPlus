@@ -1,6 +1,5 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityList;
 import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
@@ -8,6 +7,7 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.World;
 
+@Deprecated
 public class ItemHumanEgg extends Item
 {
 	public String getTextureFile()

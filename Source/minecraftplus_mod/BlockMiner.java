@@ -2,7 +2,6 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
@@ -11,7 +10,6 @@ import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.World;
 
 public class BlockMiner extends BlockNormal {
-	public Minecraft minecraft;
     public int fuse;
 
     protected BlockMiner(int i, int j) {

@@ -2,7 +2,6 @@ package net.minecraftplus_mod;
 
 import java.util.EnumSet;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.RConConsoleSource;
@@ -40,9 +39,8 @@ public class ServerTickHandler implements ITickHandler
     	//Example of using onTick methods such as is used in ModLoader's implementation
     	        if (type.equals(EnumSet.of(TickType.SERVER)))
     	        {
-    	        	Minecraft mc = Minecraft.getMinecraft();
     	        	if(!notServerSTARTUP){
-    	            onTickInServer(mc);
+    	            onTickInServer();
     	        	}
     	        	if(!notServerSTARTUP2){
     	    			onServerSTARTUP();
@@ -51,7 +49,7 @@ public class ServerTickHandler implements ITickHandler
     	        }
 	}
 
-	private void onTickInServer(Minecraft mc) {
+	private void onTickInServer() {
 		//MinecraftServer.getServer().executeCommand("say Minecraft+ Server Version Enabled!");
 		System.out.print("Minecraft+ " + MinecraftPlusBase.codever + " loaded!\n");
 		

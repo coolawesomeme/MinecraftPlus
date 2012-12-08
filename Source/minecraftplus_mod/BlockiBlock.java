@@ -1,17 +1,11 @@
 package net.minecraftplus_mod;
 
-import cpw.mods.fml.common.registry.VillagerRegistry;
-import net.minecraft.src.Block;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityLightningBolt;
-import net.minecraft.src.EntityList;
-import net.minecraft.src.EntityLiving;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityVillager;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
+
 
 public class BlockiBlock extends BlockNormal
 {

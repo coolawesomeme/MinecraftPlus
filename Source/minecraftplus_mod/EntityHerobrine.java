@@ -1,6 +1,5 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityMob;
 import net.minecraft.src.EntityPlayer;
@@ -15,7 +14,6 @@ This file will let you to set values to change the mummy. */
 
 public class EntityHerobrine extends EntityMob
 {
-	public Minecraft minecraft;
     private static final ItemStack defaultHeldItem;
     
     public EntityHerobrine (World world)

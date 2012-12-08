@@ -2,7 +2,6 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.BiomeGenBase;
 import net.minecraft.src.Block;
 import net.minecraft.src.Entity;
@@ -11,7 +10,6 @@ import net.minecraft.src.Material;
 import net.minecraft.src.World;
 
 public class BlockTrapFireSpread extends Block {
-	public Minecraft minecraft;
 	private boolean hasBeenActivated = false;
 
     protected BlockTrapFireSpread(int i, int j) {

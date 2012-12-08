@@ -2,7 +2,6 @@ package net.minecraftplus_mod;
  
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityAIAttackOnCollide;
 import net.minecraft.src.EntityAIBreakDoor;
@@ -29,7 +28,6 @@ This file will let you to set values to change the mummy. */
 
 public class EntityMummy extends EntityMob
 {
-	public Minecraft minecraft;
     private static final ItemStack defaultHeldItem;
     public EntityPlayer player;
     

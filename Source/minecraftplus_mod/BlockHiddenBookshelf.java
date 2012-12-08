@@ -22,20 +22,7 @@ public class BlockHiddenBookshelf extends Block
 
     public boolean isOpaqueCube(World world, int i, int j, int k)
     {
-      int a = world.getBlockId(i, j - 1, k);
-      int b = world.getBlockId(i, j + 1, k);
-      int c = world.getBlockId(i - 1, j, k);
-      int d = world.getBlockId(i + 1, j, k);
-      int e = world.getBlockId(i, j, k - 1);
-      int f = world.getBlockId(i, j, k + 1);
-
-      if(a == MinecraftPlusBase.hiddenBookshelf.blockID || b == MinecraftPlusBase.hiddenBookshelf.blockID || c == MinecraftPlusBase.hiddenBookshelf.blockID || d == MinecraftPlusBase.hiddenBookshelf.blockID || e == MinecraftPlusBase.hiddenBookshelf.blockID || f == MinecraftPlusBase.hiddenBookshelf.blockID){
-           return true;
-       }
-
-      else{
         return false;
-      }
     }
 
     /**

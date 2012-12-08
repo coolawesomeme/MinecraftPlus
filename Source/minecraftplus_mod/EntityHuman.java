@@ -6,7 +6,6 @@ This file will let you to set values to change the Humans. */
 import java.util.Random;
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityAIAvoidEntity;
 import net.minecraft.src.EntityAIFollowGolem;
@@ -34,7 +33,6 @@ import net.minecraft.src.World;
 
 public class EntityHuman extends EntityCreature
 {
-	public Minecraft minecraft;
 	private static final ItemStack defaultHeldItem;
     private static int messageNumber = 31;
     private static int messageNumber2 = messageNumber;
@@ -165,9 +163,9 @@ public class EntityHuman extends EntityCreature
         entityplayer.addChatMessage("");
         }
         if(p == 7){
-        boolean var4 = minecraft.theWorld.isDaytime();
-        boolean var2 = minecraft.theWorld.isRaining();
-        boolean var3 = minecraft.theWorld.isThundering();
+        boolean var4 = entityplayer.worldObj.isDaytime();
+        boolean var2 = entityplayer.worldObj.isRaining();
+        boolean var3 = entityplayer.worldObj.isThundering();
         if(var2 == true && var3 == false && var4 == true){
         entityplayer.addChatMessage("It's raining/ snowing right now!");
         entityplayer.addChatMessage("");

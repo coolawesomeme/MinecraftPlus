@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.Locale.Category;
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Achievement;
 import net.minecraft.src.BiomeGenBase;
@@ -60,12 +59,11 @@ import net.minecraftplus_mod.CommonProxy;
 public class MinecraftPlusBase 
 {	
 	/** Version of the mod for @Mod annotation. Use if you wish, otherwise use modver.*/
-	protected static final String VERSION = "r" + "2" + "b" + "3";
+	protected static final String VERSION = "r" + "2" + "b" + "4";
 	
 	//This is an Annotation interface which establishes the location of the Client and Server Proxy's. These are needed for such things as preloading texture files, etc
 	@SidedProxy(clientSide = "net.minecraftplus_mod.ClientProxy", serverSide = "net.minecraftplus_mod.CommonProxy")
 	public static CommonProxy proxy;
-	public static ClientProxy clientproxy;
 	
 	//Establishes an Instance of your mod, simple enough
 	@Instance("MinecraftPlus")
@@ -99,9 +97,6 @@ public class MinecraftPlusBase
 	
 	/**MinecraftPlus Instance */
 	public static MinecraftPlus getPlusInstance;
-	
-	/**Minecraft Instance */
-	public static Minecraft getMinecraftInstance;
 	
 	//ID's for Configuration File
 	public static int embroniumIngotID;
@@ -201,7 +196,6 @@ public class MinecraftPlusBase
 	public void init(FMLInitializationEvent event)
 	{		
 		proxy.registerRenderInformation();
-		clientproxy.registerRenderInformation();
 		
 		//You don't have to have all of the calls separated into different methods obviously, I just find it easier to be organized this way
 		initializeBlocksAndItems();
@@ -394,8 +388,6 @@ public class MinecraftPlusBase
 		}));*/
 	}
 
-	
-	@SideOnly(Side.CLIENT)
 	private void addRecipes() 
 	{
 		//This is an example of adding a Non-Ore Dictionary recipe where only a specific Item will do. Remind you of something? If you've used ModLoader
