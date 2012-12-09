@@ -25,6 +25,7 @@ import net.minecraft.src.StatCollector;
 import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
@@ -55,12 +56,9 @@ import net.minecraftplus_mod.CommonProxy;
 //This is an Annotation interface that establishes what sides of the mod are required to run it. clientSideRequired should always be true, and serverSideRequired should USUALLY be false
 @NetworkMod(clientSideRequired = true, serverSideRequired = false)
 //This is an Annotation interface that establishes the ModID, the name of the Mod, and the Version of the mod. 
-@Mod(modid = "MinecraftPlus", name = "Minecraft+", version = MinecraftPlusBase.VERSION)
+@Mod(modid = "MinecraftPlus", name = "Minecraft+", version = MinecraftPlusBase.modver)
 public class MinecraftPlusBase 
 {	
-	/** Version of the mod for @Mod annotation. Use if you wish, otherwise use modver.*/
-	protected static final String VERSION = "r" + "2" + "b" + "4";
-	
 	//This is an Annotation interface which establishes the location of the Client and Server Proxy's. These are needed for such things as preloading texture files, etc
 	@SidedProxy(clientSide = "net.minecraftplus_mod.ClientProxy", serverSide = "net.minecraftplus_mod.CommonProxy")
 	public static CommonProxy proxy;
@@ -70,18 +68,16 @@ public class MinecraftPlusBase
 	public static MinecraftPlusBase instance = new MinecraftPlusBase();
     
     /** Version Codename. Changed every release.*/
-    public static String codename = "Caramel";
+    public static String codename = "Coconut";
     
     /** Mod release version. +1 every public release. */
-	public static String modverrelease = VERSION.substring(2, 2);
-	
-	private static int verlength = VERSION.length();
+	public static final String modverrelease = "2";
 	
 	/** Mod build version. +1 every compile. */
-    public static String modverbuild = VERSION.substring(4, verlength);
+    public static final String modverbuild = "5";
     
     /** Full mod version string. */
-    public static String modver = VERSION;
+    public static final String modver = "r" + modverrelease + "b" + modverbuild;
     
     /** Full mod version string + codename. */
     public static String codever = modver + " \"" + codename + "\"";
@@ -132,6 +128,9 @@ public class MinecraftPlusBase
     public static Block redstoneLampThinActive;
     public static Block trapBlockFire;
     public static Block trapBlockFireSpread;
+    public static Block palmWood;
+    public static Block palmLeaves;
+    public static Block palmSapling;
 	
 	//Items
 	public static Item embroniumIngot;
@@ -189,7 +188,7 @@ public class MinecraftPlusBase
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
-		
+		MinecraftForge.EVENT_BUS.register(new PlusBonemealHandler());
 	}
 	
 	@Init
@@ -209,10 +208,15 @@ public class MinecraftPlusBase
 		addOreDictionaryEntries();
 		initAchievements();
 		registerHandlers();
+		addDungeonLoot();
 		
 		isMCPlusLoaded = true;
 	}
 	
+	private void addDungeonLoot() {
+		DungeonHooks.addDungeonLoot(new ItemStack(this.Tomato), 50,2,10);
+	}
+
 	private void registerEntities() {
 		// Register your entities here
 		// Parameters are: entClass, entName, ID, mod, trackingRange, updateFrequency, sendVelocityUpdates // Just like before, just called
@@ -306,7 +310,7 @@ public class MinecraftPlusBase
 	{
 		//Blocks
 		embroniumBlock = new BlockStorageOre(1181, 1, Material.rock).setHardness(2.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("embroniumBlock");
-		embroniumOre = new BlockNormal(1180,3, Material.rock).setCreativeTab(CreativeTabs.tabBlock).setHardness(2.0F).setResistance(5.0F).setBlockName("embroniumOre");
+		embroniumOre = new BlockNormal(1180,2, Material.rock).setCreativeTab(CreativeTabs.tabBlock).setHardness(2.0F).setResistance(5.0F).setBlockName("embroniumOre");
 		bouncyBlock = new BlockBouncyBlock(1182,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("bouncyBlock");
 		boosterBlock = new BlockBoosterBlock(1183,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("boosterBlock");
 		healBlock = new BlockHealBlock(1184,4).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabBlock).setBlockName("healBlock");
@@ -326,6 +330,9 @@ public class MinecraftPlusBase
 		redstoneLampThinActive = (new BlockRedstoneLampThin(1204, true)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("redstoneLightThinActive");
 		trapBlockFire = new BlockTrapFire(1205,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("trapBlockFire");
 		trapBlockFireSpread = new BlockTrapFireSpread(1206,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(CreativeTabs.tabRedstone).setBlockName("trapBlockFireSpread");
+		palmWood = new BlockPalmWood(1207,21).setCreativeTab(CreativeTabs.tabDecorations).setBlockName("palmWood");
+		palmLeaves = new BlockPalmLeaves(1208,23).setCreativeTab(CreativeTabs.tabDecorations).setBlockName("palmLeaves");
+		palmSapling = new BlockPalmSapling(1209,25).setCreativeTab(CreativeTabs.tabDecorations).setBlockName("palmSapling");
 		
 		//Items
 		embroniumIngot = new ItemOre(31002).setIconCoord(1, 0).setCreativeTab(CreativeTabs.tabMaterials).setItemName("embroniumIngot");
@@ -485,6 +492,9 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(pizzaBlock, "Pizza");
 		LanguageRegistry.addName(redstoneLampThinIdle, "Thin Redstone Lamp");
 		LanguageRegistry.addName(redstoneLampThinActive, "[ACTIVE] Thin Redstone Lamp");
+		LanguageRegistry.addName(palmWood, "Palm Wood");
+		LanguageRegistry.addName(palmLeaves, "Palm Leaves");
+		LanguageRegistry.addName(palmSapling, "Palm Sapling");
 		//Items
 		LanguageRegistry.addName(embroniumIngot, "Embronium Ingot");
 		LanguageRegistry.addName(embroniumDust, "Embronium Dust");
@@ -537,13 +547,16 @@ public class MinecraftPlusBase
 		//Blocks
 		LanguageRegistry.instance().addNameForObject(embroniumBlock, "en_PT", "Block 'o' Embronium");
 		LanguageRegistry.instance().addNameForObject(redstoneLampThinActive, "en_PT", "Cheater's Light");
-		LanguageRegistry.instance().addNameForObject(redstoneLampThinIdle, "en_PT", "Magical Light");
+		LanguageRegistry.instance().addNameForObject(redstoneLampThinIdle, "en_PT", "Witchlike Lumineer");
+		LanguageRegistry.instance().addNameForObject(redstoneLampThinActive, "fr_FR", "Lumiere de Tricheur");
+		LanguageRegistry.instance().addNameForObject(redstoneLampThinIdle, "fr_FR", "Lumiere");
 		//Items
 		LanguageRegistry.instance().addNameForObject(embroniumIngot, "en_PT", "Embronium Bullion");
 		//Food
 		LanguageRegistry.instance().addNameForObject(Cheese, "fr_FR", "Fromage");
-		LanguageRegistry.instance().addNameForObject(Cheese, "en_PT", "Frozen Butter");
+		LanguageRegistry.instance().addNameForObject(Cheese, "en_PT", "Cold Butter");
 		LanguageRegistry.instance().addNameForObject(itemBandage, "en_PT", "Wrapped Parchment");
+		LanguageRegistry.instance().addNameForObject(Tomato, "fr_FR", "Tomate");
 		//Armor
 		//
 		//Tools
@@ -575,6 +588,9 @@ public class MinecraftPlusBase
 		GameRegistry.registerBlock(pizzaBlock);
 		GameRegistry.registerBlock(redstoneLampThinIdle);
 		GameRegistry.registerBlock(redstoneLampThinActive);
+		GameRegistry.registerBlock(palmWood);
+		GameRegistry.registerBlock(palmLeaves);
+		GameRegistry.registerBlock(palmSapling);
 		//GameRegistry.registerBlock(exampleSmeltingAchievementBlock);
 	}
 
