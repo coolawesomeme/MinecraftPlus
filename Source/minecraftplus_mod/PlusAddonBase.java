@@ -4,25 +4,17 @@ public @interface PlusAddonBase {
 
 	/**
 	 * The addon making class. Implement it.
-	 *
 	 * @author coolawesomeme
-	 *
 	 */
 	
 	public @interface registerAddon {
-		/**
-	     * The name of the addon.
-	     */
+		/**The name of the addon. */
 	    String addonName();
 	    
-	    /**
-	     * The author of the addon.
-	     */
+	    /**The author of the addon. */
 	    String addonAuthor();
 	    
-	    /**
-	     * The version of the addon.
-	     */
+	    /** The version of the addon. */
 	    String addonVersion();
 	}
 }

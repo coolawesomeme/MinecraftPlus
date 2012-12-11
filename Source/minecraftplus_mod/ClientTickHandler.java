@@ -21,7 +21,6 @@ import cpw.mods.fml.common.TickType;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.asm.SideOnly;
 
-@SideOnly(Side.CLIENT)
 public class ClientTickHandler implements ITickHandler 
 {
 	private boolean notSTARTUP = false;
@@ -166,7 +165,6 @@ public class ClientTickHandler implements ITickHandler
             }
             
             minecraft.thePlayer.addChatMessage("Today is " + month + " " + date + suffix + ".");
-            minecraft.thePlayer.addChatMessage("");
             
             if(!isBetaVersion){
             int counter = 0;
@@ -196,6 +194,7 @@ public class ClientTickHandler implements ITickHandler
                 	System.out.println("[MC+] Mod up to date!");
                 }
                 else{
+                minecraft.thePlayer.addChatMessage("");
                 minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                 minecraft.thePlayer.addChatMessage("\u00A7bhttp://bit.ly/MCPlus" + "\u00A7f");
                 if(!temp[1].isEmpty()){
@@ -203,7 +202,6 @@ public class ClientTickHandler implements ITickHandler
                 } if(!temp[2].isEmpty()){
                 minecraft.thePlayer.addChatMessage(temp[2]);
                 }
-                minecraft.thePlayer.addChatMessage("");
                 System.out.println("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                 System.out.println("http://bit.ly/MCPlus");
                 }
@@ -213,7 +211,7 @@ public class ClientTickHandler implements ITickHandler
             
             in.close();
             } catch (Exception e) {
-            	System.out.println("[MC+] Error: " + e);
+            	System.err.println("[MC+] Error: " + e);
             }
             } 
             // For internal testing:
@@ -245,6 +243,7 @@ public class ClientTickHandler implements ITickHandler
                     	System.out.println("[MC+] Mod up to date!");
                     }
                     else{
+                    minecraft.thePlayer.addChatMessage("");
                     minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                     minecraft.thePlayer.addChatMessage("(\u00A7bJust ask coolawesomeme\u00A7f!)");
                     if(temp[1].isEmpty() == false){
@@ -252,7 +251,6 @@ public class ClientTickHandler implements ITickHandler
                     } if(temp[1].isEmpty() == false){
                     minecraft.thePlayer.addChatMessage(temp[2]);
                     }
-                    minecraft.thePlayer.addChatMessage("");
                     System.out.println("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                     System.out.println("(Ask coolawesomeme!)");
                     }
@@ -262,22 +260,22 @@ public class ClientTickHandler implements ITickHandler
                 
                 in.close();
             } catch (Exception e) {
-            	System.out.println("[MC+] Error: " + e);
+            	System.err.println("[MC+] Error: " + e);
             }
         	}
             notSTARTUP = true;
             
             if (calendar.get(2) + 1 == 4 && calendar.get(5) == 5)
             {
+            	minecraft.thePlayer.addChatMessage("");
                 minecraft.thePlayer.addChatMessage("Happy birthday, Minecraft+!");
                 minecraft.thePlayer.addChatMessage("Today is the day Minecraft+ was published on Minecraft Forums!");
                 minecraft.thePlayer.addChatMessage("CELEBRATION!!!!!!!!!!");
-                minecraft.thePlayer.addChatMessage("");
                 try
                 { 
                 Process p = Runtime.getRuntime().exec("cmd /c start http://bit.ly/MCPlus"); 
                 } 
-                catch(Exception e1) {System.out.println(e1);} 
+                catch(Exception e1) {System.err.println(e1);} 
             }
         }
         }

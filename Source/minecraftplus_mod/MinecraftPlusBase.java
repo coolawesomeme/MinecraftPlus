@@ -1,10 +1,21 @@
 package net.minecraftplus_mod;
 
 import java.awt.Color;
+import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale.Category;
+import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.Achievement;
 import net.minecraft.src.BiomeGenBase;
@@ -27,15 +38,18 @@ import net.minecraftforge.common.AchievementPage;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.EnumHelper;
+import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.Mod.ServerStarted;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.asm.SideOnly;
@@ -58,10 +72,11 @@ import net.minecraftplus_mod.CommonProxy;
 //This is an Annotation interface that establishes the ModID, the name of the Mod, and the Version of the mod. 
 @Mod(modid = "MinecraftPlus", name = "Minecraft+", version = MinecraftPlusBase.modver)
 public class MinecraftPlusBase 
-{	
+{
 	//This is an Annotation interface which establishes the location of the Client and Server Proxy's. These are needed for such things as preloading texture files, etc
 	@SidedProxy(clientSide = "net.minecraftplus_mod.ClientProxy", serverSide = "net.minecraftplus_mod.CommonProxy")
 	public static CommonProxy proxy;
+	public static ClientProxy clientproxy;
 	
 	//Establishes an Instance of your mod, simple enough
 	@Instance("MinecraftPlus")
@@ -71,10 +86,10 @@ public class MinecraftPlusBase
     public static String codename = "Coconut";
     
     /** Mod release version. +1 every public release. */
-	public static final String modverrelease = "2";
+	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final String modverbuild = "5";
+    public static final int modverbuild = 6;
     
     /** Full mod version string. */
     public static final String modver = "r" + modverrelease + "b" + modverbuild;
@@ -93,6 +108,15 @@ public class MinecraftPlusBase
 	
 	/**MinecraftPlus Instance */
 	public static MinecraftPlus getPlusInstance;
+	
+	/**Addon Base Instance */
+	public static PlusAddonBase addon;
+	
+	/**Addon Registerer Instance */
+	public static PlusAddonRegister addonRegister;
+	
+	@SideOnly(Side.CLIENT)
+	public static Minecraft minecraft;
 	
 	//ID's for Configuration File
 	public static int embroniumIngotID;
@@ -189,12 +213,166 @@ public class MinecraftPlusBase
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.register(new PlusBonemealHandler());
+		try {
+			File success = new File("MinecraftPlus");
+			success.mkdir();
+			File readme = new File("MinecraftPlus/README.txt");
+			if(!readme.exists()){
+				readme();
+			}else{
+				Random random = new Random();
+				int one = random.nextInt(2);
+				if(one <= 1){
+					readme.delete();
+					readme();
+				}
+			}
+		      File makefile = new File("MinecraftPlus/stats.mcplus");
+		      if(!makefile.exists()){
+		    	makeFile();
+		      }else{
+		    	makefile.delete();
+		    	makeFile();
+		      }
+		 } catch (Exception e) {
+		      e.printStackTrace();
+		 }
 	}
 	
+	private void readme(){
+		try{
+			File readme = new File("MinecraftPlus/README.txt");
+			FileWriter fwrite = new FileWriter(readme);
+			DateFormat dateFormat1 = new SimpleDateFormat("HH");
+			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy *^:mm:ss #");
+			Date date = new Date();
+			String date1 = dateFormat1.format(date);
+			int date2 = Integer.parseInt(date1);
+			String dateandtime = dateFormat.format(date);
+			if(date2 > 12){
+				date2 = date2 - 12;
+				dateandtime = dateandtime.replace('#', 'P') + "M";
+			}else{
+				dateandtime = dateandtime.replace('#', 'A') + "M";
+			}
+			date1 = "" + date2;
+			if(date1.length() < 2){
+				date1 = "0" + date1;
+			}
+			char date3 = date1.charAt(0);
+			char date4 = date1.charAt(1);
+			String fullDate = dateandtime.replace('*', date3);
+			fullDate = fullDate.replace('^', date4);
+			Map<String, ModContainer> modslist = Loader.instance().getIndexedModList();
+			fwrite.write("~-!-~ Minecraft+ Folder Readme ~-!-~" + "\n");
+			fwrite.write("----------------------------------------------" + "\n");
+			fwrite.write("// Generated " + fullDate + "\n\n");
+			fwrite.write("This is the Minecraft+ folder. All documents pertaining to Minecraft+ will\n");
+			fwrite.write("go here. A document you can see is stats.mcplus. This can be opened by any\n");
+			fwrite.write("text editor, but it will not display well in Notepad (I recommend Notepad++).\n");
+			fwrite.write("This file shows important debugging info which is to be sent to coolawesomeme,\n");
+			fwrite.write("should you encounter any errors.\n");
+			fwrite.write("Thanks for reading!");
+			fwrite.write("\n\n" + "~[|\\O/|]~");
+			fwrite.flush();
+			fwrite.close();
+			System.out.println("[MC+] Readme file made/ updated.");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+	
+	private void makeFile() {
+		try{
+			File makefile = new File("MinecraftPlus/stats.mcplus");
+			
+			String modver2 = "";
+			String modver3 = "";
+				try{
+					// Create a URL for the desired page
+					URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
+					// Read all the text returned by the server
+					BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+					while ((modver2 = in.readLine()) != null) {
+						// str is one line of text; readLine() strips the newline character(s)
+						String[] temp;
+						temp = modver2.split("-");
+						modver3 = temp[0];
+					}
+					in.close();
+				}catch(Exception e){
+					modver3 = modver;	
+				}
+			FileWriter fwrite = new FileWriter(makefile);
+			DateFormat dateFormat1 = new SimpleDateFormat("HH");
+			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy *^:mm:ss #");
+			Date date = new Date();
+			String date1 = dateFormat1.format(date);
+			int date2 = Integer.parseInt(date1);
+			String dateandtime = dateFormat.format(date);
+			if(date2 > 12){
+				date2 = date2 - 12;
+				dateandtime = dateandtime.replace('#', 'P') + "M";
+			}else{
+				dateandtime = dateandtime.replace('#', 'A') + "M";
+			}
+			date1 = "" + date2;
+			if(date1.length() < 2){
+				date1 = "0" + date1;
+			}
+			char date3 = date1.charAt(0);
+			char date4 = date1.charAt(1);
+			String fullDate = dateandtime.replace('*', date3);
+			fullDate = fullDate.replace('^', date4);
+			String randString = "";
+			Random random = new Random();
+			int randInt = random.nextInt(5);
+			if(randInt <= 1)
+				randString = "Come with me if you want to live.";
+			if(randInt == 2)
+				randString = "Help me Obi-Wan, you're my only hope.";
+			if(randInt == 3)
+				randString = "Hasta la Vista, baby.";
+			if(randInt == 4)
+				randString = "The name's Bond. James Bond.";
+			if(randInt >= 5)
+				randString = "I'm the king of the world!";
+			String loaded = "False";
+			if(Loader.instance().isModLoaded("MinecraftPlus") || Loader.instance().isModLoaded("Minecraft+")){
+				loaded = "True";
+				isMCPlusLoaded = true;
+			}
+			Map<String, ModContainer> modslist = Loader.instance().getIndexedModList();
+			fwrite.write("~-!-~ Minecraft+ Mod Stats ~-!-~" + "\n");
+			fwrite.write(" ~!~    (Debugging Info)    ~!~ " + "\n");
+			fwrite.write("----------------------------------------------" + "\n");
+			fwrite.write("LastTimeMC+WasRun: " + fullDate + "\n");
+			fwrite.write("LastUsedModVersion: " + codever + "\n");
+			fwrite.write("LatestMC+Version: " + modver3 + "\n");
+			fwrite.write("RecommendedForgeVersion: " + "6.4.0.396" + "\n");
+			fwrite.write("RecommendedFMLVersion: " + "4.5.2.459" + "\n");
+			fwrite.write("LastUsedForgeVersion: " + ForgeVersion.getVersion() + "\n");
+			fwrite.write("LastUsedFMLVersion: " + Loader.instance().getFMLVersionString() + "\n");
+			fwrite.write("LastUsedMinecraftVersion: " + Loader.instance().getMCVersionString() + "\n");
+			fwrite.write("WasMinecraft+Loaded: " + loaded + "\n");
+			fwrite.write("NumberOfModsUsed: " + modslist.size() + "\n");
+			fwrite.write("ModsUsed:" + "\n");
+			fwrite.write(Loader.instance().getIndexedModList() + "\n");
+			fwrite.write("\n" + "// " + randString);
+			fwrite.write("\n" + "~[|\\O/|]~");
+			fwrite.flush();
+			fwrite.close();
+			System.out.println("[MC+] Stats/ Debugging file made/ updated.");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
+
 	@Init
 	public void init(FMLInitializationEvent event)
 	{		
 		proxy.registerRenderInformation();
+		clientproxy.registerRenderInformation();
 		
 		//You don't have to have all of the calls separated into different methods obviously, I just find it easier to be organized this way
 		initializeBlocksAndItems();
@@ -209,8 +387,6 @@ public class MinecraftPlusBase
 		initAchievements();
 		registerHandlers();
 		addDungeonLoot();
-		
-		isMCPlusLoaded = true;
 	}
 	
 	private void addDungeonLoot() {

@@ -10,7 +10,6 @@ import net.minecraft.src.RenderBiped;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
-@SideOnly(Side.CLIENT)
 public class ClientProxy extends CommonProxy{
 	
 	public static void registerRenderInformation(){
