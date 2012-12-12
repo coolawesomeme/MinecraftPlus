@@ -217,9 +217,9 @@ public class MinecraftPlusBase
 	{
 		MinecraftForge.EVENT_BUS.register(new PlusBonemealHandler());
 		try {
-			File success = new File("MinecraftPlus");
+			File success = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus");
 			success.mkdir();
-			File readme = new File("MinecraftPlus/README.txt");
+			File readme = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus/README.txt");
 			if(!readme.exists()){
 				readme();
 			}else{
@@ -230,7 +230,7 @@ public class MinecraftPlusBase
 					readme();
 				}
 			}
-		      File makefile = new File("MinecraftPlus/stats.mcplus");
+		      File makefile = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus/stats.mcplus");
 		      if(!makefile.exists()){
 		    	makeFile();
 		      }else{
@@ -244,7 +244,7 @@ public class MinecraftPlusBase
 	
 	private void readme(){
 		try{
-			File readme = new File("MinecraftPlus/README.txt");
+			File readme = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus/README.txt");
 			FileWriter fwrite = new FileWriter(readme);
 			DateFormat dateFormat1 = new SimpleDateFormat("HH");
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy *^:mm:ss #");
@@ -286,7 +286,7 @@ public class MinecraftPlusBase
 	}
 	
 	private void makeFile() {
-		try{			
+		try{
 			String modver2 = "";
 			String modver3 = "";
 				try{
@@ -304,7 +304,7 @@ public class MinecraftPlusBase
 				}catch(Exception e){
 					modver3 = modver;	
 				}
-			File makefile = new File("MinecraftPlus/stats.mcplus");
+			File makefile = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus/stats.mcplus");
 			FileWriter fwrite = new FileWriter(makefile);
 			DateFormat dateFormat1 = new SimpleDateFormat("HH");
 			DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy *^:mm:ss #");
