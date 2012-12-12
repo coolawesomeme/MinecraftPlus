@@ -39,6 +39,11 @@ public class BlockPizza extends BlockNormal
         this.setBlockBounds(var1, 0.0F, var1, 1.0F - var1, var2, 1.0F - var1);
     }
 
+    public String getTextureFile()
+	{
+		return "/minecraftplus/spritesheet_blocks.png";
+	}
+    
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)

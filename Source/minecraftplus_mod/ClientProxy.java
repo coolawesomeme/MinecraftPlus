@@ -12,8 +12,8 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class ClientProxy extends CommonProxy{
 	
+	@SideOnly(Side.CLIENT)
 	public static void registerRenderInformation(){
-		TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
 		preloadTextures();
 		RenderingRegistry.registerEntityRenderingHandler(EntityHuman.class, new RenderBiped(new ModelBiped(), 0.5F));
 		RenderingRegistry.registerEntityRenderingHandler(EntityMummy.class, new RenderBiped(new ModelBiped(), 0.5F));

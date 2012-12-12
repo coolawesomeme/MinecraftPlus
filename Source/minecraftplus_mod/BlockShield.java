@@ -7,14 +7,14 @@ import java.util.Random;
 
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
-import net.minecraft.src.CreativeTabs;
+import net.minecraft.src.BlockPane;
 import net.minecraft.src.Entity;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
 import net.minecraft.src.World;
 
-public class BlockShield extends BlockNormal
+public class BlockShield extends BlockPane
 {
     /**
      * Holds the texture index of the side of the pane (the thin lateral side)
@@ -27,9 +27,14 @@ public class BlockShield extends BlockNormal
      */
     private final boolean canDropItself;
 
-    protected BlockShield(int par1, int par2, int par3, Material par4Material, boolean par5)
+    public String getTextureFile()
+	{
+		return "/minecraftplus/spritesheet_blocks.png";
+	}
+    
+    public BlockShield(int par1, int par2, int par3, Material par4Material, boolean par5)
     {
-        super(par1, par2, par4Material);
+        super(par1, par2, par3, par4Material, par5);
         this.sideTextureIndex = par3;
         this.canDropItself = par5;
     }
@@ -68,6 +73,7 @@ public class BlockShield extends BlockNormal
     }
 
     @SideOnly(Side.CLIENT)
+
     /**
      * Returns true if the given side of this block type should be rendered, if the adjacent block is at the given
      * coordinates.  Args: blockAccess, x, y, z, side
@@ -194,15 +200,6 @@ public class BlockShield extends BlockNormal
     public int getSideTextureIndex()
     {
         return this.sideTextureIndex;
-    }
-
-    /**
-     * Gets passed in the blockID of the block adjacent and supposed to return true if its allowed to connect to the
-     * type of blockID passed in. Args: blockID
-     */
-    public final boolean canThisPaneConnectToThisBlockID(int par1)
-    {
-        return Block.opaqueCubeLookup[par1] || par1 == this.blockID || par1 == Block.glass.blockID;
     }
 
     /**
