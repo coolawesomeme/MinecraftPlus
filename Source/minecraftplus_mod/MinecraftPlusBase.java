@@ -92,7 +92,7 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 7;
+    public static final int modverbuild = 8;
     
     /** Full mod version string. */
     public static final String modver = "r" + modverrelease + "b" + modverbuild;
@@ -122,11 +122,6 @@ public class MinecraftPlusBase
 	public static Minecraft minecraft;
 	
 	//ID's for Configuration File
-	public static int embroniumIngotID;
-	public static int embroniumDustID;
-	public static int embroniumBlockID;
-	public static int mummyEggID;
-	public static int humanEggID;
 	
 	//Blocks
 	public static Block embroniumBlock;
@@ -210,12 +205,79 @@ public class MinecraftPlusBase
     public static Item daggerGold;
     public static Item daggerDiamond;
     public static Item daggerEmbronium;
+    
+    //IDs
+    public static int embroniumBlockID;
+    public static int embroniumOreID;
+    public static int bouncyBlockID;
+    public static int boosterBlockID;
+    public static int healBlockID;
+    public static int damageBlockID;
+    public static int embroniumTorchID;
+    public static int forceFieldBlockID;
+    public static int shieldBlockID;
+    public static int nullBlockID;
+    public static int camperBlockID;
+    public static int iBlockID;
+    public static int cobbleGenBlockID;
+    public static int craterBlockID;
+    public static int minerBlockID;
+    public static int hiddenBookshelfID;
+    public static int pizzaBlockID;
+    public static int redstoneLampThinIdleID;
+    public static int redstoneLampThinActiveID;
+    public static int trapBlockFireID;
+    public static int trapBlockFireSpreadID;
+    public static int palmWoodID;
+    public static int palmLeavesID;
+    public static int palmSaplingID;
+    public static int embroniumIngotID;
+    public static int embroniumDustID;
+    public static int vortexCrystalID;
+    public static int itemBandageID; 
+    public static int CheeseID;
+    public static int SausageID;
+    public static int hotDogID;
+    public static int chickenSoupID;
+    public static int TomatoID;
+    public static int pizzaSliceID;
+    public static int SandwichID;
+    public static int cheeseCakeID;
+    public static int pizzaPlacerID;
+    public static int iceCubeID;
+    public static int iceCreamConeID;
+    public static int embroniumHelmetID;
+    public static int embroniumChestID;
+    public static int embroniumPantsID;
+    public static int embroniumBootsID;
+    public static int ironManHelmetID;
+    public static int ironManChestID;
+    public static int ironManPantsID;
+    public static int ironManBootsID;
+    public static int embroniumPickaxeID;
+    public static int embroniumSpadeID;
+    public static int embroniumSwordID;
+    public static int embroniumAxeID;
+    public static int embroniumHoeID;
+    public static int daggerWoodID;
+    public static int daggerStoneID;
+    public static int daggerIronID;
+    public static int daggerGoldID;
+    public static int daggerDiamondID;
+    public static int daggerEmbroniumID;
 	
 	//The pre initialization step is not required for a mod to run, but it is excellent for establishing Configuration files before the Mod is loaded (Great for Item/Block ID's)
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		configFile(event);
 		MinecraftForge.EVENT_BUS.register(new PlusBonemealHandler());
+		if(event.getSide() == Side.CLIENT){
+		fileMaker();
+		}
+	}
+
+	private void fileMaker() {
 		try {
 			File success = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus");
 			success.mkdir();
@@ -240,7 +302,7 @@ public class MinecraftPlusBase
 		 } catch (Exception e) {
 		      e.printStackTrace();
 		 }
-	}
+		}
 	
 	private void readme(){
 		try{
@@ -270,13 +332,15 @@ public class MinecraftPlusBase
 			fwrite.write("~-!-~ Minecraft+ Folder Readme ~-!-~" + "\n");
 			fwrite.write("----------------------------------------------" + "\n");
 			fwrite.write("// Generated " + fullDate + "\n\n");
-			fwrite.write("This is the Minecraft+ folder. All documents pertaining to Minecraft+ will\n");
-			fwrite.write("go here. A document you can see is stats.mcplus. This can be opened by any\n");
-			fwrite.write("text editor, but it will not display well in Notepad (I recommend Notepad++).\n");
-			fwrite.write("This file shows important debugging info which is to be sent to coolawesomeme,\n");
+			fwrite.write("This is the Minecraft+ folder. All documents pertaining to Minecraft+ (Other\n");
+			fwrite.write("than the config file) will go here. A document you can see is stats.mcplus. This can\n");
+			fwrite.write("be opened by any text editor, but it will not display well in Notepad (I recommend Notepad++).\n");
+			fwrite.write("The stats file shows important debugging info which is to be sent to coolawesomeme,\n");
 			fwrite.write("should you encounter any errors.\n");
-			fwrite.write("Thanks for reading!");
-			fwrite.write("\n\n" + "~[|\\O/|]~");
+			fwrite.write("The aforementioned config file is located here:\n");
+			fwrite.write("\\.minecraft\\config\\MinecraftPlus.cfg" + "\n\n");
+			fwrite.write("Thanks for reading!\n");
+			fwrite.write("~[|\\O/|]~");
 			fwrite.flush();
 			fwrite.close();
 			System.out.println("[MC+] Readme file made/ updated.");
@@ -487,82 +551,150 @@ public class MinecraftPlusBase
 	private static void initializeBlocksAndItems()
 	{
 		//Blocks
-		embroniumBlock = new BlockStorageOre(1181, 1, Material.rock).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("embroniumBlock");
-		embroniumOre = new BlockNormal(1180,2, Material.rock).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("embroniumOre");
-		bouncyBlock = new BlockBouncyBlock(1182,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("bouncyBlock");
-		boosterBlock = new BlockBoosterBlock(1183,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("boosterBlock");
-		healBlock = new BlockHealBlock(1184,4).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("healBlock");
-		damageBlock = new BlockDamageBlock(1185,6).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("damageBlock");
-		embroniumTorch = new EmbroniumTorch(1186, 15).setLightValue(1.0F).setHardness(1.0F).setCreativeTab(plusTab).setBlockName("embroniumTorch");
-		forceFieldBlock = new BlockForceField(1187,9).setHardness(2.0F).setCreativeTab(plusTab).setResistance(5.0F).setBlockName("forceField");
-		shieldBlock = new BlockShield(1188, 16 , 32, Material.glass, false).setCreativeTab(plusTab).setHardness(3.0F).setResistance(10.0F).setBlockName("shieldBlock");
-		nullBlock = new BlockNull(1195,0).setHardness(0.0F).setResistance(1.0F).setBlockName("nullBlock");
-		camperBlock = new BlockCamper(1196,10).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("camperBlock");
-		iBlock = new BlockiBlock(1197,14).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("iBlock");
-		cobbleGenBlock = new BlockCobbleGen(1198,11).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("cobbleGenBlock");
-		craterBlock = new BlockCrater(1199,12).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("craterBlock");
-		minerBlock = new BlockMiner(1200,13).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("minerBlock");
-		hiddenBookshelf = new BlockHiddenBookshelf(1201,35).setHardness(1.5F).setCreativeTab(plusTab).setResistance(5.0F).setBlockName("hiddenBookshelf");
-		pizzaBlock = new BlockPizza(1202,0).setHardness(2.0F).setResistance(1.0F).setBlockName("pizzaBlock");
-		redstoneLampThinIdle = (new BlockRedstoneLampThin(1203, false)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("redstoneLightThin").setCreativeTab(plusTab);
-		redstoneLampThinActive = (new BlockRedstoneLampThin(1204, true)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("redstoneLightThinActive");
-		trapBlockFire = new BlockTrapFire(1205,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFire");
-		trapBlockFireSpread = new BlockTrapFireSpread(1206,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFireSpread");
-		palmWood = new BlockPalmWood(1207,21).setCreativeTab(plusTab).setBlockName("palmWood");
-		palmLeaves = new BlockPalmLeaves(1208,23).setCreativeTab(plusTab).setBlockName("palmLeaves");
-		palmSapling = new BlockPalmSapling(1209,25).setCreativeTab(plusTab).setBlockName("palmSapling");
+		embroniumBlock = new BlockStorageOre(embroniumBlockID, 1, Material.rock).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("embroniumBlock");
+		embroniumOre = new BlockNormal(embroniumOreID,2, Material.rock).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("embroniumOre");
+		bouncyBlock = new BlockBouncyBlock(bouncyBlockID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("bouncyBlock");
+		boosterBlock = new BlockBoosterBlock(boosterBlockID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("boosterBlock");
+		healBlock = new BlockHealBlock(healBlockID,4).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("healBlock");
+		damageBlock = new BlockDamageBlock(damageBlockID,6).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("damageBlock");
+		embroniumTorch = new EmbroniumTorch(embroniumTorchID, 15).setLightValue(1.0F).setHardness(1.0F).setCreativeTab(plusTab).setBlockName("embroniumTorch");
+		forceFieldBlock = new BlockForceField(forceFieldBlockID,9).setHardness(2.0F).setCreativeTab(plusTab).setResistance(5.0F).setBlockName("forceField");
+		shieldBlock = new BlockShield(shieldBlockID, 16 , 32, Material.glass, false).setCreativeTab(plusTab).setHardness(3.0F).setResistance(10.0F).setBlockName("shieldBlock");
+		nullBlock = new BlockNull(nullBlockID,0).setHardness(0.0F).setResistance(1.0F).setBlockName("nullBlock");
+		camperBlock = new BlockCamper(camperBlockID,10).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("camperBlock");
+		iBlock = new BlockiBlock(iBlockID,14).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("iBlock");
+		cobbleGenBlock = new BlockCobbleGen(cobbleGenBlockID,11).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("cobbleGenBlock");
+		craterBlock = new BlockCrater(craterBlockID,12).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("craterBlock");
+		minerBlock = new BlockMiner(minerBlockID,13).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("minerBlock");
+		hiddenBookshelf = new BlockHiddenBookshelf(hiddenBookshelfID,35).setHardness(1.5F).setCreativeTab(plusTab).setResistance(5.0F).setBlockName("hiddenBookshelf");
+		pizzaBlock = new BlockPizza(pizzaBlockID,0).setHardness(2.0F).setResistance(1.0F).setBlockName("pizzaBlock");
+		redstoneLampThinIdle = (new BlockRedstoneLampThin(redstoneLampThinIdleID, false)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("redstoneLightThin").setCreativeTab(plusTab);
+		redstoneLampThinActive = (new BlockRedstoneLampThin(redstoneLampThinActiveID, true)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("redstoneLightThinActive");
+		trapBlockFire = new BlockTrapFire(trapBlockFireID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFire");
+		trapBlockFireSpread = new BlockTrapFireSpread(trapBlockFireSpreadID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFireSpread");
+		palmWood = new BlockPalmWood(palmWoodID,21).setCreativeTab(plusTab).setBlockName("palmWood");
+		palmLeaves = new BlockPalmLeaves(palmLeavesID,23).setCreativeTab(plusTab).setBlockName("palmLeaves");
+		palmSapling = new BlockPalmSapling(palmSaplingID,25).setCreativeTab(plusTab).setBlockName("palmSapling");
 		
 		//Items
-		embroniumIngot = new ItemOre(31002).setIconCoord(1, 0).setCreativeTab(plusTab).setItemName("embroniumIngot");
-		embroniumDust = new ItemOre(31005).setIconCoord(2, 0).setCreativeTab(plusTab).setItemName("embroniumDust");
-		//mummyEgg = new ItemMummyEgg(31001).setIconCoord(14, 15).setCreativeTab(this.tabMisc).setItemName("mummyEgg");
-		//humanEgg = new ItemHumanEgg(31019).setIconCoord(15, 15).setCreativeTab(this.tabMisc).setItemName("humanEgg");
-		vortexCrystal = new ItemSpecialEffect(31024).setIconCoord(5, 0).setCreativeTab(plusTab).setItemName("vortexCrystal");
+		embroniumIngot = new ItemOre(embroniumIngotID).setIconCoord(1, 0).setCreativeTab(plusTab).setItemName("embroniumIngot");
+		embroniumDust = new ItemOre(embroniumDustID).setIconCoord(2, 0).setCreativeTab(plusTab).setItemName("embroniumDust");
+		vortexCrystal = new ItemSpecialEffect(vortexCrystalID).setIconCoord(5, 0).setCreativeTab(plusTab).setItemName("vortexCrystal");
 		
 		//Food
-		itemBandage = new ItemPlusFood(31000, 8, 1F, false).setIconCoord(3, 0).setCreativeTab(plusTab).setItemName("bandage"); 
-		Cheese = new ItemPlusFood(31003, 4, 1F, false).setIconCoord(4, 0).setCreativeTab(plusTab).setItemName("Cheese");
-		Sausage = new ItemPlusFood(31025, 4, 1F, true).setIconCoord(8, 0).setCreativeTab(plusTab).setItemName("Sausage");
-		hotDog = new ItemPlusFood(31026, 4, 1F, false).setIconCoord(9, 0).setCreativeTab(plusTab).setItemName("hotDog");
-		chickenSoup = new ItemPlusFood(31027, 4, 1F, false).setIconCoord(10, 0).setCreativeTab(plusTab).setItemName("chickenSoup");
-		Tomato = new ItemNormal(31028).setIconCoord(11, 0).setCreativeTab(plusTab).setItemName("Tomato");
-		pizzaSlice = new ItemPlusFood(31029, 2, 1F, false).setIconCoord(6, 0).setCreativeTab(plusTab).setItemName("pizzaSlice");
-		Sandwich = new ItemPlusFood(31030, 3, 1F, false).setIconCoord(7, 0).setCreativeTab(plusTab).setItemName("Sandwich");
-		cheeseCake = new ItemPlusFood(31031, 4, 1F, false).setIconCoord(2, 1).setCreativeTab(plusTab).setItemName("cheeseCake");
-		pizzaPlacer = new ItemBlockPlacer(31032, MinecraftPlusBase.pizzaBlock).setIconCoord(3, 1).setMaxStackSize(16).setCreativeTab(plusTab).setItemName("pizzaPlacer");
-		iceCube = new ItemNormal(31033).setIconCoord(0, 1).setCreativeTab(plusTab).setItemName("iceCube").setContainerItem(Item.bucketEmpty);
-		iceCreamCone = new ItemPlusFood(31034, 2, 1F, false).setIconCoord(1, 1).setCreativeTab(plusTab).setItemName("iceCreamCone").setContainerItem(Item.bucketEmpty);
+		itemBandage = new ItemPlusFood(itemBandageID, 8, 1F, false).setIconCoord(3, 0).setCreativeTab(plusTab).setItemName("bandage"); 
+		Cheese = new ItemPlusFood(CheeseID, 4, 1F, false).setIconCoord(4, 0).setCreativeTab(plusTab).setItemName("Cheese");
+		Sausage = new ItemPlusFood(SausageID, 4, 1F, true).setIconCoord(8, 0).setCreativeTab(plusTab).setItemName("Sausage");
+		hotDog = new ItemPlusFood(hotDogID, 4, 1F, false).setIconCoord(9, 0).setCreativeTab(plusTab).setItemName("hotDog");
+		chickenSoup = new ItemPlusFood(chickenSoupID, 4, 1F, false).setIconCoord(10, 0).setCreativeTab(plusTab).setItemName("chickenSoup");
+		Tomato = new ItemNormal(TomatoID).setIconCoord(11, 0).setCreativeTab(plusTab).setItemName("Tomato");
+		pizzaSlice = new ItemPlusFood(pizzaSliceID, 2, 1F, false).setIconCoord(6, 0).setCreativeTab(plusTab).setItemName("pizzaSlice");
+		Sandwich = new ItemPlusFood(SandwichID, 3, 1F, false).setIconCoord(7, 0).setCreativeTab(plusTab).setItemName("Sandwich");
+		cheeseCake = new ItemPlusFood(cheeseCakeID, 4, 1F, false).setIconCoord(2, 1).setCreativeTab(plusTab).setItemName("cheeseCake");
+		pizzaPlacer = new ItemBlockPlacer(pizzaPlacerID, MinecraftPlusBase.pizzaBlock).setIconCoord(3, 1).setMaxStackSize(16).setCreativeTab(plusTab).setItemName("pizzaPlacer");
+		iceCube = new ItemNormal(iceCubeID).setIconCoord(0, 1).setCreativeTab(plusTab).setItemName("iceCube").setContainerItem(Item.bucketEmpty);
+		iceCreamCone = new ItemPlusFood(iceCreamConeID, 2, 1F, false).setIconCoord(1, 1).setCreativeTab(plusTab).setItemName("iceCreamCone").setContainerItem(Item.bucketEmpty);
 
 		//Armor
 		EnumArmorMaterial EMBRONIUM = EnumHelper.addArmorMaterial("EMBRONIUM", 25, new int[]{2, 7, 5, 2}, 25);
 		EnumArmorMaterial IRONMAN = EnumHelper.addArmorMaterial("IRONMAN", 25, new int[]{3, 8, 6, 3}, 25);
 		
-		embroniumHelmet = new PlusItemArmor(31010,EMBRONIUM, 5, 0).setCreativeTab(plusTab).setIconCoord(14, 0).setItemName("embroniumHelmet");
-		embroniumChest = new PlusItemArmor(31011,EMBRONIUM, 5, 1).setCreativeTab(plusTab).setIconCoord(14, 1).setItemName("embroniumChest");
-		embroniumPants = new PlusItemArmor (31012, EMBRONIUM, 5 ,2).setCreativeTab(plusTab).setIconCoord(14, 2).setItemName("embroniumPants");
-		embroniumBoots = new PlusItemArmor (31013, EMBRONIUM, 5 ,3).setCreativeTab(plusTab).setIconCoord(14, 3).setItemName("embroniumBoots");  
+		embroniumHelmet = new PlusItemArmor(embroniumHelmetID,EMBRONIUM, 5, 0).setCreativeTab(plusTab).setIconCoord(14, 0).setItemName("embroniumHelmet");
+		embroniumChest = new PlusItemArmor(embroniumChestID,EMBRONIUM, 5, 1).setCreativeTab(plusTab).setIconCoord(14, 1).setItemName("embroniumChest");
+		embroniumPants = new PlusItemArmor (embroniumPantsID, EMBRONIUM, 5 ,2).setCreativeTab(plusTab).setIconCoord(14, 2).setItemName("embroniumPants");
+		embroniumBoots = new PlusItemArmor (embroniumBootsID, EMBRONIUM, 5 ,3).setCreativeTab(plusTab).setIconCoord(14, 3).setItemName("embroniumBoots");  
 
-		ironManHelmet = new PlusItemArmor(31020,IRONMAN, 6, 0).setCreativeTab(plusTab).setIconCoord(15, 0).setItemName("ironManHelmet");
-		ironManChest = new PlusItemArmor(31021,IRONMAN, 6, 1).setCreativeTab(plusTab).setIconCoord(15, 1).setItemName("ironManChest");
-		ironManPants = new PlusItemArmor (31022, IRONMAN, 6 ,2).setCreativeTab(plusTab).setIconCoord(15, 2).setItemName("ironManPants");
-		ironManBoots = new PlusItemArmor (31023, IRONMAN, 6 ,3).setCreativeTab(plusTab).setIconCoord(15, 3).setItemName("ironManBoots");  
+		ironManHelmet = new PlusItemArmor(ironManHelmetID,IRONMAN, 6, 0).setCreativeTab(plusTab).setIconCoord(15, 0).setItemName("ironManHelmet");
+		ironManChest = new PlusItemArmor(ironManChestID,IRONMAN, 6, 1).setCreativeTab(plusTab).setIconCoord(15, 1).setItemName("ironManChest");
+		ironManPants = new PlusItemArmor (ironManPantsID, IRONMAN, 6 ,2).setCreativeTab(plusTab).setIconCoord(15, 2).setItemName("ironManPants");
+		ironManBoots = new PlusItemArmor (ironManBootsID, IRONMAN, 6 ,3).setCreativeTab(plusTab).setIconCoord(15, 3).setItemName("ironManBoots");  
 		
 		//Toolset
-		embroniumPickaxe = (new PlusItemPickaxe (31014, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 5).setItemName("embroniumPickaxe");
-		embroniumSpade = (new PlusItemSpade (31015, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 7).setItemName("embroniumSpade");
-		embroniumSword = (new PlusItemSword (31016, PlusToolMaterial.EMBRONIUM, 4)).setCreativeTab(plusTab).setIconCoord(14, 4).setItemName("embroniumSword");
-		embroniumAxe = (new PlusItemAxe (31707, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 6).setItemName("embroniumAxe");
-		embroniumHoe = (new PlusItemHoe (31708, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 8).setItemName("embroniumHoe");
+		embroniumPickaxe = (new PlusItemPickaxe (embroniumPickaxeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 5).setItemName("embroniumPickaxe");
+		embroniumSpade = (new PlusItemSpade (embroniumSpadeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 7).setItemName("embroniumSpade");
+		embroniumSword = (new PlusItemSword (embroniumSwordID, PlusToolMaterial.EMBRONIUM, 4)).setCreativeTab(plusTab).setIconCoord(14, 4).setItemName("embroniumSword");
+		embroniumAxe = (new PlusItemAxe (embroniumAxeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 6).setItemName("embroniumAxe");
+		embroniumHoe = (new PlusItemHoe (embroniumHoeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 8).setItemName("embroniumHoe");
 		
-		daggerWood = (new PlusItemSword (31050, PlusToolMaterial.WOOD, 1)).setCreativeTab(plusTab).setIconCoord(15, 4).setItemName("daggerWood");
-		daggerStone = (new PlusItemSword (31051, PlusToolMaterial.STONE, 1)).setCreativeTab(plusTab).setIconCoord(15, 5).setItemName("daggerStone");
-		daggerIron = (new PlusItemSword (31052, PlusToolMaterial.IRON, 1)).setCreativeTab(plusTab).setIconCoord(15, 6).setItemName("daggerIron");
-		daggerGold = (new PlusItemSword (31053, PlusToolMaterial.GOLD, 1)).setCreativeTab(plusTab).setIconCoord(15, 7).setItemName("daggerGold");
-		daggerDiamond = (new PlusItemSword (31054, PlusToolMaterial.EMERALD, 1)).setCreativeTab(plusTab).setIconCoord(15, 8).setItemName("daggerDiamond");
-		daggerEmbronium = (new PlusItemSword (31055, PlusToolMaterial.EMBRONIUM, 1)).setCreativeTab(plusTab).setIconCoord(15, 9).setItemName("daggerEmbronium");
+		daggerWood = (new PlusItemSword (daggerWoodID, PlusToolMaterial.WOOD, 1)).setCreativeTab(plusTab).setIconCoord(15, 4).setItemName("daggerWood");
+		daggerStone = (new PlusItemSword (daggerStoneID, PlusToolMaterial.STONE, 1)).setCreativeTab(plusTab).setIconCoord(15, 5).setItemName("daggerStone");
+		daggerIron = (new PlusItemSword (daggerIronID, PlusToolMaterial.IRON, 1)).setCreativeTab(plusTab).setIconCoord(15, 6).setItemName("daggerIron");
+		daggerGold = (new PlusItemSword (daggerGoldID, PlusToolMaterial.GOLD, 1)).setCreativeTab(plusTab).setIconCoord(15, 7).setItemName("daggerGold");
+		daggerDiamond = (new PlusItemSword (daggerDiamondID, PlusToolMaterial.EMERALD, 1)).setCreativeTab(plusTab).setIconCoord(15, 8).setItemName("daggerDiamond");
+		daggerEmbronium = (new PlusItemSword (daggerEmbroniumID, PlusToolMaterial.EMBRONIUM, 1)).setCreativeTab(plusTab).setIconCoord(15, 9).setItemName("daggerEmbronium");
 		//exampleSmeltingAchievementBlock = new BlockExampleBlock(exampleSmeltingAchievementBlockID, 1).setHardness(2.0F).setBlockName("Example Smelting Achievement Block");
 	}
 
+	private void configFile(FMLPreInitializationEvent event) {
+		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
+		config.load();
+
+		//Blocks
+		this.embroniumOreID = config.getBlock("embroniumOre", 1180).getInt();
+		this.embroniumBlockID = config.getBlock("embroniumBlock", 1181).getInt();
+		this.bouncyBlockID = config.getBlock("trampolineBlock", 1182).getInt();
+		this.boosterBlockID = config.getBlock("boosterBlock", 1183).getInt();
+		this.healBlockID = config.getBlock("healBlock", 1184).getInt();
+		this.damageBlockID = config.getBlock("damageBlock", 1185).getInt();
+		this.embroniumTorchID = config.getBlock("embroniumTorch", 1186).getInt();
+		this.forceFieldBlockID = config.getBlock("forceFieldBlock", 1187).getInt();
+		this.shieldBlockID = config.getBlock("shieldBlock", 1188).getInt();
+		this.nullBlockID = config.getBlock("nullBlock", 1189).getInt();
+		this.camperBlockID = config.getBlock("tentBlock", 1190).getInt();
+		this.iBlockID = config.getBlock("iBlock", 1191).getInt();
+		this.cobbleGenBlockID = config.getBlock("cobbleGenBlock", 1192).getInt();
+		this.craterBlockID = config.getBlock("craterBlock", 1193).getInt();
+		this.minerBlockID = config.getBlock("minerBlock", 1194).getInt();
+		this.hiddenBookshelfID = config.getBlock("hiddenBookshelfBlock", 1195).getInt();
+		this.pizzaBlockID = config.getBlock("pizzaBlock", 1196).getInt();
+		this.redstoneLampThinIdleID = config.getBlock("redstoneLampThinIdle", 1197).getInt();
+		this.redstoneLampThinActiveID = config.getBlock("redstoneLampThinActive", 1198).getInt();
+		this.trapBlockFireID = config.getBlock("trapBlockFire", 1199).getInt();
+		this.trapBlockFireSpreadID = config.getBlock("trapBlockFireSpread", 1200).getInt();
+		this.palmLeavesID = config.getBlock("palmLeaves", 1201).getInt();
+		this.palmWoodID = config.getBlock("palmWood", 1202).getInt();
+		this.palmSaplingID = config.getBlock("palmSapling", 1203).getInt();
+		
+		//Items
+		embroniumIngotID = config.getItem("embroniumIngot", 31000).getInt();
+		embroniumDustID = config.getItem("embroniumDust", 31001).getInt();
+		vortexCrystalID = config.getItem("vortexCrystal", 31002).getInt();
+		itemBandageID = config.getItem("bandage", 31003).getInt();
+		CheeseID = config.getItem("cheese", 31004).getInt();
+		SausageID = config.getItem("sausage", 31005).getInt();
+		hotDogID = config.getItem("hotDog", 31006).getInt();
+		chickenSoupID = config.getItem("chickenSoup", 31007).getInt();
+		TomatoID = config.getItem("tomato", 31008).getInt();
+		pizzaSliceID = config.getItem("pizzaSlice", 31009).getInt();
+		SandwichID = config.getItem("sandwich", 31010).getInt();
+		cheeseCakeID = config.getItem("cheeseCake", 31011).getInt();
+		pizzaPlacerID = config.getItem("pizzaPlacer", 31012).getInt();
+		iceCubeID = config.getItem("iceCube", 31013).getInt();
+		iceCreamConeID = config.getItem("iceCreamCone", 31014).getInt();
+		embroniumHelmetID = config.getItem("embroniumHelmet", 31015).getInt();
+		embroniumChestID = config.getItem("embroniumChest", 31016).getInt();
+		embroniumPantsID = config.getItem("embroniumPants", 31017).getInt();
+		embroniumBootsID = config.getItem("embroniumBoots", 31018).getInt();
+		ironManHelmetID = config.getItem("ironManHelmet", 31019).getInt();
+		ironManChestID = config.getItem("ironManChestplate", 31020).getInt();
+		ironManPantsID = config.getItem("ironManPants", 31021).getInt();
+		ironManBootsID = config.getItem("ironManBoots", 31022).getInt();
+		embroniumPickaxeID = config.getItem("embroniumPickaxe", 31023).getInt();
+		embroniumSpadeID = config.getItem("embroniumSpade", 31024).getInt();
+		embroniumSwordID = config.getItem("embroniumSword", 31025).getInt();
+		embroniumAxeID = config.getItem("embroniumAxe", 31026).getInt();
+		embroniumHoeID = config.getItem("embroniumHoe", 31027).getInt();
+		daggerWoodID = config.getItem("daggerWood", 31028).getInt();
+		daggerStoneID = config.getItem("daggerStone", 31029).getInt();
+		daggerIronID = config.getItem("daggerIron", 31030).getInt();
+		daggerGoldID = config.getItem("daggerGold", 31031).getInt();
+		daggerDiamondID = config.getItem("daggerDiamond", 31032).getInt();
+		daggerEmbroniumID = config.getItem("daggerEmbronium", 31033).getInt();
+		
+		config.save();
+		System.out.println("[MC+] Config file made/ saved.");
+	}
+	
 	private void addOreDictionaryRecipes() 
 	{
 		//Example of making recipes that can use Items of the same registered Ore Dictionary type.

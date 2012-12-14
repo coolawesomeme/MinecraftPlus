@@ -1,5 +1,13 @@
 Changelog
 =============
+r2b8
+-------------
+- Added a config file
+- Fixed some bugs:
+	- Stats file creation crashing the server
+	- More
+- Added a secret model (Maybe it'll get used)
+
 r2b7
 -------------
 - Lots o' bug fixes, including:    
