@@ -1,5 +1,16 @@
 Changelog
 =============
+r2b9
+-------------
+- Added holiday messages
+- Added multi-colored christmas lights
+- Added normal christmas lights
+- Added 4 bulbs
+	- Yellow
+	- Red
+	- Blue
+	- Green
+
 r2b8
 -------------
 - Added a config file

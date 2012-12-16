@@ -92,7 +92,7 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 8;
+    public static final int modverbuild = 9;
     
     /** Full mod version string. */
     public static final String modver = "r" + modverrelease + "b" + modverbuild;
@@ -153,6 +153,10 @@ public class MinecraftPlusBase
     public static Block palmWood;
     public static Block palmLeaves;
     public static Block palmSapling;
+    public static Block holidaylights_1Idle;
+    public static Block holidaylights_1Active;
+    public static Block holidaylights_2Idle;
+    public static Block holidaylights_2Active;
 	
 	//Items
 	public static Item embroniumIngot;
@@ -166,6 +170,10 @@ public class MinecraftPlusBase
 	@Deprecated
 	public static Item humanEgg;	 
     public static Item vortexCrystal;
+    public static Item bulbNormal;
+    public static Item bulbRed;
+    public static Item bulbBlue;
+    public static Item bulbGreen;
 
     //Food
     public static Item itemBandage; 
@@ -265,6 +273,14 @@ public class MinecraftPlusBase
     public static int daggerGoldID;
     public static int daggerDiamondID;
     public static int daggerEmbroniumID;
+    public static int holidaylights_1IdleID;
+    public static int holidaylights_1ActiveID;
+    public static int holidaylights_2IdleID;
+    public static int holidaylights_2ActiveID;
+    public static int bulbNormalID;
+    public static int bulbRedID;
+    public static int bulbBlueID;
+    public static int bulbGreenID;
 	
 	//The pre initialization step is not required for a mod to run, but it is excellent for establishing Configuration files before the Mod is loaded (Great for Item/Block ID's)
 	@PreInit
@@ -333,11 +349,11 @@ public class MinecraftPlusBase
 			fwrite.write("----------------------------------------------" + "\n");
 			fwrite.write("// Generated " + fullDate + "\n\n");
 			fwrite.write("This is the Minecraft+ folder. All documents pertaining to Minecraft+ (Other\n");
-			fwrite.write("than the config file) will go here. A document you can see is stats.mcplus. This can\n");
-			fwrite.write("be opened by any text editor, but it will not display well in Notepad (I recommend Notepad++).\n");
-			fwrite.write("The stats file shows important debugging info which is to be sent to coolawesomeme,\n");
-			fwrite.write("should you encounter any errors.\n");
-			fwrite.write("The aforementioned config file is located here:\n");
+			fwrite.write(" than the config file) will go here. A document you can see is stats.mcplus. This can\n");
+			fwrite.write(" be opened by any text editor, but it will not display well in Notepad (I recommend\n");
+			fwrite.write(" Notepad++). The stats file shows important debugging info which is to be sent to\n");
+			fwrite.write(" coolawesomeme, should you encounter any errors.\n");
+			fwrite.write("\nThe aforementioned config file is located here:\n");
 			fwrite.write("\\.minecraft\\config\\MinecraftPlus.cfg" + "\n\n");
 			fwrite.write("Thanks for reading!\n");
 			fwrite.write("~[|\\O/|]~");
@@ -575,11 +591,20 @@ public class MinecraftPlusBase
 		palmWood = new BlockPalmWood(palmWoodID,21).setCreativeTab(plusTab).setBlockName("palmWood");
 		palmLeaves = new BlockPalmLeaves(palmLeavesID,23).setCreativeTab(plusTab).setBlockName("palmLeaves");
 		palmSapling = new BlockPalmSapling(palmSaplingID,25).setCreativeTab(plusTab).setBlockName("palmSapling");
+		holidaylights_1Idle = new BlockHolidayLight(holidaylights_1IdleID, false).setCreativeTab(plusTab).setBlockName("holidayLight_1Idle");
+		holidaylights_1Active = new BlockHolidayLight(holidaylights_1ActiveID, true).setBlockName("holidayLight_1Active");
+		holidaylights_2Idle = new BlockHolidayLight_2(holidaylights_2IdleID, false).setCreativeTab(plusTab).setBlockName("holidayLight_2Idle");
+		holidaylights_2Active = new BlockHolidayLight_2(holidaylights_2ActiveID, true).setBlockName("holidayLight_2Active");
 		
 		//Items
 		embroniumIngot = new ItemOre(embroniumIngotID).setIconCoord(1, 0).setCreativeTab(plusTab).setItemName("embroniumIngot");
 		embroniumDust = new ItemOre(embroniumDustID).setIconCoord(2, 0).setCreativeTab(plusTab).setItemName("embroniumDust");
 		vortexCrystal = new ItemSpecialEffect(vortexCrystalID).setIconCoord(5, 0).setCreativeTab(plusTab).setItemName("vortexCrystal");
+		
+		bulbNormal = new ItemNormal(bulbNormalID).setIconCoord(15, 15).setCreativeTab(plusTab).setItemName("bulbNormal");
+		bulbRed = new ItemNormal(bulbRedID).setIconCoord(12, 15).setCreativeTab(plusTab).setItemName("bulbRed");
+		bulbBlue = new ItemNormal(bulbBlueID).setIconCoord(13, 15).setCreativeTab(plusTab).setItemName("bulbBlue");
+		bulbGreen = new ItemNormal(bulbGreenID).setIconCoord(14, 15).setCreativeTab(plusTab).setItemName("bulbGreen");
 		
 		//Food
 		itemBandage = new ItemPlusFood(itemBandageID, 8, 1F, false).setIconCoord(3, 0).setCreativeTab(plusTab).setItemName("bandage"); 
@@ -654,6 +679,10 @@ public class MinecraftPlusBase
 		this.palmLeavesID = config.getBlock("palmLeaves", 1201).getInt();
 		this.palmWoodID = config.getBlock("palmWood", 1202).getInt();
 		this.palmSaplingID = config.getBlock("palmSapling", 1203).getInt();
+		this.holidaylights_1IdleID = config.getBlock("holidayLights.1", 1204).getInt();
+		this.holidaylights_1ActiveID = config.getBlock("holidayLights.1.active", 1205).getInt();
+		this.holidaylights_2IdleID = config.getBlock("holidayLights.2", 1206).getInt();
+		this.holidaylights_2ActiveID = config.getBlock("holidayLights.2.active", 1207).getInt();
 		
 		//Items
 		embroniumIngotID = config.getItem("embroniumIngot", 31000).getInt();
@@ -690,9 +719,13 @@ public class MinecraftPlusBase
 		daggerGoldID = config.getItem("daggerGold", 31031).getInt();
 		daggerDiamondID = config.getItem("daggerDiamond", 31032).getInt();
 		daggerEmbroniumID = config.getItem("daggerEmbronium", 31033).getInt();
+		bulbNormalID = config.getItem("bulbNormal", 31034).getInt();
+		bulbRedID = config.getItem("bulbRed", 31034).getInt();
+		bulbBlueID = config.getItem("bulbBlue", 31035).getInt();
+		bulbGreenID = config.getItem("bulbGreen", 31036).getInt();
 		
 		config.save();
-		System.out.println("[MC+] Config file made/ saved.");
+		System.out.println("[MC+] Config file made/ updated.");
 	}
 	
 	private void addOreDictionaryRecipes() 
@@ -758,6 +791,16 @@ public class MinecraftPlusBase
 		GameRegistry.addShapelessRecipe(new ItemStack(Block.ice, 1), new Object[] { /*ingredients*/ iceCube});
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumIngot, 9), new Object[] { /*ingredients*/ MinecraftPlusBase.embroniumBlock});
 
+		GameRegistry.addRecipe(new ItemStack(bulbNormal), new Object [] {" # ", "###", " @ ", Character.valueOf('#'), Item.lightStoneDust, Character.valueOf('@'), Item.redstone});
+		GameRegistry.addRecipe(new ItemStack(holidaylights_1Idle), new Object [] {"   ", "###", "$@%", Character.valueOf('#'), Item.silk, Character.valueOf('$'), MinecraftPlusBase.bulbRed, Character.valueOf('@'), MinecraftPlusBase.bulbBlue, Character.valueOf('%'), MinecraftPlusBase.bulbGreen});
+		GameRegistry.addRecipe(new ItemStack(holidaylights_2Idle), new Object [] {"   ", "###", "$$$", Character.valueOf('#'), Item.silk, Character.valueOf('$'), MinecraftPlusBase.bulbNormal});
+		ItemStack redDye = new ItemStack(Item.dyePowder, 1, 1);
+		ItemStack blueDye = new ItemStack(Item.dyePowder, 1, 4);
+		ItemStack greenDye = new ItemStack(Item.dyePowder, 1, 2);
+		GameRegistry.addShapelessRecipe(new ItemStack(bulbRed), new Object[] {MinecraftPlusBase.bulbNormal, redDye});
+		GameRegistry.addShapelessRecipe(new ItemStack(bulbBlue), new Object[] {MinecraftPlusBase.bulbNormal, blueDye});
+		GameRegistry.addShapelessRecipe(new ItemStack(bulbGreen), new Object[] {MinecraftPlusBase.bulbNormal, greenDye});
+		
 		//Items
 		GameRegistry.addRecipe(new ItemStack(embroniumTorch, 4), new Object [] {"   ", " # ", " @ ", Character.valueOf('#'), MinecraftPlusBase.embroniumDust, Character.valueOf('@'), Item.stick});
 		GameRegistry.addRecipe(new ItemStack(vortexCrystal, 2), new Object [] {"$#$", "#@#", "$#$", Character.valueOf('#'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.redstone, Character.valueOf('$'), Item.diamond});  //This is the recipe for vortex crystals
@@ -805,12 +848,20 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(palmWood, "Palm Wood");
 		LanguageRegistry.addName(palmLeaves, "Palm Leaves");
 		LanguageRegistry.addName(palmSapling, "Palm Sapling");
+		LanguageRegistry.addName(holidaylights_1Idle, "Multi-colored Holiday Lights");
+		LanguageRegistry.addName(holidaylights_1Active, "[ACTIVE] Multi-colored Holiday Lights");
+		LanguageRegistry.addName(holidaylights_2Idle, "Yellow Holiday Lights");
+		LanguageRegistry.addName(holidaylights_2Active, "[ACTIVE] Yellow Holiday Lights");
 		//Items
 		LanguageRegistry.addName(embroniumIngot, "Embronium Ingot");
 		LanguageRegistry.addName(embroniumDust, "Embronium Dust");
 		//LanguageRegistry.addName(mummyEgg, "Mummy Egg");
 		//LanguageRegistry.addName(humanEgg, "Human Egg");
 		LanguageRegistry.addName(vortexCrystal, "Vortex Crystal");
+		LanguageRegistry.addName(bulbNormal, "Normal Bulb");
+		LanguageRegistry.addName(bulbRed, "Red Bulb");
+		LanguageRegistry.addName(bulbBlue, "Blue Bulb");
+		LanguageRegistry.addName(bulbGreen, "Green Bulb");
 		//Food
 		LanguageRegistry.addName(itemBandage, "Bandage");
 		LanguageRegistry.addName(Cheese, "Cheese");
@@ -859,7 +910,7 @@ public class MinecraftPlusBase
 		//Blocks
 		LanguageRegistry.instance().addNameForObject(embroniumBlock, "en_PT", "Block 'o' Embronium");
 		LanguageRegistry.instance().addNameForObject(redstoneLampThinActive, "en_PT", "Cheater's Light");
-		LanguageRegistry.instance().addNameForObject(redstoneLampThinIdle, "en_PT", "Witchlike Lumineer");
+		LanguageRegistry.instance().addNameForObject(redstoneLampThinIdle, "en_PT", "Witchlike Light");
 		LanguageRegistry.instance().addNameForObject(redstoneLampThinActive, "fr_FR", "Lumiere de Tricheur");
 		LanguageRegistry.instance().addNameForObject(redstoneLampThinIdle, "fr_FR", "Lumiere");
 		//Items
@@ -903,6 +954,10 @@ public class MinecraftPlusBase
 		GameRegistry.registerBlock(palmWood);
 		GameRegistry.registerBlock(palmLeaves);
 		GameRegistry.registerBlock(palmSapling);
+		GameRegistry.registerBlock(holidaylights_1Idle);
+		GameRegistry.registerBlock(holidaylights_1Active);
+		GameRegistry.registerBlock(holidaylights_2Idle);
+		GameRegistry.registerBlock(holidaylights_2Active);
 		//GameRegistry.registerBlock(exampleSmeltingAchievementBlock);
 	}
 

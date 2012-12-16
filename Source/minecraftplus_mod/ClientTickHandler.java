@@ -164,7 +164,7 @@ public class ClientTickHandler implements ITickHandler
             minecraft.thePlayer.addChatMessage("Welcome " + username + "!");
             }
             
-            minecraft.thePlayer.addChatMessage("Today is " + month + " " + date + suffix + ".");
+            minecraft.thePlayer.addChatMessage("Today is " + month + " " + date + suffix + " " + calendar.get(Calendar.YEAR) + ".");
             
             if(!isBetaVersion){
             int counter = 0;
@@ -276,6 +276,12 @@ public class ClientTickHandler implements ITickHandler
                 Process p = Runtime.getRuntime().exec("cmd /c start http://bit.ly/MCPlus"); 
                 } 
                 catch(Exception e1) {System.err.println(e1);} 
+            }if (calendar.get(2) + 1 == 1 && calendar.get(5) == 1)
+            {
+            	minecraft.thePlayer.addChatMessage("Happy New Year " + calendar.get(Calendar.YEAR) + " from the Minecraft+ team!");
+            }if (calendar.get(2) + 1 == 12 && calendar.get(5) == 25)
+            {
+            	minecraft.thePlayer.addChatMessage("Happy Holidays " + calendar.get(Calendar.YEAR) + " from the Minecraft+ team!");
             }
         }
         }
