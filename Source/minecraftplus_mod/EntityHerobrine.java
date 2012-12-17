@@ -54,7 +54,7 @@ public class EntityHerobrine extends EntityMob
         super.onLivingUpdate();
     }
     
-    protected void dropFewItems()
+    protected void dropFewItems(boolean par1, int par2)
     {
         dropItem(Item.diamond.shiftedIndex, 2);
         dropItem(Item.ingotIron.shiftedIndex, 3);

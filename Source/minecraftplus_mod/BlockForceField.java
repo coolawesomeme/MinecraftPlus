@@ -45,7 +45,7 @@ public class BlockForceField extends BlockNormal {
 
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {
-        if(hasBeenActivated == true){
+        if(hasBeenActivated){
     	blockRemove(world, i, j, k);
         entityplayer.addChatMessage("Forcefield De-activating!");
         hasBeenActivated = false;
@@ -54,7 +54,7 @@ public class BlockForceField extends BlockNormal {
 
      public void onBlockDestroyedByPlayer(World world, int i, int j, int k, int l)
         {
-    	 if(hasBeenActivated == true){
+    	 if(hasBeenActivated){
          blockRemove(world, i, j, k);
          hasBeenActivated = false;
     	 }
@@ -62,7 +62,7 @@ public class BlockForceField extends BlockNormal {
 
     public void onBlockDestroyedByExplosion(World world, int i, int j, int k)
     {
-    	if(hasBeenActivated == true){
+    	if(hasBeenActivated){
     	blockRemove(world, i, j, k);
         hasBeenActivated = false;
     	}

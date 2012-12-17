@@ -1,5 +1,13 @@
 Changelog
 =============
+r2b10
+-------------
+- Before release bug fixing
+	- Fixed Iron Man armor not showing up on the character
+	- Entity Bugs
+	- Moar
+- Changed a few textures
+
 r2b9
 -------------
 - Added holiday messages
@@ -35,7 +43,7 @@ r2b6
 - Fixed some bugs    
 	- Fixed block-related bugs
 	- More
-- Added a changelog (this) :D    
+- Added a changelog (this file) :D    
     
 r2b5
 -------------

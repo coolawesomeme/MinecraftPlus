@@ -32,7 +32,7 @@ public class ClientTickHandler implements ITickHandler
     public String updateMessage = "missingno";
     public String updateMessage2 = "missingno";
     private boolean isPlayerWearingSpecialArmor = true;
-    private boolean isBetaVersion = true;
+    private boolean isBetaVersion = MinecraftPlusBase.betaVersion;
     private static int clientTickCount = 0;
     private static int clientSecondCount = 0;
     private static int clientTickNumber = 1;
@@ -246,9 +246,9 @@ public class ClientTickHandler implements ITickHandler
                     minecraft.thePlayer.addChatMessage("");
                     minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
                     minecraft.thePlayer.addChatMessage("(\u00A7bJust ask coolawesomeme\u00A7f!)");
-                    if(temp[1].isEmpty() == false){
+                    if(!temp[1].isEmpty()){
                     minecraft.thePlayer.addChatMessage(temp[1]);
-                    } if(temp[1].isEmpty() == false){
+                    } if(!temp[2].isEmpty()){
                     minecraft.thePlayer.addChatMessage(temp[2]);
                     }
                     System.out.println("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");

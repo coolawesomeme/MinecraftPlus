@@ -166,4 +166,12 @@ public class MinecraftPlus {
 		}
 		return finalString;
 	}
+	
+	public static void sendOutMessage(String message){
+		System.out.println("[MC+] " + message);
+	}
+	
+	public static void sendOutMessage(String message, String signature){
+		System.out.println("[" + signature + "] " + message);
+	}
 }

@@ -87,7 +87,7 @@ public class EntityMummy extends EntityMob
         super.onLivingUpdate();
     }
     
-    protected void dropFewItems()
+    protected void dropFewItems(boolean par1, int par2)
     {
     	Random randomGenerator = new Random();
         int rarity = randomGenerator.nextInt(3);

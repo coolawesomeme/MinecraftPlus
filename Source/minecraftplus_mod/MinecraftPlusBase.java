@@ -92,22 +92,22 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 9;
+    public static final int modverbuild = 10;
+    
+    /** Is this a beta version? */
+    public static boolean betaVersion = true;
     
     /** Full mod version string. */
     public static final String modver = "r" + modverrelease + "b" + modverbuild;
     
     /** Full mod version string + codename. */
     public static String codever = modver + " \"" + codename + "\"";
-    
+        
     /** Current Minecraft Version. */
     public static String mcver = "1.4.5";
     
     /** Check to see if the mod is loaded or not. */
     public static boolean isMCPlusLoaded = false;
-	
-	/**MinecraftPlusBase Instance */
-	public static MinecraftPlusBase getPlusBaseInstance;
 	
 	/**MinecraftPlus Instance */
 	public static MinecraftPlus getPlusInstance;
@@ -120,6 +120,7 @@ public class MinecraftPlusBase
 	
 	@SideOnly(Side.CLIENT)
 	public static Minecraft minecraft;
+	
 	
 	//ID's for Configuration File
 	
@@ -490,9 +491,10 @@ public class MinecraftPlusBase
         EntityRegistry.registerModEntity(EntityHuman.class, "Human", 1, this, 250, 5, false);
         
         //Adding Spawns
-        EntityRegistry.addSpawn(EntityHuman.class, 5, 0, 10, EnumCreatureType.creature);
-        EntityRegistry.addSpawn(EntityMummy.class, 5, 0, 20, EnumCreatureType.monster, BiomeGenBase.desert, BiomeGenBase.desertHills);
-        EntityRegistry.addSpawn(EntityHerobrine.class, 1, 0, 2, EnumCreatureType.monster);
+        EntityRegistry.addSpawn(EntityHuman.class, 20, 0, 10, EnumCreatureType.creature);
+        EntityRegistry.addSpawn(EntityMummy.class, 15, 0, 20, EnumCreatureType.monster, BiomeGenBase.desert, BiomeGenBase.desertHills);
+        EntityRegistry.addSpawn(EntityHerobrine.class, 2, 0, 2, EnumCreatureType.monster);
+        
 	}
 
 	private void addSmeltingRecipes() 

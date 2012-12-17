@@ -39,7 +39,7 @@ public class PlusWorldGenerator implements IWorldGenerator {
 	        }
 		}
 		
-		for(int q = 0; q < 15; q++)
+		for(int q = 0; q < 8; q++)
         {
                 int randPosX = i + random.nextInt(15);
                 int randPosY = random.nextInt(80);

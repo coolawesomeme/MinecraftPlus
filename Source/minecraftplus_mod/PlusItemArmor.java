@@ -30,7 +30,7 @@ public class PlusItemArmor extends ItemArmor implements IArmorTextureProvider
             }
             if(itemstack.itemID == MinecraftPlusBase.ironManHelmet.shiftedIndex || itemstack.itemID == MinecraftPlusBase.ironManChest.shiftedIndex || itemstack.itemID == MinecraftPlusBase.ironManBoots.shiftedIndex)
             {
-                            return "/minecraftplus/armor/ironman_1.png";
+                            return "/minecraftplus/armor/ironmanarmor_1.png";
             }
             if(itemstack.itemID == MinecraftPlusBase.ironManPants.shiftedIndex)
             {

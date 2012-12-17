@@ -28,6 +28,6 @@ public class BlockHealBlock extends BlockNormal {
 
     public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
     {
-    	entity.attackEntityFrom(DamageSource.magic, -2);
+    	entity.attackEntityFrom(DamageSource.magic, -1);
     }
 }
