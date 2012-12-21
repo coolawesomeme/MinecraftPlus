@@ -1,7 +1,7 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.ItemStack;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.ItemStack;
 
 public class PlusTab extends CreativeTabs{
 	public PlusTab(String label) {

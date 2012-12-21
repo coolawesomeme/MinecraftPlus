@@ -1,9 +1,7 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemReed;
+import net.minecraft.block.Block;
+import net.minecraft.item.ItemReed;
 
 public class ItemBlockPlacer extends ItemReed
 {

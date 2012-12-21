@@ -2,11 +2,11 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.world.World;
 
 public class BlockTrapFire extends Block {
 	private boolean hasBeenActivated = false;

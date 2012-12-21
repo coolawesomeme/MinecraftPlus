@@ -1,6 +1,7 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.Block;
+import net.minecraft.block.Block;
+
  
 public class PlusItemSpade extends PlusItemTool
 {

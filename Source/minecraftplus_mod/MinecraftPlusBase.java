@@ -1,7 +1,5 @@
 package net.minecraftplus_mod;
 
-import java.awt.Color;
-import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,38 +8,25 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale.Category;
 import java.util.Map;
 import java.util.Random;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.Achievement;
-import net.minecraft.src.BiomeGenBase;
-import net.minecraft.src.Block;
-import net.minecraft.src.CallableMinecraftVersion;
-import net.minecraft.src.CraftingManager;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.EnumArmorMaterial;
-import net.minecraft.src.EnumCreatureType;
-import net.minecraft.src.EnumToolMaterial;
-import net.minecraft.src.IStatStringFormat;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemReed;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.StatCollector;
-import net.minecraftforge.client.MinecraftForgeClient;
-import net.minecraftforge.common.AchievementPage;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.Configuration;
 import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -50,22 +35,18 @@ import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.Mod.ServerStarted;
 import cpw.mods.fml.common.ModContainer;
-import cpw.mods.fml.common.Side;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.asm.SideOnly;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
-
-import net.minecraftplus_mod.ClientProxy;
-import net.minecraftplus_mod.CommonProxy;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 //This is an Annotation interface that establishes what sides of the mod are required to run it. clientSideRequired should always be true, and serverSideRequired should USUALLY be false
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, versionBounds = "[" + MinecraftPlusBase.modver + "]")
@@ -92,7 +73,7 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 10;
+    public static final int modverbuild = 11;
     
     /** Is this a beta version? */
     public static boolean betaVersion = true;
@@ -104,7 +85,7 @@ public class MinecraftPlusBase
     public static String codever = modver + " \"" + codename + "\"";
         
     /** Current Minecraft Version. */
-    public static String mcver = "1.4.5";
+    public static String mcver = "1.4.6";
     
     /** Check to see if the mod is loaded or not. */
     public static boolean isMCPlusLoaded = false;
@@ -432,8 +413,8 @@ public class MinecraftPlusBase
 			fwrite.write("LastTimeMC+WasRun: " + fullDate + "\n");
 			fwrite.write("LastUsedModVersion: " + codever + "\n");
 			fwrite.write("LatestMC+Version: " + modver3 + "\n");
-			fwrite.write("RecommendedForgeVersion: " + "6.4.0.396" + "\n");
-			fwrite.write("RecommendedFMLVersion: " + "4.5.2.459" + "\n");
+			fwrite.write("RecommendedForgeVersion: " + "6.5.0.466" + "\n");
+			fwrite.write("RecommendedFMLVersion: " + "4.6.7.508" + "\n");
 			fwrite.write("LastUsedForgeVersion: " + ForgeVersion.getVersion() + "\n");
 			fwrite.write("LastUsedFMLVersion: " + Loader.instance().getFMLVersionString() + "\n");
 			fwrite.write("LastUsedMinecraftVersion: " + Loader.instance().getMCVersionString() + "\n");
@@ -451,6 +432,14 @@ public class MinecraftPlusBase
 		}
 	}
 
+	public static boolean isOutdated(int release, int build){
+		if(modverrelease < release || modverbuild < build){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	@Init
 	public void init(FMLInitializationEvent event)
 	{		
@@ -610,7 +599,7 @@ public class MinecraftPlusBase
 		
 		//Food
 		itemBandage = new ItemPlusFood(itemBandageID, 8, 1F, false).setIconCoord(3, 0).setCreativeTab(plusTab).setItemName("bandage"); 
-		Cheese = new ItemPlusFood(CheeseID, 4, 1F, false).setIconCoord(4, 0).setCreativeTab(plusTab).setItemName("Cheese");
+		Cheese = new ItemPlusFood(CheeseID, 4, 1F, false).setIconCoord(4, 0).setCreativeTab(plusTab).setContainerItem(Item.bucketEmpty).setItemName("Cheese");
 		Sausage = new ItemPlusFood(SausageID, 4, 1F, true).setIconCoord(8, 0).setCreativeTab(plusTab).setItemName("Sausage");
 		hotDog = new ItemPlusFood(hotDogID, 4, 1F, false).setIconCoord(9, 0).setCreativeTab(plusTab).setItemName("hotDog");
 		chickenSoup = new ItemPlusFood(chickenSoupID, 4, 1F, false).setIconCoord(10, 0).setCreativeTab(plusTab).setItemName("chickenSoup");
@@ -790,7 +779,7 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack(healBlock, 1), new Object [] {"###", "###", "###", Character.valueOf('#'), Item.cake});
 		GameRegistry.addRecipe(new ItemStack(bouncyBlock, 1), new Object [] {"   ", "###", "@ @", Character.valueOf('#'), Block.cloth, Character.valueOf('@'), Item.stick});
 		GameRegistry.addRecipe(new ItemStack(iceCube, 4), new Object [] {"   ", " # ", " @ ", Character.valueOf('#'), Item.snowball, Character.valueOf('@'), Item.bucketWater});
-		GameRegistry.addShapelessRecipe(new ItemStack(Block.ice, 1), new Object[] { /*ingredients*/ iceCube});
+		GameRegistry.addShapelessRecipe(new ItemStack(Block.ice, 1), new Object[] { /*ingredients*/ iceCube, iceCube, iceCube, iceCube});
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumIngot, 9), new Object[] { /*ingredients*/ MinecraftPlusBase.embroniumBlock});
 
 		GameRegistry.addRecipe(new ItemStack(bulbNormal), new Object [] {" # ", "###", " @ ", Character.valueOf('#'), Item.lightStoneDust, Character.valueOf('@'), Item.redstone});

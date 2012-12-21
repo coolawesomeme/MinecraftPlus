@@ -9,17 +9,11 @@ import java.util.EnumSet;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.EntityList;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EnumGameType;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.EnumGameType;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
 
 public class ClientTickHandler implements ITickHandler 
 {
@@ -190,7 +184,7 @@ public class ClientTickHandler implements ITickHandler
             	
                 System.out.println("Latest mod version found: Minecraft+ " + temp[0] + ".");
                 
-                if(temp[0].equals(modver)){
+                if(!MinecraftPlusBase.isOutdated(Integer.parseInt(temp[3]), Integer.parseInt(temp[4]))){
                 	System.out.println("[MC+] Mod up to date!");
                 }
                 else{
@@ -239,7 +233,7 @@ public class ClientTickHandler implements ITickHandler
                 	
                     System.out.println("Latest beta mod version found: Minecraft+ " + temp[0] + ".");
                     
-                    if(temp[0].equals(modver)){
+                    if(!MinecraftPlusBase.isOutdated(Integer.parseInt(temp[3]), Integer.parseInt(temp[4]))){
                     	System.out.println("[MC+] Mod up to date!");
                     }
                     else{

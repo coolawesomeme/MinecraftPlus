@@ -2,10 +2,10 @@ package net.minecraftplus_mod;
  
 import java.util.Random;
 
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.BlockBreakable;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.BlockBreakable;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 public class BlockNull extends BlockBreakable
 {

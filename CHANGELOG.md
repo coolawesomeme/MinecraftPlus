@@ -1,5 +1,10 @@
 Changelog
 =============
+r2b11
+-------------
+- Final bug testing stage
+- Updated to Minecraft 1.4.6 & Forge 6.5.0.466
+
 r2b10
 -------------
 - Before release bug fixing

@@ -4,32 +4,26 @@ package net.minecraftplus_mod;
 This file will let you to set values to change the Humans. */
 
 import java.util.Random;
-import java.util.List;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.EntityAIAvoidEntity;
-import net.minecraft.src.EntityAIFollowGolem;
-import net.minecraft.src.EntityAIMoveIndoors;
-import net.minecraft.src.EntityAIMoveTwardsRestriction;
-import net.minecraft.src.EntityAIOpenDoor;
-import net.minecraft.src.EntityAIPlay;
-import net.minecraft.src.EntityAIRestrictOpenDoor;
-import net.minecraft.src.EntityAISwimming;
-import net.minecraft.src.EntityAIVillagerMate;
-import net.minecraft.src.EntityAIWander;
-import net.minecraft.src.EntityAIWatchClosest;
-import net.minecraft.src.EntityAIWatchClosest2;
-import net.minecraft.src.EntityCreature;
-import net.minecraft.src.EntityLiving;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityVillager;
-import net.minecraft.src.EntityZombie;
-import net.minecraft.src.EnumCreatureAttribute;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.NBTTagCompound;
-import net.minecraft.src.World;
+import net.minecraft.block.Block;
+import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.ai.EntityAIAvoidEntity;
+import net.minecraft.entity.ai.EntityAIMoveIndoors;
+import net.minecraft.entity.ai.EntityAIMoveTwardsRestriction;
+import net.minecraft.entity.ai.EntityAIOpenDoor;
+import net.minecraft.entity.ai.EntityAIRestrictOpenDoor;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.ai.EntityAIWatchClosest2;
+import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
 
 public class EntityHuman extends EntityCreature
 {

@@ -1,7 +1,8 @@
 package net.minecraftplus_mod;
 
-import java.util.ArrayList;
-import net.minecraft.src.*;
+import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.ItemArmor;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.IArmorTextureProvider;
 
 public class PlusItemArmor extends ItemArmor implements IArmorTextureProvider

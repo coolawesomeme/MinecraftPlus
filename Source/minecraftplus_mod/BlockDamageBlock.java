@@ -2,12 +2,11 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.DamageSource;
+import net.minecraft.world.World;
 
 public class BlockDamageBlock extends BlockNormal {
     protected BlockDamageBlock(int i, int j) {

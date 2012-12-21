@@ -1,13 +1,13 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityMob;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EnumCreatureAttribute;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.MathHelper;
-import net.minecraft.src.World;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EnumCreatureAttribute;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.MathHelper;
+import net.minecraft.world.World;
  
 /* PLEASE DO NOT CHANGE ANY VALUES IF YOU DON'T KNOW WHAT YOU ARE DOING.
 This file will let you to set values to change the mummy. */

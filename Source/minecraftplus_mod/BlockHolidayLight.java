@@ -7,12 +7,12 @@ import static net.minecraftforge.common.ForgeDirection.WEST;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.IBlockAccess;
+import net.minecraft.world.World;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockHolidayLight extends BlockNormal{
 
@@ -141,7 +141,7 @@ public class BlockHolidayLight extends BlockNormal{
 
     public void func_85107_d(int par1)
     {
-        float var3 = 0.125F;
+        float var3 = 0.05F;
 
         if (par1 == 2)
         {

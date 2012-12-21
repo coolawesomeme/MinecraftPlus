@@ -1,11 +1,10 @@
 package net.minecraftplus_mod;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.src.*;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.world.World;
 
 public class BlockPalmSapling extends BlockFlower
 {

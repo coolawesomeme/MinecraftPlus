@@ -2,8 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.Material;
+import net.minecraft.block.material.Material;
 
 public class BlockBoosterBlock extends BlockNormal {
     protected BlockBoosterBlock(int i, int j) {

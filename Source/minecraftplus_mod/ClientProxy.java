@@ -1,14 +1,11 @@
 package net.minecraftplus_mod;
 
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.asm.SideOnly;
-import cpw.mods.fml.common.registry.TickRegistry;
-import java.util.EnumSet;
-import net.minecraft.src.ModelBiped;
-import net.minecraft.src.RenderBiped;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraftforge.client.MinecraftForgeClient;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ClientProxy extends CommonProxy{
 	

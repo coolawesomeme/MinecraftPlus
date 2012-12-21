@@ -1,8 +1,9 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.IInventory;
-import net.minecraft.src.ItemStack;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.ICraftingHandler;
 
 public class MinecraftPlusCraftingHandler implements ICraftingHandler 
@@ -10,13 +11,11 @@ public class MinecraftPlusCraftingHandler implements ICraftingHandler
 	@Override
 	public void onCrafting(EntityPlayer player, ItemStack item, IInventory craftMatrix) 
 	{
-		/*if(item.itemID == ExampleMod.exampleItem.shiftedIndex)
+		if(item.itemID == MinecraftPlusBase.cobbleGenBlock.blockID)
 		{
-			player.addStat(ExampleMod.getExampleItem, 1);
-			//You can also add something like this if you want to give people experience for crafting this item
-			//An experience argument is already included in GameRegistry.addSmelting();
-			player.addExperience(5);
-		}*/
+			ItemStack bucketEmpty = new ItemStack(Item.bucketEmpty, 0, 2);
+			player.inventory.addItemStackToInventory(bucketEmpty);
+		}
 	}
 
 	@Override

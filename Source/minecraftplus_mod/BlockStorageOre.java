@@ -1,8 +1,7 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.CreativeTabs;
-import net.minecraft.src.Material;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
 
 public class BlockStorageOre extends Block 
 {

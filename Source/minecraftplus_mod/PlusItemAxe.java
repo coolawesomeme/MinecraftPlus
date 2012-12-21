@@ -1,8 +1,8 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.Block;
-import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 
 public class PlusItemAxe extends PlusItemTool
 {

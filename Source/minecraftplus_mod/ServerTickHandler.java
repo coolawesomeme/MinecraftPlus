@@ -2,14 +2,8 @@ package net.minecraftplus_mod;
 
 import java.util.EnumSet;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.src.GuiScreen;
-import net.minecraft.src.RConConsoleSource;
-
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.Side;
-import cpw.mods.fml.common.asm.SideOnly;
 
 public class ServerTickHandler implements ITickHandler 
 {	

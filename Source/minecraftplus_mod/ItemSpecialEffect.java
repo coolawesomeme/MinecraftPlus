@@ -1,7 +1,7 @@
 package net.minecraftplus_mod;
 
-import net.minecraft.src.EnumRarity;
-import net.minecraft.src.ItemStack;
+import net.minecraft.item.EnumRarity;
+import net.minecraft.item.ItemStack;
 
 public class ItemSpecialEffect extends ItemNormal
 {

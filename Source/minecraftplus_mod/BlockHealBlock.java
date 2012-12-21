@@ -2,13 +2,10 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Entity;
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.Material;
-import net.minecraft.src.World;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.world.World;
 
 public class BlockHealBlock extends BlockNormal {
 	
@@ -26,8 +23,12 @@ public class BlockHealBlock extends BlockNormal {
         return AxisAlignedBB.getBoundingBox((float)par2 + f, par3, (float)par4 + f, (float)(par2 + 1) - f, (float)(par3 + 1) - f, (float)(par4 + 1) - f);
     }
 
-    public void onEntityCollidedWithBlock(World world, int i, int j, int k, Entity entity)
+    /**
+     * Called upon block activation (right click on the block.)
+     */
+    public boolean onBlockActivated(World par1World, int par2, int par3, int par4, EntityPlayer par5EntityPlayer, int par6, float par7, float par8, float par9)
     {
-    	entity.attackEntityFrom(DamageSource.magic, -1);
+    	par5EntityPlayer.heal(4);
+        return true;
     }
 }
