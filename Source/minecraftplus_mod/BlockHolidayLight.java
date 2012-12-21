@@ -141,7 +141,7 @@ public class BlockHolidayLight extends BlockNormal{
 
     public void func_85107_d(int par1)
     {
-        float var3 = 0.05F;
+        float var3 = 0.02F;
 
         if (par1 == 2)
         {

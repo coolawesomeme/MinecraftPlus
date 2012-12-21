@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
@@ -30,16 +31,19 @@ public class PlusWorldGenerator implements IWorldGenerator {
 	private void generateSurface(World world, Random random, int i, int j, String currentBiome) {
 		
 		if(currentBiome == "Desert" || currentBiome == "DesertHills" || currentBiome == "Beach"){
-			for(int q = 0; q < 8; q++)
+			for(int q = 0; q < 1; q++)
 	        {
 	                int randPosX = i + random.nextInt(15);
 	                int randPosY = random.nextInt(80);
 	                int randPosZ = j + random.nextInt(16);
-	                (new TreePalm()).generate(world, random, randPosX, randPosY, randPosZ);
+	                int yPosNew = randPosY - 1;
+	                if(world.getBlockId(randPosX, yPosNew, randPosZ) == Block.grass.blockID || world.getBlockId(randPosX, yPosNew, randPosZ) == Block.sand.blockID){
+	                	(new TreePalm()).generate(world, random, randPosX, randPosY, randPosZ);
+	                }
 	        }
 		}
 		
-		for(int q = 0; q < 8; q++)
+		for(int q = 0; q < 3; q++)
         {
                 int randPosX = i + random.nextInt(15);
                 int randPosY = random.nextInt(80);

@@ -206,15 +206,6 @@ public class BlockShield extends BlockPane
      */
     protected boolean canSilkHarvest()
     {
-        return true;
-    }
-
-    /**
-     * Returns an item stack containing a single instance of the current block type. 'i' is the block's subtype/damage
-     * and is ignored for blocks which do not support subtypes. Blocks which cannot be harvested should return null.
-     */
-    protected ItemStack createStackedBlock(int par1)
-    {
-        return new ItemStack(this.blockID, 1, par1);
+        return false;
     }
 }

@@ -1,5 +1,15 @@
 Changelog
 =============
+r2b12
+-------------
+- Fixed lots of bugs
+	- Palm trees spawning too often
+	- [SPOILER] Plus Signs not having things in chest
+	- Armor not displaying on body
+	- Blocks destroyed through right-clicking on certain blocks not disappearing
+	- More
+- Updated to Forge 6.5.0.471
+
 r2b11
 -------------
 - Final bug testing stage

@@ -73,7 +73,7 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 11;
+    public static final int modverbuild = 12;
     
     /** Is this a beta version? */
     public static boolean betaVersion = true;
@@ -101,7 +101,6 @@ public class MinecraftPlusBase
 	
 	@SideOnly(Side.CLIENT)
 	public static Minecraft minecraft;
-	
 	
 	//ID's for Configuration File
 	
@@ -351,6 +350,8 @@ public class MinecraftPlusBase
 		try{
 			String modver2 = "";
 			String modver3 = "";
+			int modver4 = 0;
+			int modver5 = 0;
 				try{
 					// Create a URL for the desired page
 					URL url = new URL("https://raw.github.com/coolawesomeme/MinecraftPlus/master/MODUPDATE.txt");
@@ -361,6 +362,8 @@ public class MinecraftPlusBase
 						String[] temp;
 						temp = modver2.split("-");
 						modver3 = temp[0];
+						modver4 = Integer.parseInt(temp[3]);
+						modver5 = Integer.parseInt(temp[4]);
 					}
 					in.close();
 				}catch(Exception e){
@@ -407,23 +410,29 @@ public class MinecraftPlusBase
 				isMCPlusLoaded = true;
 			}
 			Map<String, ModContainer> modslist = Loader.instance().getIndexedModList();
-			fwrite.write("~-!-~ Minecraft+ Mod Stats ~-!-~" + "\n");
-			fwrite.write(" ~!~    (Debugging Info)    ~!~ " + "\n");
-			fwrite.write("----------------------------------------------" + "\n");
-			fwrite.write("LastTimeMC+WasRun: " + fullDate + "\n");
-			fwrite.write("LastUsedModVersion: " + codever + "\n");
-			fwrite.write("LatestMC+Version: " + modver3 + "\n");
-			fwrite.write("RecommendedForgeVersion: " + "6.5.0.466" + "\n");
-			fwrite.write("RecommendedFMLVersion: " + "4.6.7.508" + "\n");
-			fwrite.write("LastUsedForgeVersion: " + ForgeVersion.getVersion() + "\n");
-			fwrite.write("LastUsedFMLVersion: " + Loader.instance().getFMLVersionString() + "\n");
-			fwrite.write("LastUsedMinecraftVersion: " + Loader.instance().getMCVersionString() + "\n");
-			fwrite.write("WasMinecraft+Loaded: " + loaded + "\n");
-			fwrite.write("NumberOfModsUsed: " + modslist.size() + "\n");
-			fwrite.write("ModsUsed:" + "\n");
-			fwrite.write(Loader.instance().getIndexedModList() + "\n");
-			fwrite.write("\n" + "// " + randString);
-			fwrite.write("\n" + "~[|\\O/|]~");
+			fwrite.write("~-!-~ Minecraft+ Mod Stats ~-!-~" + "  " + "\n");
+			fwrite.write(" ~!~   (/Debugging Info)    ~!~ " + "  " + "\n");
+			fwrite.write("----------------------------------------------" + "  " + "\n");
+			fwrite.write("LastTimeMC+WasRun: " + fullDate + "  " + "\n");
+			fwrite.write("LastUsedModVersion: " + codever + "  ");
+			if(isUpdated(modver4, modver5)){
+				fwrite.write("  " + "\n");}
+			else if(isOutdated(modver4, modver5)){
+				fwrite.write(" (Outdated Version)" + "  " + "\n");}
+			else if(isBeta(modver4, modver5)){
+				fwrite.write(" (Beta Version)" + "  " + "\n");}
+			fwrite.write("LatestMC+VersionFoundOnline: " + modver3 + "  " + "\n");
+			fwrite.write("RecommendedForgeVersion: " + "6.5.0.471" + "  " + "\n");
+			fwrite.write("RecommendedFMLVersion: " + "4.6.12.511" + "  " + "\n");
+			fwrite.write("LastUsedForgeVersion: " + ForgeVersion.getVersion() + "  " + "\n");
+			fwrite.write("LastUsedFMLVersion: " + Loader.instance().getFMLVersionString() + "  " + "\n");
+			fwrite.write("LastUsedMinecraftVersion: " + Loader.instance().getMCVersionString() + "  " + "\n");
+			fwrite.write("WasMinecraft+Loaded: " + loaded + "  " + "\n");
+			fwrite.write("NumberOfModsUsed: " + modslist.size() + "  " + "\n");
+			fwrite.write("ModsUsed:" + "  " + "\n");
+			fwrite.write(Loader.instance().getIndexedModList().keySet() + "  " + "\n");
+			fwrite.write("\n" + "// " + randString + "  ");
+			fwrite.write("\n" + "~[|\\O/|]~" + "  ");
 			fwrite.flush();
 			fwrite.close();
 			System.out.println("[MC+] Stats/ Debugging file made/ updated.");
@@ -434,6 +443,22 @@ public class MinecraftPlusBase
 
 	public static boolean isOutdated(int release, int build){
 		if(modverrelease < release || modverbuild < build){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public static boolean isBeta(int release, int build){
+		if(modverrelease > release || modverbuild > build){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public static boolean isUpdated(int release, int build){
+		if(modverrelease == release || modverbuild == build){
 			return true;
 		}else{
 			return false;
@@ -615,15 +640,15 @@ public class MinecraftPlusBase
 		EnumArmorMaterial EMBRONIUM = EnumHelper.addArmorMaterial("EMBRONIUM", 25, new int[]{2, 7, 5, 2}, 25);
 		EnumArmorMaterial IRONMAN = EnumHelper.addArmorMaterial("IRONMAN", 25, new int[]{3, 8, 6, 3}, 25);
 		
-		embroniumHelmet = new PlusItemArmor(embroniumHelmetID,EMBRONIUM, 5, 0).setCreativeTab(plusTab).setIconCoord(14, 0).setItemName("embroniumHelmet");
-		embroniumChest = new PlusItemArmor(embroniumChestID,EMBRONIUM, 5, 1).setCreativeTab(plusTab).setIconCoord(14, 1).setItemName("embroniumChest");
-		embroniumPants = new PlusItemArmor (embroniumPantsID, EMBRONIUM, 5 ,2).setCreativeTab(plusTab).setIconCoord(14, 2).setItemName("embroniumPants");
-		embroniumBoots = new PlusItemArmor (embroniumBootsID, EMBRONIUM, 5 ,3).setCreativeTab(plusTab).setIconCoord(14, 3).setItemName("embroniumBoots");  
+		embroniumHelmet = new PlusItemArmor(embroniumHelmetID,EMBRONIUM, 3, 0).setCreativeTab(plusTab).setIconCoord(14, 0).setItemName("embroniumHelmet");
+		embroniumChest = new PlusItemArmor(embroniumChestID,EMBRONIUM, 3, 1).setCreativeTab(plusTab).setIconCoord(14, 1).setItemName("embroniumChest");
+		embroniumPants = new PlusItemArmor(embroniumPantsID, EMBRONIUM, 3 ,2).setCreativeTab(plusTab).setIconCoord(14, 2).setItemName("embroniumPants");
+		embroniumBoots = new PlusItemArmor(embroniumBootsID, EMBRONIUM, 3 ,3).setCreativeTab(plusTab).setIconCoord(14, 3).setItemName("embroniumBoots");  
 
-		ironManHelmet = new PlusItemArmor(ironManHelmetID,IRONMAN, 6, 0).setCreativeTab(plusTab).setIconCoord(15, 0).setItemName("ironManHelmet");
-		ironManChest = new PlusItemArmor(ironManChestID,IRONMAN, 6, 1).setCreativeTab(plusTab).setIconCoord(15, 1).setItemName("ironManChest");
-		ironManPants = new PlusItemArmor (ironManPantsID, IRONMAN, 6 ,2).setCreativeTab(plusTab).setIconCoord(15, 2).setItemName("ironManPants");
-		ironManBoots = new PlusItemArmor (ironManBootsID, IRONMAN, 6 ,3).setCreativeTab(plusTab).setIconCoord(15, 3).setItemName("ironManBoots");  
+		ironManHelmet = new PlusItemArmor(ironManHelmetID,IRONMAN, 3, 0).setCreativeTab(plusTab).setIconCoord(15, 0).setItemName("ironManHelmet");
+		ironManChest = new PlusItemArmor(ironManChestID,IRONMAN, 3, 1).setCreativeTab(plusTab).setIconCoord(15, 1).setItemName("ironManChest");
+		ironManPants = new PlusItemArmor(ironManPantsID, IRONMAN, 3 ,2).setCreativeTab(plusTab).setIconCoord(15, 2).setItemName("ironManPants");
+		ironManBoots = new PlusItemArmor(ironManBootsID, IRONMAN, 3 ,3).setCreativeTab(plusTab).setIconCoord(15, 3).setItemName("ironManBoots");  
 		
 		//Toolset
 		embroniumPickaxe = (new PlusItemPickaxe (embroniumPickaxeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 5).setItemName("embroniumPickaxe");
@@ -920,7 +945,7 @@ public class MinecraftPlusBase
 	private void registerBlocks() 
 	{
 		//This is an example of registering a Block, again, this should also look familiar if you've used ModLoader
-		//Register Block params (Object of Block) 
+		//Register Block params (Object of Block)
 		GameRegistry.registerBlock(embroniumBlock);
 		GameRegistry.registerBlock(embroniumOre);
 		GameRegistry.registerBlock(bouncyBlock);

@@ -19,6 +19,10 @@ public class BlockNull extends BlockBreakable
 		return "/minecraftplus/spritesheet_blocks.png";
 	}
     
+    public void onBlockAdded(World par1World, int par2, int par3, int par4) {
+    	par1World.setBlock(par2, par3, par4, 0);
+    }
+    
     /**
      * Returns a bounding box from the pool of bounding boxes (this means this box can change after the pool has been
      * cleared to be reused)

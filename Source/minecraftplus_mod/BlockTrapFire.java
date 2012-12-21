@@ -101,7 +101,8 @@ public class BlockTrapFire extends Block {
 
     public void blockRemove(World world, int x, int y, int z)
     {
-        world.setBlockWithNotify(x, y + 1, z, 0);
+    	int nullBlock = MinecraftPlusBase.nullBlock.blockID;
+        world.setBlockWithNotify(x, y + 1, z, nullBlock);
             }
 
     public void blockCreate(World world, int x, int y, int z)

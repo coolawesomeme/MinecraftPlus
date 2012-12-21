@@ -78,58 +78,60 @@ public class BlockCobbleGen extends BlockNormal {
 
     public void blockRemove(World world, int x, int y, int z)
     {
+    	int nullBlock = MinecraftPlusBase.nullBlock.blockID;
         //Generator
-        world.setBlockWithNotify(x, y, z + 2, 0);
-        world.setBlockWithNotify(x, y - 1, z + 3, 0);
-        world.setBlockWithNotify(x, y, z + 3, 0);
-        world.setBlockWithNotify(x, y, z + 5, 0);
-        world.setBlockWithNotify(x, y, z + 4, 0);
+        world.setBlockWithNotify(x, y, z + 2, nullBlock);
+        world.setBlockWithNotify(x, y - 1, z + 3, nullBlock);
+        world.setBlockWithNotify(x, y, z + 3, nullBlock);
+        world.setBlockWithNotify(x, y, z + 5, nullBlock);
+        world.setBlockWithNotify(x, y, z + 4, nullBlock);
 
         //Wall
-        world.setBlockWithNotify(x, y, z + 6, 0);
-        world.setBlockWithNotify(x + 1, y, z + 6, 0);
-        world.setBlockWithNotify(x - 1, y, z + 6, 0);
-        world.setBlockWithNotify(x + 1, y, z + 5, 0);
-        world.setBlockWithNotify(x - 1, y, z + 5, 0);
-        world.setBlockWithNotify(x + 1, y, z + 4, 0);
-        world.setBlockWithNotify(x - 1, y, z + 4, 0);
-        world.setBlockWithNotify(x + 1, y, z + 3, 0);
-        world.setBlockWithNotify(x - 1, y, z + 3, 0);
-        world.setBlockWithNotify(x + 1, y, z + 2, 0);
-        world.setBlockWithNotify(x - 1, y, z + 2, 0);
-        world.setBlockWithNotify(x + 1, y, z + 1, 0);
-        world.setBlockWithNotify(x - 1, y, z + 1, 0);
-        world.setBlockWithNotify(x, y, z + 1, 0);
+        world.setBlockWithNotify(x, y, z + 6, nullBlock);
+        world.setBlockWithNotify(x + 1, y, z + 6, nullBlock);
+        world.setBlockWithNotify(x - 1, y, z + 6, nullBlock);
+        world.setBlockWithNotify(x + 1, y, z + 5, nullBlock);
+        world.setBlockWithNotify(x - 1, y, z + 5, nullBlock);
+        world.setBlockWithNotify(x + 1, y, z + 4, nullBlock);
+        world.setBlockWithNotify(x - 1, y, z + 4, nullBlock);
+        world.setBlockWithNotify(x + 1, y, z + 3, nullBlock);
+        world.setBlockWithNotify(x - 1, y, z + 3, nullBlock);
+        world.setBlockWithNotify(x + 1, y, z + 2, nullBlock);
+        world.setBlockWithNotify(x - 1, y, z + 2, nullBlock);
+        world.setBlockWithNotify(x + 1, y, z + 1, nullBlock);
+        world.setBlockWithNotify(x - 1, y, z + 1, nullBlock);
+        world.setBlockWithNotify(x, y, z + 1, nullBlock);
 
         //Wall Level 2
-        world.setBlockWithNotify(x, y - 1, z + 6, 0);
-        world.setBlockWithNotify(x + 1, y - 1, z + 6, 0);
-        world.setBlockWithNotify(x - 1, y - 1, z + 6, 0);
-        world.setBlockWithNotify(x + 1, y - 1, z + 5, 0);
-        world.setBlockWithNotify(x - 1, y - 1, z + 5, 0);
-        world.setBlockWithNotify(x + 1, y - 1, z + 4, 0);
-        world.setBlockWithNotify(x - 1, y - 1, z + 4, 0);
-        world.setBlockWithNotify(x + 1, y - 1, z + 3, 0);
-        world.setBlockWithNotify(x - 1, y - 1, z + 3, 0);
-        world.setBlockWithNotify(x + 1, y - 1, z + 2, 0);
-        world.setBlockWithNotify(x - 1, y - 1, z + 2, 0);
-        world.setBlockWithNotify(x + 1, y - 1, z + 1, 0);
-        world.setBlockWithNotify(x - 1, y - 1, z + 1, 0);
-        world.setBlockWithNotify(x, y - 1, z + 1, 0);
+        world.setBlockWithNotify(x, y - 1, z + 6, nullBlock);
+        world.setBlockWithNotify(x + 1, y - 1, z + 6, nullBlock);
+        world.setBlockWithNotify(x - 1, y - 1, z + 6, nullBlock);
+        world.setBlockWithNotify(x + 1, y - 1, z + 5, nullBlock);
+        world.setBlockWithNotify(x - 1, y - 1, z + 5, nullBlock);
+        world.setBlockWithNotify(x + 1, y - 1, z + 4, nullBlock);
+        world.setBlockWithNotify(x - 1, y - 1, z + 4, nullBlock);
+        world.setBlockWithNotify(x + 1, y - 1, z + 3, nullBlock);
+        world.setBlockWithNotify(x - 1, y - 1, z + 3, nullBlock);
+        world.setBlockWithNotify(x + 1, y - 1, z + 2, nullBlock);
+        world.setBlockWithNotify(x - 1, y - 1, z + 2, nullBlock);
+        world.setBlockWithNotify(x + 1, y - 1, z + 1, nullBlock);
+        world.setBlockWithNotify(x - 1, y - 1, z + 1, nullBlock);
+        world.setBlockWithNotify(x, y - 1, z + 1, nullBlock);
 
         //Other Blocks
-        world.setBlockWithNotify(x, y - 1, z + 2, 0);
-        world.setBlockWithNotify(x, y - 1, z + 4, 0);
-        world.setBlockWithNotify(x, y - 1, z + 5, 0);
-        world.setBlockWithNotify(x, y - 2, z + 3, 0);
+        world.setBlockWithNotify(x, y - 1, z + 2, nullBlock);
+        world.setBlockWithNotify(x, y - 1, z + 4, nullBlock);
+        world.setBlockWithNotify(x, y - 1, z + 5, nullBlock);
+        world.setBlockWithNotify(x, y - 2, z + 3, nullBlock);
             }
 
     public void blockCreate(World world, int x, int y, int z)
     {
+    	int nullBlock = MinecraftPlusBase.nullBlock.blockID;
         //Generator
         world.setBlockWithNotify(x, y, z + 2, Block.waterMoving.blockID);
-        world.setBlockWithNotify(x, y - 1, z + 3, 0);
-        world.setBlockWithNotify(x, y, z + 3, 0);
+        world.setBlockWithNotify(x, y - 1, z + 3, nullBlock);
+        world.setBlockWithNotify(x, y, z + 3, nullBlock);
         world.setBlockWithNotify(x, y, z + 5, Block.lavaStill.blockID);
         world.setBlockWithNotify(x, y, z + 4, Block.cobblestone.blockID);
 

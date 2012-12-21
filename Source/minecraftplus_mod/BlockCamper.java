@@ -78,125 +78,126 @@ public class BlockCamper extends BlockNormal {
 
     public void blockRemove(World world, int x, int y, int z)
     {
-        //Wall - Level 1
-        world.setBlockWithNotify(x + 2, y + 1, z, 0);
-        world.setBlockWithNotify(x - 2, y + 1, z, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 1, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 1, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 1, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 1, z + 2, 0, 0);
-        world.setBlockWithNotify(x + 2, y + 1, z - 1, 0);
-        world.setBlockWithNotify(x - 2, y + 1, z - 1, 0);
-        world.setBlockWithNotify(x + 2, y + 1, z + 1, 0);
-        world.setBlockWithNotify(x - 2, y + 1, z + 1, 0);
-        world.setBlockWithNotify(x + 1, y + 1, z + 2, 0);
-        world.setBlockWithNotify(x - 1, y + 1, z + 2, 0);
-        world.setBlockWithNotify(x + 1, y + 1, z - 2, 0);
-        world.setBlockWithNotify(x - 1, y + 1, z - 2, 0);
-        world.setBlockWithNotify(x, y + 1, z - 2, 0);
+    	int nullBlock = MinecraftPlusBase.nullBlock.blockID;
+    	//Wall - Level 1
+    	world.setBlockWithNotify(x + 2, y + 1, z, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 1, z, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 1, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 1, z - 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 1, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 1, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 1, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 1, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 1, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 1, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 1, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 1, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 1, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 1, z - 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 1, z - 2, nullBlock);
 
-        //Wall - Level 2
-        world.setBlockWithNotify(x + 2, y + 2, z, 0);
-        world.setBlockWithNotify(x - 2, y + 2, z, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 2, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 2, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 2, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 2, z + 2, 0, 0);
-        world.setBlockWithNotify(x + 2, y + 2, z - 1, 0);
-        world.setBlockWithNotify(x - 2, y + 2, z - 1, 0);
-        world.setBlockWithNotify(x + 2, y + 2, z + 1, 0);
-        world.setBlockWithNotify(x - 2, y + 2, z + 1, 0);
-        world.setBlockWithNotify(x + 1, y + 2, z + 2, 0);
-        world.setBlockWithNotify(x - 1, y + 2, z + 2, 0);
-        world.setBlockWithNotify(x + 1, y + 2, z - 2, 0);
-        world.setBlockWithNotify(x - 1, y + 2, z - 2, 0);
-        world.setBlockWithNotify(x, y + 2, z - 2, 0);
+    	//Wall - Level 2
+    	world.setBlockWithNotify(x + 2, y + 2, z, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 2, z, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 2, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 2, z - 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 2, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 2, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 2, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 2, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 2, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 2, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 2, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 2, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 2, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 2, z - 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 2, z - 2, nullBlock);
 
-        //Wall - Level 3
-        world.setBlockWithNotify(x + 2, y + 3, z, 0);
-        world.setBlockWithNotify(x - 2, y + 3, z, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 3, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 3, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 3, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 3, z + 2, 0, 0);
-        world.setBlockWithNotify(x + 2, y + 3, z - 1, 0);
-        world.setBlockWithNotify(x - 2, y + 3, z - 1, 0);
-        world.setBlockWithNotify(x + 2, y + 3, z + 1, 0);
-        world.setBlockWithNotify(x - 2, y + 3, z + 1, 0);
-        world.setBlockWithNotify(x + 1, y + 3, z + 2, 0);
-        world.setBlockWithNotify(x - 1, y + 3, z + 2, 0);
-        world.setBlockWithNotify(x + 1, y + 3, z - 2, 0);
-        world.setBlockWithNotify(x - 1, y + 3, z - 2, 0);
-        world.setBlockWithNotify(x, y + 3, z + 2, 0);
-        world.setBlockWithNotify(x, y + 3, z - 2, 0);
+    	//Wall - Level 3
+    	world.setBlockWithNotify(x + 2, y + 3, z, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 3, z, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 3, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 3, z - 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 3, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 3, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 3, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 3, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 3, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 3, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 3, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 3, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 3, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 3, z - 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 3, z + 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 3, z - 2, nullBlock);
 
-        //Roof
-        world.setBlockAndMetadataWithNotify(x + 2, y + 4, z, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 4, z, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 4, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 4, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 4, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 4, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 4, z - 1, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 4, z - 1, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 2, y + 4, z + 1, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 2, y + 4, z + 1, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 1, y + 4, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 1, y + 4, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x + 1, y + 4, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x - 1, y + 4, z - 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x, y + 4, z + 2, 0, 0);
-        world.setBlockAndMetadataWithNotify(x, y + 4, z - 2, 0, 0);
-        world.setBlockWithNotify(x, y + 4, z, 0);
-        world.setBlockWithNotify(x + 1, y + 4, z, 0);
-        world.setBlockWithNotify(x - 1, y + 4, z, 0);
-        world.setBlockWithNotify(x, y + 4, z + 1, 0);
-        world.setBlockWithNotify(x, y + 4, z - 1, 0);
-        world.setBlockWithNotify(x + 1, y + 4, z + 1, 0);
-        world.setBlockWithNotify(x - 1, y + 4, z + 1, 0);
-        world.setBlockWithNotify(x + 1, y + 4, z - 1, 0);
-        world.setBlockWithNotify(x - 1, y + 4, z - 1, 0);
+    	//Roof
+    	world.setBlockAndMetadataWithNotify(x + 2, y + 4, z, nullBlock, nullBlock);
+    	world.setBlockAndMetadataWithNotify(x - 2, y + 4, z, nullBlock, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 4, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 4, z - 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 4, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 4, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 4, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 4, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 2, y + 4, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y + 4, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 4, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 4, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 4, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 4, z - 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 4, z + 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 4, z - 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 4, z, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 4, z, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 4, z, nullBlock);
+    	world.setBlockWithNotify(x, y + 4, z + 1, nullBlock);
+    	world.setBlockWithNotify(x, y + 4, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 4, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 4, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 4, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 4, z - 1, nullBlock);
 
-        //Floor
-        world.setBlockWithNotify(x + 1, y, z - 1, 0);
-        world.setBlockAndMetadataWithNotify(x - 1, y, z - 1, 0, 2);
-        world.setBlockWithNotify(x, y, z - 1, 0);
-        world.setBlockWithNotify(x + 1, y, z, 0);
-        world.setBlockWithNotify(x - 1, y, z, 0);
-        world.setBlockWithNotify(x + 1, y, z + 1, 0);
-        world.setBlockWithNotify(x - 1, y, z + 1, 0);
-        world.setBlockWithNotify(x, y, z + 1, 0);
-        world.setBlockWithNotify(x, y, z - 2, 0);
-        world.setBlockWithNotify(x - 2, y, z, 0);
-        world.setBlockWithNotify(x + 2, y, z, 0);
-        world.setBlockWithNotify(x, y, z + 2, 0);
-        world.setBlockWithNotify(x, y, z - 2, 0);
-        world.setBlockWithNotify(x - 2, y, z + 2, 0);
-        world.setBlockWithNotify(x - 2, y, z - 2, 0);
-        world.setBlockWithNotify(x + 2, y, z + 2, 0);
-        world.setBlockWithNotify(x + 2, y, z - 2, 0);
-        world.setBlockWithNotify(x - 2, y, z + 1, 0);
-        world.setBlockWithNotify(x - 2, y, z - 1, 0);
-        world.setBlockWithNotify(x + 2, y, z + 1, 0);
-        world.setBlockWithNotify(x + 2, y, z - 1, 0);
-        world.setBlockWithNotify(x - 1, y, z + 2, 0);
-        world.setBlockWithNotify(x + 1, y, z - 2, 0);
-        world.setBlockWithNotify(x - 1, y, z - 2, 0);
-        world.setBlockWithNotify(x + 1, y, z + 2, 0);
+    	//Floor
+    	world.setBlockWithNotify(x + 1, y, z - 1, nullBlock);
+    	world.setBlockAndMetadataWithNotify(x - 1, y, z - 1, nullBlock, 2);
+    	world.setBlockWithNotify(x, y, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y, z, nullBlock);
+    	world.setBlockWithNotify(x - 1, y, z, nullBlock);
+    	world.setBlockWithNotify(x + 1, y, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 1, y, z + 1, nullBlock);
+    	world.setBlockWithNotify(x, y, z + 1, nullBlock);
+    	world.setBlockWithNotify(x, y, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y, z, nullBlock);
+    	world.setBlockWithNotify(x + 2, y, z, nullBlock);
+    	world.setBlockWithNotify(x, y, z + 2, nullBlock);
+    	world.setBlockWithNotify(x, y, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y, z + 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y, z - 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 2, y, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 2, y, z + 1, nullBlock);
+    	world.setBlockWithNotify(x - 2, y, z - 1, nullBlock);
+    	world.setBlockWithNotify(x + 2, y, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 2, y, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 1, y, z + 2, nullBlock);
+    	world.setBlockWithNotify(x + 1, y, z - 2, nullBlock);
+    	world.setBlockWithNotify(x - 1, y, z - 2, nullBlock);
+    	world.setBlockWithNotify(x + 1, y, z + 2, nullBlock);
 
-        //Other Blocks
+    	//Other Blocks
 
-        world.setBlockAndMetadataWithNotify(x, y + 2, z + 2, 0, 15);
-        world.setBlockAndMetadataWithNotify(x, y + 1, z + 2, 0, 3);
-        world.setBlockWithNotify(x, y, z + 3, 0);
-        world.setBlockWithNotify(x - 1, y, z + 3, 0);
-        world.setBlockWithNotify(x + 1, y, z + 3, 0);
-        world.setBlockWithNotify(x, y, z + 4, 0);
-        world.setBlockAndMetadataWithNotify(x - 1, y + 1, z, 0, 14);
-        world.setBlockAndMetadataWithNotify(x - 1, y + 1, z + 1, 0, 2);
-        world.setBlockWithNotify(x, y + 3, z + 1, 0);
-        world.setBlockWithNotify(x + 1, y + 3, z - 1, 0);
-        world.setBlockWithNotify(x - 1, y + 3, z - 1, 0);
+    	world.setBlockWithNotify(x, y + 2, z + 2, nullBlock);
+    	world.setBlockWithNotify(x, y + 1, z + 2, nullBlock);
+    	world.setBlockWithNotify(x, y, z + 3, nullBlock);
+    	world.setBlockWithNotify(x - 1, y, z + 3, nullBlock);
+    	world.setBlockWithNotify(x + 1, y, z + 3, nullBlock);
+    	world.setBlockWithNotify(x, y, z + 4, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 1, z, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 1, z + 1, nullBlock);
+    	world.setBlockWithNotify(x, y + 3, z + 1, nullBlock);
+    	world.setBlockWithNotify(x + 1, y + 3, z - 1, nullBlock);
+    	world.setBlockWithNotify(x - 1, y + 3, z - 1, nullBlock);
             }
 
     public void blockCreate(World world, int x, int y, int z)
