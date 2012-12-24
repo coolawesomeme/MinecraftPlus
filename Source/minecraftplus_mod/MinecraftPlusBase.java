@@ -73,10 +73,10 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 2;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 12;
+    public static final int modverbuild = 13;
     
     /** Is this a beta version? */
-    public static boolean betaVersion = true;
+    public static boolean betaVersion = false;
     
     /** Full mod version string. */
     public static final String modver = "r" + modverrelease + "b" + modverbuild;
@@ -121,6 +121,7 @@ public class MinecraftPlusBase
 	public static Block craterBlock;
 	public static Block minerBlock;
 	public static Block hiddenBookshelf;
+	public static Block mintBlock;
 	
 	/** Deprecated. Instead, now called trapBlockFire. */
 	@Deprecated
@@ -169,6 +170,8 @@ public class MinecraftPlusBase
     public static Item pizzaPlacer;
     public static Item iceCube;
     public static Item iceCreamCone;
+    public static Item Mint;
+    public static Item candyCane;
 
     //Armor
     public static Item embroniumHelmet;
@@ -262,7 +265,10 @@ public class MinecraftPlusBase
     public static int bulbRedID;
     public static int bulbBlueID;
     public static int bulbGreenID;
-	
+	public static int mintBlockID;
+	public static int mintID;
+	public static int candyCaneID;
+    
 	//The pre initialization step is not required for a mod to run, but it is excellent for establishing Configuration files before the Mod is loaded (Great for Item/Block ID's)
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
@@ -611,6 +617,7 @@ public class MinecraftPlusBase
 		holidaylights_1Active = new BlockHolidayLight(holidaylights_1ActiveID, true).setBlockName("holidayLight_1Active");
 		holidaylights_2Idle = new BlockHolidayLight_2(holidaylights_2IdleID, false).setCreativeTab(plusTab).setBlockName("holidayLight_2Idle");
 		holidaylights_2Active = new BlockHolidayLight_2(holidaylights_2ActiveID, true).setBlockName("holidayLight_2Active");
+		mintBlock = new BlockNormal(mintBlockID, 30, Material.ground).setCreativeTab(plusTab).setBlockName("mintBlock");
 		
 		//Items
 		embroniumIngot = new ItemOre(embroniumIngotID).setIconCoord(1, 0).setCreativeTab(plusTab).setItemName("embroniumIngot");
@@ -635,7 +642,9 @@ public class MinecraftPlusBase
 		pizzaPlacer = new ItemBlockPlacer(pizzaPlacerID, MinecraftPlusBase.pizzaBlock).setIconCoord(3, 1).setMaxStackSize(16).setCreativeTab(plusTab).setItemName("pizzaPlacer");
 		iceCube = new ItemNormal(iceCubeID).setIconCoord(0, 1).setCreativeTab(plusTab).setItemName("iceCube").setContainerItem(Item.bucketEmpty);
 		iceCreamCone = new ItemPlusFood(iceCreamConeID, 2, 1F, false).setIconCoord(1, 1).setCreativeTab(plusTab).setItemName("iceCreamCone").setContainerItem(Item.bucketEmpty);
-
+		Mint = new ItemNormal(mintID).setIconCoord(4, 1).setCreativeTab(plusTab).setItemName("Mint");
+		candyCane = new ItemPlusFood(candyCaneID, 1, 1F, false).setIconCoord(5, 1).setCreativeTab(plusTab).setItemName("candyCane");
+		
 		//Armor
 		EnumArmorMaterial EMBRONIUM = EnumHelper.addArmorMaterial("EMBRONIUM", 25, new int[]{2, 7, 5, 2}, 25);
 		EnumArmorMaterial IRONMAN = EnumHelper.addArmorMaterial("IRONMAN", 25, new int[]{3, 8, 6, 3}, 25);
@@ -699,6 +708,7 @@ public class MinecraftPlusBase
 		this.holidaylights_1ActiveID = config.getBlock("holidayLights.1.active", 1205).getInt();
 		this.holidaylights_2IdleID = config.getBlock("holidayLights.2", 1206).getInt();
 		this.holidaylights_2ActiveID = config.getBlock("holidayLights.2.active", 1207).getInt();
+		this.mintBlockID = config.getBlock("mintBlock", 1208).getInt();
 		
 		//Items
 		embroniumIngotID = config.getItem("embroniumIngot", 31000).getInt();
@@ -739,6 +749,8 @@ public class MinecraftPlusBase
 		bulbRedID = config.getItem("bulbRed", 31034).getInt();
 		bulbBlueID = config.getItem("bulbBlue", 31035).getInt();
 		bulbGreenID = config.getItem("bulbGreen", 31036).getInt();
+		mintID = config.getItem("Mint", 31037).getInt();
+		candyCaneID = config.getItem("candyCane", 31038).getInt();
 		
 		config.save();
 		System.out.println("[MC+] Config file made/ updated.");
@@ -806,7 +818,10 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack(iceCube, 4), new Object [] {"   ", " # ", " @ ", Character.valueOf('#'), Item.snowball, Character.valueOf('@'), Item.bucketWater});
 		GameRegistry.addShapelessRecipe(new ItemStack(Block.ice, 1), new Object[] { /*ingredients*/ iceCube, iceCube, iceCube, iceCube});
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumIngot, 9), new Object[] { /*ingredients*/ MinecraftPlusBase.embroniumBlock});
-
+		GameRegistry.addShapelessRecipe(new ItemStack(mintBlock), new Object[] { /*ingredients*/ MinecraftPlusBase.Mint, MinecraftPlusBase.Mint, MinecraftPlusBase.Mint, MinecraftPlusBase.Mint});
+		GameRegistry.addShapelessRecipe(new ItemStack(Mint, 4), new Object[] { /*ingredients*/ MinecraftPlusBase.Mint});
+		GameRegistry.addShapelessRecipe(new ItemStack(candyCane), new Object[] { /*ingredients*/ MinecraftPlusBase.Mint, MinecraftPlusBase.Mint, Item.sugar, Item.sugar});
+		
 		GameRegistry.addRecipe(new ItemStack(bulbNormal), new Object [] {" # ", "###", " @ ", Character.valueOf('#'), Item.lightStoneDust, Character.valueOf('@'), Item.redstone});
 		GameRegistry.addRecipe(new ItemStack(holidaylights_1Idle), new Object [] {"   ", "###", "$@%", Character.valueOf('#'), Item.silk, Character.valueOf('$'), MinecraftPlusBase.bulbRed, Character.valueOf('@'), MinecraftPlusBase.bulbBlue, Character.valueOf('%'), MinecraftPlusBase.bulbGreen});
 		GameRegistry.addRecipe(new ItemStack(holidaylights_2Idle), new Object [] {"   ", "###", "$$$", Character.valueOf('#'), Item.silk, Character.valueOf('$'), MinecraftPlusBase.bulbNormal});
@@ -868,6 +883,8 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(holidaylights_1Active, "[ACTIVE] Multi-colored Holiday Lights");
 		LanguageRegistry.addName(holidaylights_2Idle, "Yellow Holiday Lights");
 		LanguageRegistry.addName(holidaylights_2Active, "[ACTIVE] Yellow Holiday Lights");
+		LanguageRegistry.addName(mintBlock, "Mint Block");
+		
 		//Items
 		LanguageRegistry.addName(embroniumIngot, "Embronium Ingot");
 		LanguageRegistry.addName(embroniumDust, "Embronium Dust");
@@ -914,6 +931,9 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(daggerGold, "Golden Dagger");
 		LanguageRegistry.addName(daggerDiamond, "Diamond Dagger");
 		LanguageRegistry.addName(daggerEmbronium, "Embronium Dagger");
+		
+		LanguageRegistry.addName(candyCane, "Candy Cane");
+		LanguageRegistry.addName(Mint, "Mint");
 		
 		LanguageRegistry.instance().addStringLocalization("itemGroup.plusTab", "en_US", "Minecraft+");
 		
@@ -974,6 +994,7 @@ public class MinecraftPlusBase
 		GameRegistry.registerBlock(holidaylights_1Active);
 		GameRegistry.registerBlock(holidaylights_2Idle);
 		GameRegistry.registerBlock(holidaylights_2Active);
+		GameRegistry.registerBlock(mintBlock);
 		//GameRegistry.registerBlock(exampleSmeltingAchievementBlock);
 	}
 

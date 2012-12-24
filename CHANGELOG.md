@@ -1,5 +1,12 @@
 Changelog
 =============
+r2b13
+-------------
+- Added Mint Block
+- Added Mint Item
+- Added Candy cane
+- Fixed some stuff
+
 r2b12
 -------------
 - Fixed lots of bugs

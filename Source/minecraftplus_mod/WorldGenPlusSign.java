@@ -168,7 +168,7 @@ public class WorldGenPlusSign extends WorldGenerator
             		scored++;
             		}
             	if(scored == 0){
-            		ItemStack itemstack = new ItemStack(Item.appleRed, 4);
+            		ItemStack itemstack = new ItemStack(MinecraftPlusBase.Tomato, 10);
             		ItemStack itemstack1 = new ItemStack(Item.expBottle, 1);
             		ItemStack itemstack2 = new ItemStack(Item.diamond, 1);
             		ItemStack itemstack3 = new ItemStack(Item.lightStoneDust, 2);

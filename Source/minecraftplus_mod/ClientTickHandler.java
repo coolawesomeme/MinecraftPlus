@@ -8,9 +8,11 @@ import java.util.Date;
 import java.util.EnumSet;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.EnumGameType;
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
@@ -320,7 +322,7 @@ public class ClientTickHandler implements ITickHandler
             minecraft.thePlayer.capabilities.allowFlying = false;
             minecraft.thePlayer.fireResistance = 0;
         	}
-        	minecraft.thePlayer.capabilities.setFlySpeed(0.02F);
+        	minecraft.thePlayer.capabilities.setFlySpeed(0.03F);
             isPlayerWearingSpecialArmor = false;
         }
         }

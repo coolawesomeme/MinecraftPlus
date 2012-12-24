@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.feature.WorldGenClay;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import cpw.mods.fml.common.IWorldGenerator;
 
@@ -51,9 +52,17 @@ public class PlusWorldGenerator implements IWorldGenerator {
                 (new WorldGenMinable(MinecraftPlusBase.embroniumOre.blockID, 12)).generate(world, random, randPosX, randPosY, randPosZ);
         }
         
-        //Still being worked on.
-        int number = random.nextInt(200);
+		int number = random.nextInt(16);
         if(number == 10){
+                int randPosX = i + random.nextInt(15);
+                int randPosY = random.nextInt(128);
+                int randPosZ = j + random.nextInt(16);
+                (new WorldGenMint(MinecraftPlusBase.mintBlock.blockID, 4)).generate(world, random, randPosX, randPosY, randPosZ);
+        }
+		
+        //Still being worked on.
+        int number1 = random.nextInt(200);
+        if(number1 == 10){
                 int randPosX = i + random.nextInt(15);
                 int randPosY = random.nextInt(128);
                 int randPosZ = j + random.nextInt(16);
