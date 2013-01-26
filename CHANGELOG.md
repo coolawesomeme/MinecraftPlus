@@ -3,7 +3,10 @@ Changelog
 r3b1
 -------------
 - Fixed some bugs
-- Added waterfall block
+- Added water fountain block
+- Added lava fountain block
+- Added tomato crops
+- Added tomato seeds
 - Added asphalt path
 - Added iron fence
 - Added iron fence gate
