@@ -7,7 +7,7 @@ public class BlockNormal extends Block
 {
 	public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_blocks.png";
+		return MinecraftPlusBase.block_texture;
 	}
 	
 	public BlockNormal(int par1, int par2, Material par3Material) 

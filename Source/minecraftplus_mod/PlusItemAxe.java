@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 
 public class PlusItemAxe extends PlusItemTool
@@ -9,9 +10,9 @@ public class PlusItemAxe extends PlusItemTool
     /** an array of the blocks this axe is effective against */
     private static Block[] blocksEffectiveAgainst = new Block[] {Block.planks, Block.bookShelf, Block.wood, Block.chest, Block.stoneDoubleSlab, Block.stoneSingleSlab, Block.pumpkin, Block.pumpkinLantern};
 
-    protected PlusItemAxe(int par1, PlusToolMaterial par2PlusToolMaterial)
+    protected PlusItemAxe(int par1, EnumToolMaterial par2EnumToolMaterial)
     {
-        super(par1, 3, par2PlusToolMaterial, blocksEffectiveAgainst);
+        super(par1, 3, par2EnumToolMaterial, blocksEffectiveAgainst);
     }
 
     /**

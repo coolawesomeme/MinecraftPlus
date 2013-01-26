@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
@@ -40,7 +41,7 @@ public class BlockPizza extends BlockNormal
 
     public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_blocks.png";
+		return MinecraftPlusBase.block_texture;
 	}
     
     /**

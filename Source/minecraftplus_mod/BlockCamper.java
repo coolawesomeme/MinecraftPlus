@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
@@ -29,6 +30,10 @@ public class BlockCamper extends BlockNormal {
                     if(flag)
                     {
                             world.scheduleBlockUpdate(i, j, k, blockID, tickRate());
+                    }else{
+                    	if(hasBeenActivated){
+                    		world.scheduleBlockUpdate(i, j, k, blockID, tickRate());
+                    	}
                     }
             }
     }
@@ -40,8 +45,17 @@ public class BlockCamper extends BlockNormal {
              //Whatever you put here is what happens when it's powered
              blockCreate(world, i, j, k);
              hasBeenActivated = true;
+            }else if(!world.isBlockIndirectlyGettingPowered(i, j, k) || !world.isBlockIndirectlyGettingPowered(i, j - 1, k))
+            {
+            	if(hasBeenActivated){
+                //Whatever you put here is what happens when it stops being powered
+                blockRemove(world, i, j, k);
+                hasBeenActivated = false;
+            	}
             }
     }
+        
+    
 
     public void onBlockClicked(World world, int i, int j, int k, EntityPlayer entityplayer)
     {

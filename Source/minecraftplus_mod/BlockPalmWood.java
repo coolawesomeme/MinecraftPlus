@@ -5,6 +5,10 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.world.World;
+import static net.minecraftforge.common.ForgeDirection.EAST;
+import static net.minecraftforge.common.ForgeDirection.NORTH;
+import static net.minecraftforge.common.ForgeDirection.SOUTH;
+import static net.minecraftforge.common.ForgeDirection.WEST;
 
 public class BlockPalmWood extends BlockNormal
 {
@@ -90,20 +94,21 @@ public class BlockPalmWood extends BlockNormal
         return var10 | var11;
     }
 
-    public int getBlockTextureFromSide(int i)
+    /**
+     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
+     */
+    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-        if (i == 0)
-        {
+    		if (par1 == 0)
+        	{
                 return 22;
-        }
-        if (i == 1)
-        {
-                return 22;
-        }
-        else
-        {
-                return this.blockIndexInTexture;
-        }
+        	}else if (par1 == 1)
+        	{
+        		return 22;
+        	}else
+        	{
+        		return this.blockIndexInTexture;
+        	}
     }
 
     @Override

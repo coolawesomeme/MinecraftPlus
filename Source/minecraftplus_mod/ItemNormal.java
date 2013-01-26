@@ -6,7 +6,7 @@ public class ItemNormal extends Item
 {
 		public String getTextureFile()
 		{
-			return "/minecraftplus/spritesheet_items.png";
+			return MinecraftPlusBase.item_texture;
 		}
 		
         public ItemNormal(int par1)

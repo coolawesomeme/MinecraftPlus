@@ -1,5 +1,19 @@
 Changelog
 =============
+r3b1
+-------------
+- Fixed some bugs
+- Added waterfall block
+- Added asphalt path
+- Added iron fence
+- Added iron fence gate
+- Added iron trap door
+- Added splashscreen
+- Added update auto-download feature
+- Removed deprecated mummy & human eggs [THEY ARE STILL IN THE GAME, just not with the traditional item methods]
+- Removed other unneccesary code
+- Changed a whole bunch of textures
+
 r2b13
 -------------
 - Added Mint Block

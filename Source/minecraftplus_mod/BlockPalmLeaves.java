@@ -3,9 +3,11 @@ package net.minecraftplus_mod;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeavesBase;
 import net.minecraft.block.material.Material;
+import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -28,10 +30,9 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
 
     protected BlockPalmLeaves(int par1, int par2)
     {
-        super(par1, par2, Material.leaves, false);
+        super(par1, par2, Material.leaves, !Minecraft.isFancyGraphicsEnabled());
         this.baseIndexInPNG = par2;
         this.setTickRandomly(true);
-        this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
     @SideOnly(Side.CLIENT)
@@ -121,7 +122,7 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
 
     public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_blocks.png";
+		return MinecraftPlusBase.block_texture;
 	}
     
     /**
@@ -337,7 +338,7 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
     public int getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
     	boolean lvl = this.graphicsLevel;
-    	if(lvl == false){
+    	if(!lvl){
         	return baseIndexInPNG;
         }else{
         	return baseIndexInPNG + 1;
@@ -352,7 +353,7 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
     public void setGraphicsLevel(boolean par1)
     {
         this.graphicsLevel = par1;
-        if(par1 == false){
+        if(!par1){
         	blockIndexInTexture = baseIndexInPNG;
         }else{
         	blockIndexInTexture = baseIndexInPNG + 1;

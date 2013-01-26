@@ -2,10 +2,11 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.material.Material;
 
 public class BlockBoosterBlock extends BlockNormal {
-    protected BlockBoosterBlock(int i, int j) {
+    public BlockBoosterBlock(int i, int j) {
         super(i, j, Material.iron);
         slipperiness = 1.5F;
     }

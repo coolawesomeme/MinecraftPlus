@@ -51,7 +51,7 @@ public class ItemPlusFood extends ItemFood
 
     public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_items.png";
+		return MinecraftPlusBase.item_texture;
 	}
     
     public ItemPlusFood(int par1, int par2, boolean par3)

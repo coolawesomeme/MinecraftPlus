@@ -18,8 +18,9 @@ public class ClientProxy extends CommonProxy{
 	}	
 	
 	public static void preloadTextures() {
-		MinecraftForgeClient.preloadTexture("/minecraftplus/spritesheet_items.png");
-		MinecraftForgeClient.preloadTexture("/minecraftplus/spritesheet_blocks.png");
+		MinecraftForgeClient.preloadTexture(MinecraftPlusBase.item_texture);
+		MinecraftForgeClient.preloadTexture(MinecraftPlusBase.block_texture);
+		MinecraftForgeClient.preloadTexture("/minecraftplus/logo.png");
         MinecraftForgeClient.preloadTexture("/minecraftplus/armor/embroniumarmor_1.png");
         MinecraftForgeClient.preloadTexture("/minecraftplus/armor/embroniumarmor_2.png");
         MinecraftForgeClient.preloadTexture("/minecraftplus/armor/ironmanarmor_1.png");

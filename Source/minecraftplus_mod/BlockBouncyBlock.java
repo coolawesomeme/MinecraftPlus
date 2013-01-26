@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -10,7 +11,7 @@ import net.minecraft.world.World;
 
 public class BlockBouncyBlock extends BlockNormal
 {
-protected BlockBouncyBlock(int i, int j)
+public BlockBouncyBlock(int i, int j)
 {
 super(i, j, Material.wood);
                 setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F, 1.0F);

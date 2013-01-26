@@ -1,15 +1,16 @@
 package net.minecraftplus_mod;
 
 import net.minecraft.block.Block;
+import net.minecraft.item.EnumToolMaterial;
 
  
 public class PlusItemSpade extends PlusItemTool
 {
     private static Block blocksEffectiveAgainst[];
 
-    public PlusItemSpade(int par1, PlusToolMaterial par2PlusToolMaterial)
+    public PlusItemSpade(int par1, EnumToolMaterial par2EnumToolMaterial)
     {
-        super(par1, 1, par2PlusToolMaterial, blocksEffectiveAgainst);
+        super(par1, 1, par2EnumToolMaterial, blocksEffectiveAgainst);
     }
 
     /**

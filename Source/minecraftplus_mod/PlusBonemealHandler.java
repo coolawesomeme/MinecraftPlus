@@ -15,6 +15,12 @@ public class PlusBonemealHandler
                         {
                                 ((BlockPalmSapling)MinecraftPlusBase.palmSapling).growTree(event.world, event.X, event.Y, event.Z, event.world.rand);
                         }
+                }else if (event.ID == MinecraftPlusBase.tomatoCrop.blockID)
+                {
+                    if (!event.world.isRemote)
+                    {
+                            ((BlockTomatoCrop)MinecraftPlusBase.tomatoCrop).growCrop(event.world, event.X, event.Y, event.Z);
+                    }
                 }
 
         }

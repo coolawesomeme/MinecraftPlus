@@ -8,6 +8,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -17,8 +19,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.item.EnumArmorMaterial;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSeeds;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.Configuration;
@@ -26,7 +31,9 @@ import net.minecraftforge.common.DungeonHooks;
 import net.minecraftforge.common.EnumHelper;
 import net.minecraftforge.common.ForgeVersion;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.Property;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftplus_mod.PlusAddonBase.Addon;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -41,6 +48,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.EntityRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.LanguageRegistry;
@@ -52,7 +60,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @NetworkMod(clientSideRequired = true, serverSideRequired = false, versionBounds = "[" + MinecraftPlusBase.modver + "]")
 //This is an Annotation interface that establishes the ModID, the name of the Mod, and the Version of the mod. 
 @Mod(modid = "MinecraftPlus", name = "Minecraft+", version = MinecraftPlusBase.modver)
-public class MinecraftPlusBase 
+public class MinecraftPlusBase
 {
 	//This is an Annotation interface which establishes the location of the Client and Server Proxy's. These are needed for such things as preloading texture files, etc
 	@SidedProxy(clientSide = "net.minecraftplus_mod.ClientProxy", serverSide = "net.minecraftplus_mod.CommonProxy")
@@ -62,21 +70,21 @@ public class MinecraftPlusBase
 	
 	//Establishes an Instance of your mod, simple enough
 	@Instance()
-	public static MinecraftPlusBase instance = new MinecraftPlusBase();
+	public static MinecraftPlusBase instance;
     
 	public static CreativeTabs plusTab = new PlusTab("plusTab");
 	
     /** Version Codename. Changed every release.*/
-    public static String codename = "Coconut";
+    public static String codename = "Caramel";
     
     /** Mod release version. +1 every public release. */
-	public static final int modverrelease = 2;
+	public static final int modverrelease = 3;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 13;
+    public static final int modverbuild = 1;
     
     /** Is this a beta version? */
-    public static boolean betaVersion = false;
+    public static PlusModType versionType = PlusModType.BETA;
     
     /** Full mod version string. */
     public static final String modver = "r" + modverrelease + "b" + modverbuild;
@@ -85,19 +93,31 @@ public class MinecraftPlusBase
     public static String codever = modver + " \"" + codename + "\"";
         
     /** Current Minecraft Version. */
-    public static String mcver = "1.4.6";
+    public static String mcver = "1.4.7";
     
     /** Check to see if the mod is loaded or not. */
     public static boolean isMCPlusLoaded = false;
 	
-	/**MinecraftPlus Instance */
-	public static MinecraftPlus getPlusInstance;
-	
 	/**Addon Base Instance */
 	public static PlusAddonBase addon;
 	
+	public static MinecraftPlusBase plusBase;
+	
 	/**Addon Registerer Instance */
 	public static PlusAddonRegister addonRegister;
+	
+	public static String block_texture = "/minecraftplus/spritesheet_blocks.png";
+	
+	public static String item_texture = "/minecraftplus/spritesheet_items.png";
+	
+	/**GUI Handler Instance  */
+	public PlusGuiHandler gui;
+	
+	protected static boolean isSplashScreenEnabled;
+	
+	protected static int splashScreenTime;
+	
+	protected static boolean download;
 	
 	@SideOnly(Side.CLIENT)
 	public static Minecraft minecraft;
@@ -121,12 +141,7 @@ public class MinecraftPlusBase
 	public static Block craterBlock;
 	public static Block minerBlock;
 	public static Block hiddenBookshelf;
-	public static Block mintBlock;
-	
-	/** Deprecated. Instead, now called trapBlockFire. */
-	@Deprecated
-	public static Block trapBlock;
-	
+	public static Block mintBlock;	
 	public static Block pizzaBlock;
     public static Block redstoneLampThinIdle;
     public static Block redstoneLampThinActive;
@@ -139,23 +154,30 @@ public class MinecraftPlusBase
     public static Block holidaylights_1Active;
     public static Block holidaylights_2Idle;
     public static Block holidaylights_2Active;
+    public static Block tomatoCrop;
+    public static Block asphaltPath;
+    public static Block waterFountainBlock;
+    public static Block lavaFountainBlock;
+    public static Block ironTrapdoor;
+    public static Block ironFence;
+    public static Block ironFenceGate;
+    //public static Block neonOre;
+    //public static Block neonBlock;
+    //public static Block neonBlockBlue;
+    //public static Block neonBlockRed;
 	
 	//Items
 	public static Item embroniumIngot;
-	public static Item embroniumDust;
-	
-	/** Deprecated. Instead, uses Forge's method of creating eggs with entities. */
-	@Deprecated
-	public static Item mummyEgg;
-	
-	/** Deprecated. Instead, uses Forge's method of creating eggs with entities. */
-	@Deprecated
-	public static Item humanEgg;	 
+	public static Item embroniumDust;	 
     public static Item vortexCrystal;
     public static Item bulbNormal;
     public static Item bulbRed;
     public static Item bulbBlue;
     public static Item bulbGreen;
+    //public static Item neonDust;
+    //public static Item neonIngot;
+    //public static Item neonIngotBlue;
+    //public static Item neonIngotRed;
 
     //Food
     public static Item itemBandage; 
@@ -164,6 +186,7 @@ public class MinecraftPlusBase
     public static Item hotDog;
     public static Item chickenSoup;
     public static Item Tomato;
+    public static Item tomatoSeeds;
     public static Item pizzaSlice;
     public static Item Sandwich;
     public static Item cheeseCake;
@@ -268,7 +291,23 @@ public class MinecraftPlusBase
 	public static int mintBlockID;
 	public static int mintID;
 	public static int candyCaneID;
-    
+	public static int tomatoSeedsID;
+	public static int tomatoCropID;
+	public static int asphaltPathID;
+	public static int waterFountainBlockID;
+	public static int lavaFountainBlockID;
+	public static int ironTrapdoorID;
+	public static int ironFenceID;
+	public static int ironFenceGateID;
+    //public static int neonOreID;
+    //public static int neonBlockID;
+    //public static int neonBlockBlueID;
+    //public static int neonBlockRedID;
+	//public static int neonDustID;
+    //public static int neonIngotID;
+    //public static int neonIngotBlueID;
+    //public static int neonIngotRedID;
+	
 	//The pre initialization step is not required for a mod to run, but it is excellent for establishing Configuration files before the Mod is loaded (Great for Item/Block ID's)
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
@@ -332,17 +371,17 @@ public class MinecraftPlusBase
 			String fullDate = dateandtime.replace('*', date3);
 			fullDate = fullDate.replace('^', date4);
 			Map<String, ModContainer> modslist = Loader.instance().getIndexedModList();
-			fwrite.write("~-!-~ Minecraft+ Folder Readme ~-!-~" + "\n");
-			fwrite.write("----------------------------------------------" + "\n");
-			fwrite.write("// Generated " + fullDate + "\n\n");
-			fwrite.write("This is the Minecraft+ folder. All documents pertaining to Minecraft+ (Other\n");
-			fwrite.write(" than the config file) will go here. A document you can see is stats.mcplus. This can\n");
-			fwrite.write(" be opened by any text editor, but it will not display well in Notepad (I recommend\n");
-			fwrite.write(" Notepad++). The stats file shows important debugging info which is to be sent to\n");
-			fwrite.write(" coolawesomeme, should you encounter any errors.\n");
-			fwrite.write("\nThe aforementioned config file is located here:\n");
-			fwrite.write("\\.minecraft\\config\\MinecraftPlus.cfg" + "\n\n");
-			fwrite.write("Thanks for reading!\n");
+			fwrite.write("~-!-~ Minecraft+ Folder Readme ~-!-~ " + "\n");
+			fwrite.write("---------------------------------------------- " + "\n");
+			fwrite.write("// Generated " + fullDate + " \n\n");
+			fwrite.write("This is the Minecraft+ folder. All documents pertaining to Minecraft+ (Other \n");
+			fwrite.write("than the config file) will go here. A document you can see is stats.mcplus. This can \n");
+			fwrite.write("be opened by any text editor, but it will not display well in Notepad (I recommend \n");
+			fwrite.write("Notepad++). The stats file shows important debugging info which is to be sent to \n");
+			fwrite.write("coolawesomeme, should you encounter any errors. \n");
+			fwrite.write("\nThe aforementioned config file is located here: \n");
+			fwrite.write("\\.minecraft\\config\\MinecraftPlus.cfg " + "\n\n");
+			fwrite.write("Thanks for reading! \n");
 			fwrite.write("~[|\\O/|]~");
 			fwrite.flush();
 			fwrite.close();
@@ -420,13 +459,17 @@ public class MinecraftPlusBase
 			fwrite.write(" ~!~   (/Debugging Info)    ~!~ " + "  " + "\n");
 			fwrite.write("----------------------------------------------" + "  " + "\n");
 			fwrite.write("LastTimeMC+WasRun: " + fullDate + "  " + "\n");
-			fwrite.write("LastUsedModVersion: " + codever + "  ");
+			String var1 = "";
 			if(isUpdated(modver4, modver5)){
-				fwrite.write("  " + "\n");}
-			else if(isOutdated(modver4, modver5)){
-				fwrite.write(" (Outdated Version)" + "  " + "\n");}
-			else if(isBeta(modver4, modver5)){
-				fwrite.write(" (Beta Version)" + "  " + "\n");}
+				var1 = "";
+			}else if(isOutdated(modver4, modver5)){
+				var1 = " (Outdated Version)";
+			}else if(isBeta(modver4, modver5)){
+				var1 = " (Beta Version)";
+			}else{
+				var1 = "";
+			}
+			fwrite.write("LastUsedModVersion: " + codever + var1 + "  " + "\n");
 			fwrite.write("LatestMC+VersionFoundOnline: " + modver3 + "  " + "\n");
 			fwrite.write("RecommendedForgeVersion: " + "6.5.0.471" + "  " + "\n");
 			fwrite.write("RecommendedFMLVersion: " + "4.6.12.511" + "  " + "\n");
@@ -434,8 +477,8 @@ public class MinecraftPlusBase
 			fwrite.write("LastUsedFMLVersion: " + Loader.instance().getFMLVersionString() + "  " + "\n");
 			fwrite.write("LastUsedMinecraftVersion: " + Loader.instance().getMCVersionString() + "  " + "\n");
 			fwrite.write("WasMinecraft+Loaded: " + loaded + "  " + "\n");
-			fwrite.write("NumberOfModsUsed: " + modslist.size() + "  " + "\n");
-			fwrite.write("ModsUsed:" + "  " + "\n");
+			fwrite.write("LadtNumberOfModsUsed: " + modslist.size() + "  " + "\n");
+			fwrite.write("LastModsUsed:" + "  " + "\n");
 			fwrite.write(Loader.instance().getIndexedModList().keySet() + "  " + "\n");
 			fwrite.write("\n" + "// " + randString + "  ");
 			fwrite.write("\n" + "~[|\\O/|]~" + "  ");
@@ -448,7 +491,7 @@ public class MinecraftPlusBase
 	}
 
 	public static boolean isOutdated(int release, int build){
-		if(modverrelease < release || modverbuild < build){
+		if(modverrelease <= release && modverbuild < build){
 			return true;
 		}else{
 			return false;
@@ -456,7 +499,7 @@ public class MinecraftPlusBase
 	}
 	
 	public static boolean isBeta(int release, int build){
-		if(modverrelease > release || modverbuild > build){
+		if(modverrelease >= release && modverbuild > build){
 			return true;
 		}else{
 			return false;
@@ -464,7 +507,7 @@ public class MinecraftPlusBase
 	}
 	
 	public static boolean isUpdated(int release, int build){
-		if(modverrelease == release || modverbuild == build){
+		if(modverrelease == release && modverbuild == build){
 			return true;
 		}else{
 			return false;
@@ -488,12 +531,14 @@ public class MinecraftPlusBase
 		addOreDictionaryRecipes();
 		addOreDictionaryEntries();
 		initAchievements();
-		registerHandlers();
-		addDungeonLoot();
+		registerHandlers(event);
+		addForgeHooks();
 	}
 	
-	private void addDungeonLoot() {
+	private void addForgeHooks() {
+		MinecraftForge.addGrassSeed(new ItemStack(tomatoSeeds), 4);
 		DungeonHooks.addDungeonLoot(new ItemStack(this.Tomato), 50,2,10);
+		tomatoSeeds.setTextureFile(MinecraftPlusBase.block_texture);
 	}
 
 	private void registerEntities() {
@@ -530,6 +575,10 @@ public class MinecraftPlusBase
 		//Level 0 = Wood, Level 1 = Stone and Gold, Level 2 = Iron, Level 3 = Diamond
 		MinecraftForge.setBlockHarvestLevel(embroniumBlock, "pickaxe", 2);
 		MinecraftForge.setBlockHarvestLevel(embroniumOre, "pickaxe", 2);
+		MinecraftForge.setBlockHarvestLevel(ironTrapdoor, "pickaxe", 1);
+		MinecraftForge.setBlockHarvestLevel(ironFence, "pickaxe", 1);
+		MinecraftForge.setBlockHarvestLevel(ironFenceGate, "pickaxe", 1);
+		MinecraftForge.setBlockHarvestLevel(asphaltPath, "pickaxe", 0);
 	}
 
 	private void initAchievements() 
@@ -550,7 +599,7 @@ public class MinecraftPlusBase
 		*/
 	}
 
-	private void registerHandlers() 
+	private void registerHandlers(FMLInitializationEvent event) 
 	{
 		//Register World Generator params (new instance of a class that implements IWorldGenerator)
 		//This registers a file to generate blocks in the world
@@ -569,11 +618,13 @@ public class MinecraftPlusBase
 		//GameRegistry.registerPickupHandler(new ExampleModPickupHandler());
 		
 		//Register Tick Handler params (new instance of a class that implements ITickHandler, Side of Minecraft which uses this tick handler (Client, Server, or Bukkit))
-		TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
-		TickRegistry.registerTickHandler(new ServerTickHandler(), Side.SERVER);
+		if(event.getSide() == Side.CLIENT){
+		TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);}
+		if(event.getSide() == Side.SERVER){
+		TickRegistry.registerTickHandler(new ServerTickHandler(), Side.SERVER);}
 		
 		//Register Gui Handler params (instance of your Mod class, new instance of a class that implements IGuiHandler)
-		//NetworkRegistry.instance().registerGuiHandler(this, guiHandler);
+		NetworkRegistry.instance().registerGuiHandler(this, new PlusGuiHandler());
 	}
 	
 	//Example of adding something to the ore Dictionary
@@ -610,14 +661,25 @@ public class MinecraftPlusBase
 		redstoneLampThinActive = (new BlockRedstoneLampThin(redstoneLampThinActiveID, true)).setHardness(0.3F).setStepSound(Block.soundGlassFootstep).setBlockName("redstoneLightThinActive");
 		trapBlockFire = new BlockTrapFire(trapBlockFireID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFire");
 		trapBlockFireSpread = new BlockTrapFireSpread(trapBlockFireSpreadID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFireSpread");
-		palmWood = new BlockPalmWood(palmWoodID,21).setCreativeTab(plusTab).setBlockName("palmWood");
-		palmLeaves = new BlockPalmLeaves(palmLeavesID,23).setCreativeTab(plusTab).setBlockName("palmLeaves");
-		palmSapling = new BlockPalmSapling(palmSaplingID,25).setCreativeTab(plusTab).setBlockName("palmSapling");
+		palmWood = new BlockPalmWood(palmWoodID,21).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmWood");
+		palmLeaves = new BlockPalmLeaves(palmLeavesID,22).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmLeaves");
+		palmSapling = new BlockPalmSapling(palmSaplingID,25).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmSapling");
 		holidaylights_1Idle = new BlockHolidayLight(holidaylights_1IdleID, false).setCreativeTab(plusTab).setBlockName("holidayLight_1Idle");
 		holidaylights_1Active = new BlockHolidayLight(holidaylights_1ActiveID, true).setBlockName("holidayLight_1Active");
 		holidaylights_2Idle = new BlockHolidayLight_2(holidaylights_2IdleID, false).setCreativeTab(plusTab).setBlockName("holidayLight_2Idle");
 		holidaylights_2Active = new BlockHolidayLight_2(holidaylights_2ActiveID, true).setBlockName("holidayLight_2Active");
-		mintBlock = new BlockNormal(mintBlockID, 30, Material.ground).setCreativeTab(plusTab).setBlockName("mintBlock");
+		mintBlock = new BlockNormal(mintBlockID, 30, Material.ground).setCreativeTab(plusTab).setHardness(1.0F).setResistance(5.0F).setBlockName("mintBlock");
+		tomatoCrop = new BlockTomatoCrop(tomatoCropID, 33).setBlockName("tomatoCrop");
+		asphaltPath = new BlockAsphalt(asphaltPathID, 35).setCreativeTab(plusTab).setBlockName("asphaltPath");
+		waterFountainBlock = new BlockWaterFountain(waterFountainBlockID, 31).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("waterFountainBlock");
+		lavaFountainBlock = new BlockLavaFountain(lavaFountainBlockID, 36).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("lavaFountainBlock");
+		ironTrapdoor = new BlockIronTrapDoor(ironTrapdoorID, 37, Material.iron).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("ironTrapdoor");
+		ironFence = new BlockIronFence(ironFenceID, 38, Material.iron).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("ironFence");
+		ironFenceGate = new BlockIronFenceGate(ironFenceGateID, 38).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("ironFenceGate");
+		//neonBlock = new BlockStorageOre(neonBlockID, 39, Material.iron).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("neonBlock");
+		//neonBlockRed = new BlockStorageOre(neonBlockRedID,42, Material.iron).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("neonBlockRed");
+		//neonBlockBlue = new BlockStorageOre(neonBlockBlueID, 41, Material.iron).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("neonBlockBlue");
+		//neonOre = new BlockNormal(neonOreID,40, Material.iron).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("neonOre");
 		
 		//Items
 		embroniumIngot = new ItemOre(embroniumIngotID).setIconCoord(1, 0).setCreativeTab(plusTab).setItemName("embroniumIngot");
@@ -629,6 +691,11 @@ public class MinecraftPlusBase
 		bulbBlue = new ItemNormal(bulbBlueID).setIconCoord(13, 15).setCreativeTab(plusTab).setItemName("bulbBlue");
 		bulbGreen = new ItemNormal(bulbGreenID).setIconCoord(14, 15).setCreativeTab(plusTab).setItemName("bulbGreen");
 		
+		//neonIngot = new ItemOre(neonIngotID).setIconCoord(7, 1).setCreativeTab(plusTab).setItemName("neonIngot");
+		//neonIngotBlue = new ItemOre(neonIngotBlueID).setIconCoord(9, 1).setCreativeTab(plusTab).setItemName("neonIngotBlue");
+		//neonIngotRed = new ItemOre(neonIngotRedID).setIconCoord(10, 1).setCreativeTab(plusTab).setItemName("neonIngotRed");
+		//neonDust = new ItemOre(neonDustID).setIconCoord(8, 1).setCreativeTab(plusTab).setItemName("neonDust");
+		
 		//Food
 		itemBandage = new ItemPlusFood(itemBandageID, 8, 1F, false).setIconCoord(3, 0).setCreativeTab(plusTab).setItemName("bandage"); 
 		Cheese = new ItemPlusFood(CheeseID, 4, 1F, false).setIconCoord(4, 0).setCreativeTab(plusTab).setContainerItem(Item.bucketEmpty).setItemName("Cheese");
@@ -636,6 +703,7 @@ public class MinecraftPlusBase
 		hotDog = new ItemPlusFood(hotDogID, 4, 1F, false).setIconCoord(9, 0).setCreativeTab(plusTab).setItemName("hotDog");
 		chickenSoup = new ItemPlusFood(chickenSoupID, 4, 1F, false).setIconCoord(10, 0).setCreativeTab(plusTab).setItemName("chickenSoup");
 		Tomato = new ItemNormal(TomatoID).setIconCoord(11, 0).setCreativeTab(plusTab).setItemName("Tomato");
+		tomatoSeeds = new PlusItemSeeds(tomatoSeedsID, tomatoCrop.blockID, Block.tilledField.blockID).setCreativeTab(plusTab).setIconCoord(6, 1).setItemName("tomatoSeeds");
 		pizzaSlice = new ItemPlusFood(pizzaSliceID, 2, 1F, false).setIconCoord(6, 0).setCreativeTab(plusTab).setItemName("pizzaSlice");
 		Sandwich = new ItemPlusFood(SandwichID, 3, 1F, false).setIconCoord(7, 0).setCreativeTab(plusTab).setItemName("Sandwich");
 		cheeseCake = new ItemPlusFood(cheeseCakeID, 4, 1F, false).setIconCoord(2, 1).setCreativeTab(plusTab).setItemName("cheeseCake");
@@ -660,18 +728,20 @@ public class MinecraftPlusBase
 		ironManBoots = new PlusItemArmor(ironManBootsID, IRONMAN, 3 ,3).setCreativeTab(plusTab).setIconCoord(15, 3).setItemName("ironManBoots");  
 		
 		//Toolset
-		embroniumPickaxe = (new PlusItemPickaxe (embroniumPickaxeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 5).setItemName("embroniumPickaxe");
-		embroniumSpade = (new PlusItemSpade (embroniumSpadeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 7).setItemName("embroniumSpade");
-		embroniumSword = (new PlusItemSword (embroniumSwordID, PlusToolMaterial.EMBRONIUM, 4)).setCreativeTab(plusTab).setIconCoord(14, 4).setItemName("embroniumSword");
-		embroniumAxe = (new PlusItemAxe (embroniumAxeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 6).setItemName("embroniumAxe");
-		embroniumHoe = (new PlusItemHoe (embroniumHoeID, PlusToolMaterial.EMBRONIUM)).setCreativeTab(plusTab).setIconCoord(14, 8).setItemName("embroniumHoe");
+		EnumToolMaterial embronium = EnumHelper.addToolMaterial("EMBRONIUM", 3, 1400, 7F, 3, 10);
 		
-		daggerWood = (new PlusItemSword (daggerWoodID, PlusToolMaterial.WOOD, 1)).setCreativeTab(plusTab).setIconCoord(15, 4).setItemName("daggerWood");
-		daggerStone = (new PlusItemSword (daggerStoneID, PlusToolMaterial.STONE, 1)).setCreativeTab(plusTab).setIconCoord(15, 5).setItemName("daggerStone");
-		daggerIron = (new PlusItemSword (daggerIronID, PlusToolMaterial.IRON, 1)).setCreativeTab(plusTab).setIconCoord(15, 6).setItemName("daggerIron");
-		daggerGold = (new PlusItemSword (daggerGoldID, PlusToolMaterial.GOLD, 1)).setCreativeTab(plusTab).setIconCoord(15, 7).setItemName("daggerGold");
-		daggerDiamond = (new PlusItemSword (daggerDiamondID, PlusToolMaterial.EMERALD, 1)).setCreativeTab(plusTab).setIconCoord(15, 8).setItemName("daggerDiamond");
-		daggerEmbronium = (new PlusItemSword (daggerEmbroniumID, PlusToolMaterial.EMBRONIUM, 1)).setCreativeTab(plusTab).setIconCoord(15, 9).setItemName("daggerEmbronium");
+		embroniumPickaxe = (new PlusItemPickaxe (embroniumPickaxeID, embronium)).setCreativeTab(plusTab).setIconCoord(14, 5).setItemName("embroniumPickaxe");
+		embroniumSpade = (new PlusItemSpade (embroniumSpadeID, embronium)).setCreativeTab(plusTab).setIconCoord(14, 7).setItemName("embroniumSpade");
+		embroniumSword = (new PlusItemSword (embroniumSwordID, embronium, 4)).setCreativeTab(plusTab).setIconCoord(14, 4).setItemName("embroniumSword");
+		embroniumAxe = (new PlusItemAxe (embroniumAxeID, embronium)).setCreativeTab(plusTab).setIconCoord(14, 6).setItemName("embroniumAxe");
+		embroniumHoe = (new PlusItemHoe (embroniumHoeID, embronium)).setCreativeTab(plusTab).setIconCoord(14, 8).setItemName("embroniumHoe");
+		
+		daggerWood = (new PlusItemSword (daggerWoodID, EnumToolMaterial.WOOD, 1)).setCreativeTab(plusTab).setIconCoord(15, 4).setItemName("daggerWood");
+		daggerStone = (new PlusItemSword (daggerStoneID, EnumToolMaterial.STONE, 1)).setCreativeTab(plusTab).setIconCoord(15, 5).setItemName("daggerStone");
+		daggerIron = (new PlusItemSword (daggerIronID, EnumToolMaterial.IRON, 1)).setCreativeTab(plusTab).setIconCoord(15, 6).setItemName("daggerIron");
+		daggerGold = (new PlusItemSword (daggerGoldID, EnumToolMaterial.GOLD, 1)).setCreativeTab(plusTab).setIconCoord(15, 7).setItemName("daggerGold");
+		daggerDiamond = (new PlusItemSword (daggerDiamondID, EnumToolMaterial.EMERALD, 1)).setCreativeTab(plusTab).setIconCoord(15, 8).setItemName("daggerDiamond");
+		daggerEmbronium = (new PlusItemSword (daggerEmbroniumID, embronium, 1)).setCreativeTab(plusTab).setIconCoord(15, 9).setItemName("daggerEmbronium");
 		//exampleSmeltingAchievementBlock = new BlockExampleBlock(exampleSmeltingAchievementBlockID, 1).setHardness(2.0F).setBlockName("Example Smelting Achievement Block");
 	}
 
@@ -679,6 +749,10 @@ public class MinecraftPlusBase
 		Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 		config.load();
 
+		this.isSplashScreenEnabled = config.get(config.CATEGORY_GENERAL, "isSplashScreenEnabled", true).getBoolean(true);
+		this.splashScreenTime = config.get(config.CATEGORY_GENERAL, "splashScreenSecondsLength", 8).getInt(8);
+		this.download = config.get(config.CATEGORY_GENERAL, "autoDownloadUpdates", true).getBoolean(true);
+		
 		//Blocks
 		this.embroniumOreID = config.getBlock("embroniumOre", 1180).getInt();
 		this.embroniumBlockID = config.getBlock("embroniumBlock", 1181).getInt();
@@ -697,8 +771,8 @@ public class MinecraftPlusBase
 		this.minerBlockID = config.getBlock("minerBlock", 1194).getInt();
 		this.hiddenBookshelfID = config.getBlock("hiddenBookshelfBlock", 1195).getInt();
 		this.pizzaBlockID = config.getBlock("pizzaBlock", 1196).getInt();
-		this.redstoneLampThinIdleID = config.getBlock("redstoneLampThinIdle", 1197).getInt();
-		this.redstoneLampThinActiveID = config.getBlock("redstoneLampThinActive", 1198).getInt();
+		this.redstoneLampThinIdleID = config.getBlock("redstoneLampThin", 1197).getInt();
+		this.redstoneLampThinActiveID = config.getBlock("redstoneLampThin.active", 1198).getInt();
 		this.trapBlockFireID = config.getBlock("trapBlockFire", 1199).getInt();
 		this.trapBlockFireSpreadID = config.getBlock("trapBlockFireSpread", 1200).getInt();
 		this.palmLeavesID = config.getBlock("palmLeaves", 1201).getInt();
@@ -709,6 +783,17 @@ public class MinecraftPlusBase
 		this.holidaylights_2IdleID = config.getBlock("holidayLights.2", 1206).getInt();
 		this.holidaylights_2ActiveID = config.getBlock("holidayLights.2.active", 1207).getInt();
 		this.mintBlockID = config.getBlock("mintBlock", 1208).getInt();
+		this.tomatoCropID = config.getBlock("tomatoCrop", 1209).getInt();
+		this.asphaltPathID = config.getBlock("asphaltPath", 1210).getInt();
+		this.waterFountainBlockID = config.getBlock("waterFountainBlock", 1211).getInt();
+		this.lavaFountainBlockID = config.getBlock("lavaFountainBlock", 1212).getInt();
+		this.ironTrapdoorID = config.getBlock("ironTrapdoor", 1213).getInt();
+		this.ironFenceID = config.getBlock("ironFence", 1214).getInt();
+		this.ironFenceGateID = config.getBlock("ironFenceGate", 1215).getInt();
+		//this.neonBlockID = config.getBlock("neonBlock", 1216).getInt();
+		//this.neonBlockBlueID = config.getBlock("neonBlockBlue", 1217).getInt();
+		//this.neonBlockRedID = config.getBlock("neonBlockRed", 1218).getInt();
+		//this.neonDustID = config.getBlock("neonDust", 1219).getInt();
 		
 		//Items
 		embroniumIngotID = config.getItem("embroniumIngot", 31000).getInt();
@@ -751,6 +836,11 @@ public class MinecraftPlusBase
 		bulbGreenID = config.getItem("bulbGreen", 31036).getInt();
 		mintID = config.getItem("Mint", 31037).getInt();
 		candyCaneID = config.getItem("candyCane", 31038).getInt();
+		tomatoSeedsID = config.getItem("tomatoSeeds", 31039).getInt();
+		//neonIngotID = config.getItem("neonIngot", 31040).getInt();
+		//neonIngotBlueID = config.getItem("neonIngotBlue", 31041).getInt();
+		//neonIngotRedID = config.getItem("neonIngotRed", 31042).getInt();
+		//neonDustID = config.getItem("neonDust", 31043).getInt();
 		
 		config.save();
 		System.out.println("[MC+] Config file made/ updated.");
@@ -776,9 +866,9 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack(exampleItem), new Object [] {
 			"F", Character.valueOf('F'), exampleBlock	
 			});*/
-		GameRegistry.addRecipe(new ItemStack(embroniumBlock), new Object [] {
-			"$$$", "$$$", "$$$", Character.valueOf('$'), embroniumIngot	
-			});
+		GameRegistry.addSmelting(embroniumOre.blockID, (new ItemStack(embroniumIngot)), 2);
+		//GameRegistry.addSmelting(neonOre.blockID, (new ItemStack(neonDust)), 2);
+		GameRegistry.addRecipe(new ItemStack(embroniumBlock), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), embroniumIngot});
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumDust), new Object[] { /*ingredients*/ embroniumIngot});
 		GameRegistry.addRecipe(new ItemStack (embroniumHelmet, 1), (new Object[] {"XXX", "X X","   ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot}));
 		GameRegistry.addRecipe(new ItemStack (embroniumChest, 1), (new Object[] {"X X", "XXX", "XXX", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot}));
@@ -789,6 +879,18 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack (ironManPants, 1), (new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), MinecraftPlusBase.vortexCrystal}));
 		GameRegistry.addRecipe(new ItemStack (ironManBoots, 1), (new Object[] {"X X", "X X", Character.valueOf('X'), MinecraftPlusBase.vortexCrystal}));
 
+		//GameRegistry.addRecipe(new ItemStack(neonBlock), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngot});
+		//GameRegistry.addRecipe(new ItemStack(neonBlockBlue), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngotBlue});
+		//GameRegistry.addRecipe(new ItemStack(neonBlockRed), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngotRed});
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(embroniumIngot), new Object[] { /*ingredients*/ embroniumDust});
+		
+		ItemStack redDye = new ItemStack(Item.dyePowder, 1, 1);
+		ItemStack blueDye = new ItemStack(Item.dyePowder, 1, 4);
+		//GameRegistry.addShapelessRecipe(new ItemStack(neonIngotBlue), new Object[] { /*ingredients*/ neonIngot, blueDye});
+		//GameRegistry.addShapelessRecipe(new ItemStack(neonIngotRed), new Object[] { /*ingredients*/ neonIngot, redDye});
+		
+		
 		//Toolset
 		GameRegistry.addRecipe(new ItemStack (embroniumAxe, 1), (new Object[] {"XX ", "X@ "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.stick}));
 		GameRegistry.addRecipe(new ItemStack (embroniumPickaxe, 1), (new Object[] {"XXX", " @ "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.stick}));
@@ -816,17 +918,24 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack(healBlock, 1), new Object [] {"###", "###", "###", Character.valueOf('#'), Item.cake});
 		GameRegistry.addRecipe(new ItemStack(bouncyBlock, 1), new Object [] {"   ", "###", "@ @", Character.valueOf('#'), Block.cloth, Character.valueOf('@'), Item.stick});
 		GameRegistry.addRecipe(new ItemStack(iceCube, 4), new Object [] {"   ", " # ", " @ ", Character.valueOf('#'), Item.snowball, Character.valueOf('@'), Item.bucketWater});
+		
+		GameRegistry.addRecipe(new ItemStack(waterFountainBlock, 1), new Object [] {" # ", " % ", "$%$", Character.valueOf('#'), Item.bucketWater, Character.valueOf('%'), Block.cobblestoneWall, Character.valueOf('$'), Block.redstoneLampIdle});
+		GameRegistry.addRecipe(new ItemStack(lavaFountainBlock, 1), new Object [] {" # ", " % ", "$%$", Character.valueOf('#'), Item.bucketLava, Character.valueOf('%'), Block.cobblestoneWall, Character.valueOf('$'), Block.glowStone});
+		GameRegistry.addRecipe(new ItemStack(ironTrapdoor, 2), new Object [] {"   ", "###", "###", Character.valueOf('#'), Block.blockSteel});
+		GameRegistry.addRecipe(new ItemStack(ironFence, 2), new Object [] {"   ", "###", "# #", Character.valueOf('#'), Item.ingotIron});
+		GameRegistry.addRecipe(new ItemStack(ironFenceGate, 2), new Object [] {"   ", "@#@", "@#@", Character.valueOf('#'), Block.blockSteel, Character.valueOf('@'), Item.ingotIron});
+		
 		GameRegistry.addShapelessRecipe(new ItemStack(Block.ice, 1), new Object[] { /*ingredients*/ iceCube, iceCube, iceCube, iceCube});
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumIngot, 9), new Object[] { /*ingredients*/ MinecraftPlusBase.embroniumBlock});
 		GameRegistry.addShapelessRecipe(new ItemStack(mintBlock), new Object[] { /*ingredients*/ MinecraftPlusBase.Mint, MinecraftPlusBase.Mint, MinecraftPlusBase.Mint, MinecraftPlusBase.Mint});
 		GameRegistry.addShapelessRecipe(new ItemStack(Mint, 4), new Object[] { /*ingredients*/ MinecraftPlusBase.Mint});
 		GameRegistry.addShapelessRecipe(new ItemStack(candyCane), new Object[] { /*ingredients*/ MinecraftPlusBase.Mint, MinecraftPlusBase.Mint, Item.sugar, Item.sugar});
+		GameRegistry.addShapelessRecipe(new ItemStack(tomatoSeeds, 4), new Object[] { /*ingredients*/ MinecraftPlusBase.Tomato});
 		
+		GameRegistry.addSmelting(Item.flint.shiftedIndex, (new ItemStack(asphaltPath)), 2);
 		GameRegistry.addRecipe(new ItemStack(bulbNormal), new Object [] {" # ", "###", " @ ", Character.valueOf('#'), Item.lightStoneDust, Character.valueOf('@'), Item.redstone});
 		GameRegistry.addRecipe(new ItemStack(holidaylights_1Idle), new Object [] {"   ", "###", "$@%", Character.valueOf('#'), Item.silk, Character.valueOf('$'), MinecraftPlusBase.bulbRed, Character.valueOf('@'), MinecraftPlusBase.bulbBlue, Character.valueOf('%'), MinecraftPlusBase.bulbGreen});
 		GameRegistry.addRecipe(new ItemStack(holidaylights_2Idle), new Object [] {"   ", "###", "$$$", Character.valueOf('#'), Item.silk, Character.valueOf('$'), MinecraftPlusBase.bulbNormal});
-		ItemStack redDye = new ItemStack(Item.dyePowder, 1, 1);
-		ItemStack blueDye = new ItemStack(Item.dyePowder, 1, 4);
 		ItemStack greenDye = new ItemStack(Item.dyePowder, 1, 2);
 		GameRegistry.addShapelessRecipe(new ItemStack(bulbRed), new Object[] {MinecraftPlusBase.bulbNormal, redDye});
 		GameRegistry.addShapelessRecipe(new ItemStack(bulbBlue), new Object[] {MinecraftPlusBase.bulbNormal, blueDye});
@@ -884,6 +993,17 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(holidaylights_2Idle, "Yellow Holiday Lights");
 		LanguageRegistry.addName(holidaylights_2Active, "[ACTIVE] Yellow Holiday Lights");
 		LanguageRegistry.addName(mintBlock, "Mint Block");
+		LanguageRegistry.addName(tomatoCrop, "Tomato Crop");
+		LanguageRegistry.addName(asphaltPath, "Asphalt Path");
+		LanguageRegistry.addName(waterFountainBlock, "Water Fountain Block");
+		LanguageRegistry.addName(lavaFountainBlock, "Lava Fountain Block");
+		LanguageRegistry.addName(ironTrapdoor, "Iron Trapdoor");
+		LanguageRegistry.addName(ironFence, "Iron Fence");
+		LanguageRegistry.addName(ironFenceGate, "Iron Fence Gate");
+		//LanguageRegistry.addName(neonBlock, "Neon Block");
+		//LanguageRegistry.addName(neonBlockBlue, "Blue Neon Block");
+		//LanguageRegistry.addName(neonBlockRed, "Red Neon Block");
+		//LanguageRegistry.addName(neonOre, "Neon Ore");
 		
 		//Items
 		LanguageRegistry.addName(embroniumIngot, "Embronium Ingot");
@@ -895,6 +1015,10 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(bulbRed, "Red Bulb");
 		LanguageRegistry.addName(bulbBlue, "Blue Bulb");
 		LanguageRegistry.addName(bulbGreen, "Green Bulb");
+		//LanguageRegistry.addName(neonIngot, "Neon Ingot");
+		//LanguageRegistry.addName(neonIngotBlue, "Blue Neon Dust");
+		//LanguageRegistry.addName(neonIngotRed, "Red Neon Ingot");
+		//LanguageRegistry.addName(neonDust, "Neon Dust");
 		//Food
 		LanguageRegistry.addName(itemBandage, "Bandage");
 		LanguageRegistry.addName(Cheese, "Cheese");
@@ -904,6 +1028,7 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(hotDog, "Hot Dog");
 		LanguageRegistry.addName(chickenSoup, "Chicken Soup");
 		LanguageRegistry.addName(Tomato, "Tomato");
+		LanguageRegistry.addName(tomatoSeeds, "Tomato Crop Seeds");
 		LanguageRegistry.addName(iceCube, "Ice Cube");
 		LanguageRegistry.addName(iceCreamCone, "Ice Cream Cone");
 		LanguageRegistry.addName(cheeseCake, "Cheesecake");
@@ -995,6 +1120,17 @@ public class MinecraftPlusBase
 		GameRegistry.registerBlock(holidaylights_2Idle);
 		GameRegistry.registerBlock(holidaylights_2Active);
 		GameRegistry.registerBlock(mintBlock);
+		GameRegistry.registerBlock(tomatoCrop);
+		GameRegistry.registerBlock(asphaltPath);
+		GameRegistry.registerBlock(waterFountainBlock);
+		GameRegistry.registerBlock(lavaFountainBlock);
+		GameRegistry.registerBlock(ironTrapdoor);
+		GameRegistry.registerBlock(ironFence);
+		GameRegistry.registerBlock(ironFenceGate);
+		//GameRegistry.registerBlock(neonBlock);
+		//GameRegistry.registerBlock(neonBlockBlue);
+		//GameRegistry.registerBlock(neonBlockRed);
+		//GameRegistry.registerBlock(neonOre);
 		//GameRegistry.registerBlock(exampleSmeltingAchievementBlock);
 	}
 
@@ -1003,7 +1139,7 @@ public class MinecraftPlusBase
 	@PostInit
 	public void postInit(FMLPostInitializationEvent event)
 	{
-		
+	System.out.println("[MC+] Mod Initialized");
 	}
 	
 	//This allows you to do Certain things once a server with the mod installed is started 
@@ -1012,6 +1148,22 @@ public class MinecraftPlusBase
 	public void serverStarted(FMLServerStartedEvent event)
 	{
 		
+	}
+	
+	@SideOnly(Side.CLIENT)
+	/** Returns the directory for this mod.
+	 * @return Mod directory.*/
+	public static File getPlusClientDirectory(){
+		File var1 = new File(Minecraft.getMinecraftDir() + "/MinecraftPlus");
+		return var1;
+	}
+	
+	@SideOnly(Side.SERVER)
+	/** Returns the directory for this mod.
+	 * @return Mod directory.*/
+	public static File getPlusServerDirectory(){
+		File var1 = new File(MinecraftServer.getServer().getFolderName() + "/MinecraftPlus");
+		return var1;
 	}
 	
 	/** Returns if the mod is loaded.

@@ -2,10 +2,12 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 
 public class BlockCobbleGen extends BlockNormal {
 	private boolean hasBeenActivated = false;
@@ -29,6 +31,10 @@ public class BlockCobbleGen extends BlockNormal {
                     if(flag)
                     {
                             world.scheduleBlockUpdate(i, j, k, blockID, tickRate());
+                    }else{
+                    	if(hasBeenActivated){
+                    		world.scheduleBlockUpdate(i, j, k, blockID, tickRate());
+                    	}
                     }
             }
     }
@@ -40,6 +46,13 @@ public class BlockCobbleGen extends BlockNormal {
              //Whatever you put here is what happens when it's powered
              blockCreate(world, i, j, k);
              hasBeenActivated = true;
+            }else if(!world.isBlockIndirectlyGettingPowered(i, j, k) || !world.isBlockIndirectlyGettingPowered(i, j - 1, k))
+            {
+            	if(hasBeenActivated){
+                    //Whatever you put here is what happens when it stops being powered
+                    blockRemove(world, i, j, k);
+                    hasBeenActivated = false;
+                }
             }
     }
 
@@ -129,7 +142,12 @@ public class BlockCobbleGen extends BlockNormal {
     {
     	int nullBlock = MinecraftPlusBase.nullBlock.blockID;
         //Generator
-        world.setBlockWithNotify(x, y, z + 2, Block.waterMoving.blockID);
+    	BiomeGenBase biome = world.getBiomeGenForCoords(x, z);
+    	if(biome.biomeID == BiomeGenBase.hell.biomeID){
+    		world.setBlockWithNotify(x, y, z + 2, Block.ice.blockID);
+    	}else{
+    		world.setBlockWithNotify(x, y, z + 2, Block.waterMoving.blockID);
+    	}
         world.setBlockWithNotify(x, y - 1, z + 3, nullBlock);
         world.setBlockWithNotify(x, y, z + 3, nullBlock);
         world.setBlockWithNotify(x, y, z + 5, Block.lavaStill.blockID);

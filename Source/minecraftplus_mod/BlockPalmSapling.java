@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.BlockFlower;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.world.World;
@@ -19,7 +20,7 @@ public class BlockPalmSapling extends BlockFlower
 
     public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_blocks.png";
+		return MinecraftPlusBase.block_texture;
 	}
     
     /**

@@ -5,21 +5,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
  
 public class PlusItemSword extends ItemNormal
 {
     private int weaponDamage;
-    private final PlusToolMaterial toolMaterial;
+    private final EnumToolMaterial toolMaterial;
 
-    public PlusItemSword(int par1, PlusToolMaterial par2PlusToolMaterial, int par3Damage)
+    public PlusItemSword(int par1, EnumToolMaterial par2EnumToolMaterial, int par3Damage)
     {
         super(par1);
-        toolMaterial = par2PlusToolMaterial;
+        toolMaterial = par2EnumToolMaterial;
         maxStackSize = 1;
-        setMaxDamage(par2PlusToolMaterial.getMaxUses());
-        weaponDamage = par3Damage + par2PlusToolMaterial.getDamageVsEntity();
+        setMaxDamage(par2EnumToolMaterial.getMaxUses());
+        weaponDamage = par3Damage + par2EnumToolMaterial.getDamageVsEntity();
     }
 
     /**

@@ -31,7 +31,7 @@ public class PlusWorldGenerator implements IWorldGenerator {
 	
 	private void generateSurface(World world, Random random, int i, int j, String currentBiome) {
 		
-		if(currentBiome == "Desert" || currentBiome == "DesertHills" || currentBiome == "Beach"){
+		if(currentBiome == BiomeGenBase.desert.biomeName || currentBiome == BiomeGenBase.desertHills.biomeName || currentBiome == BiomeGenBase.beach.biomeName){
 			for(int q = 0; q < 1; q++)
 	        {
 	                int randPosX = i + random.nextInt(15);
@@ -49,8 +49,16 @@ public class PlusWorldGenerator implements IWorldGenerator {
                 int randPosX = i + random.nextInt(15);
                 int randPosY = random.nextInt(80);
                 int randPosZ = j + random.nextInt(16);
-                (new WorldGenMinable(MinecraftPlusBase.embroniumOre.blockID, 12)).generate(world, random, randPosX, randPosY, randPosZ);
+                (new WorldGenMinable(MinecraftPlusBase.embroniumOre.blockID, 9)).generate(world, random, randPosX, randPosY, randPosZ);
         }
+		
+		/*for(int q = 0; q < 2; q++)
+        {
+                int randPosX = i + random.nextInt(15);
+                int randPosY = random.nextInt(80);
+                int randPosZ = j + random.nextInt(16);
+                (new WorldGenMinable(MinecraftPlusBase.neonOre.blockID, 4)).generate(world, random, randPosX, randPosY, randPosZ);
+        }*/
         
 		int number = random.nextInt(16);
         if(number == 10){

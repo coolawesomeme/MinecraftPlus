@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -17,17 +18,17 @@ public class PlusItemTool extends ItemNormal
     private int damageVsEntity;
 
     /** The material this tool is made from. */
-    protected PlusToolMaterial toolMaterial;
+    protected EnumToolMaterial toolMaterial;
 
-    protected PlusItemTool(int par1, int par2, PlusToolMaterial par3PlusToolMaterial, Block[] par4ArrayOfBlock)
+    protected PlusItemTool(int par1, int par2, EnumToolMaterial par2EnumToolMaterial, Block[] par4ArrayOfBlock)
     {
         super(par1);
-        this.toolMaterial = par3PlusToolMaterial;
+        this.toolMaterial = par2EnumToolMaterial;
         this.blocksEffectiveAgainst = par4ArrayOfBlock;
         this.maxStackSize = 1;
-        this.setMaxDamage(par3PlusToolMaterial.getMaxUses());
-        this.efficiencyOnProperMaterial = par3PlusToolMaterial.getEfficiencyOnProperMaterial();
-        this.damageVsEntity = par2 + par3PlusToolMaterial.getDamageVsEntity();
+        this.setMaxDamage(par2EnumToolMaterial.getMaxUses());
+        this.efficiencyOnProperMaterial = par2EnumToolMaterial.getEfficiencyOnProperMaterial();
+        this.damageVsEntity = par2 + par2EnumToolMaterial.getDamageVsEntity();
         this.setCreativeTab(CreativeTabs.tabTools);
     }
 

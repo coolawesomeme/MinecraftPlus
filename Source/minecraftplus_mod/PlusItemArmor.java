@@ -15,7 +15,7 @@ public class PlusItemArmor extends ItemArmor implements IArmorTextureProvider
         @Override
         public String getTextureFile()
 		{
-			return "/minecraftplus/spritesheet_items.png";
+			return MinecraftPlusBase.item_texture;
 		}
         
 		@Override

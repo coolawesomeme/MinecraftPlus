@@ -1,21 +1,47 @@
 package net.minecraftplus_mod;
 
 import java.io.BufferedReader;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.multiplayer.NetClientHandler;
+import net.minecraft.client.multiplayer.WorldClient;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.EnumGameType;
+import net.minecraft.world.World;
 import cpw.mods.fml.common.ITickHandler;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.TickType;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.network.PacketDispatcher;
+import cpw.mods.fml.common.network.Player;
+import net.minecraft.network.packet.Packet250CustomPayload;
+import net.minecraftforge.common.ForgeVersion;
 
 public class ClientTickHandler implements ITickHandler 
 {
@@ -25,13 +51,23 @@ public class ClientTickHandler implements ITickHandler
     public String codever = MinecraftPlusBase.codever;
     public String modver2 = "missingno";
     public String modver3 = "missingno";
+    public String modverFull = "missingno";
     public String updateMessage = "missingno";
     public String updateMessage2 = "missingno";
+    public String latestMCVer = "missingno";
     private boolean isPlayerWearingSpecialArmor = true;
-    private boolean isBetaVersion = MinecraftPlusBase.betaVersion;
+    private Object getVersionType = MinecraftPlusBase.versionType;
     private static int clientTickCount = 0;
     private static int clientSecondCount = 0;
-    private static int clientTickNumber = 1;
+    private static int clientTickNumber = 0;
+    private String updateURL = "http://google.com";
+    private boolean isDownloaded = false;
+    private boolean redoSplashscreen = false;
+    private boolean splashscreenEnabled = MinecraftPlusBase.isSplashScreenEnabled;
+    private int splashScreenTimer = 0;
+    private int splashScreenTotalTime = MinecraftPlusBase.splashScreenTime;
+    private int initializationStart = splashScreenTotalTime;
+    private boolean download = MinecraftPlusBase.download;
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) 
@@ -71,14 +107,31 @@ public class ClientTickHandler implements ITickHandler
 	private void onTickInGame(Minecraft minecraft) 
 	{
 		if(!notSTARTUP){
-		initialization(minecraft, 0, 0, 0);
+		initialization(minecraft);
 		onClientStartup(minecraft);
 		}
-	    armorSpecial(minecraft);
+	    armorSpecial(minecraft, minecraft.thePlayer);
+	    if(redoSplashscreen){
+	    	if(minecraft.isSingleplayer()){
+	    		splashScreen(minecraft, MinecraftPlusBase.instance, 0, minecraft.theWorld);
+	    	}
+	    }
 	}
 
-	public void initialization(Minecraft minecraft, int i, int j, int k)
+	private void splashScreen(Minecraft minecraft, MinecraftPlusBase instance, int i, World world) {
+		if(splashscreenEnabled){
+		minecraft.thePlayer.openGui(MinecraftPlusBase.instance, PlusGuiHandler.splashScreenID, minecraft.theWorld, (int)minecraft.thePlayer.posX, (int)minecraft.thePlayer.posY, (int)minecraft.thePlayer.posZ);
+		}
+	}
+
+	public void initialization(Minecraft minecraft)
     {
+		if(minecraft.isSingleplayer()){
+		splashScreen(minecraft, MinecraftPlusBase.instance, 0, minecraft.theWorld);
+		}else{
+			redoSplashscreen = true;
+		}
+		
         Random randomGenerator = new Random();
         
         Calendar calendar = Calendar.getInstance();
@@ -141,7 +194,7 @@ public class ClientTickHandler implements ITickHandler
         String username = minecraft.thePlayer.username;
         if(notSTARTUP == false){
             
-            minecraft.thePlayer.addChatMessage("Minecraft+ " + codever + " \u00A72enabled" + "\u00A7f!");
+            minecraft.thePlayer.addChatMessage("Minecraft+ " + codever + " \u00A72loaded" + "\u00A7f!");
             
             int s = randomGenerator.nextInt(5);
             if(s <= 1){
@@ -162,7 +215,7 @@ public class ClientTickHandler implements ITickHandler
             
             minecraft.thePlayer.addChatMessage("Today is " + month + " " + date + suffix + " " + calendar.get(Calendar.YEAR) + ".");
             
-            if(!isBetaVersion){
+            if(getVersionType == PlusModType.RELEASE){
             int counter = 0;
             try {
                 // Create a URL for the desired page
@@ -186,20 +239,33 @@ public class ClientTickHandler implements ITickHandler
             	
                 System.out.println("Latest mod version found: Minecraft+ " + temp[0] + ".");
                 
+                this.modverFull = temp[0];
+                
                 if(!MinecraftPlusBase.isOutdated(Integer.parseInt(temp[3]), Integer.parseInt(temp[4]))){
                 	System.out.println("[MC+] Mod up to date!");
                 }
                 else{
+                this.latestMCVer = temp[5];
+                this.updateURL = temp[6];
+                this.downloadLatestModFile();
                 minecraft.thePlayer.addChatMessage("");
                 minecraft.thePlayer.addChatMessage("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
+                if(this.isDownloaded){
+                minecraft.thePlayer.addChatMessage("Located at: " + Minecraft.getMinecraftDir().getPath() + "/MinecraftPlus/updates");
+                }else{
                 minecraft.thePlayer.addChatMessage("\u00A7bhttp://bit.ly/MCPlus" + "\u00A7f");
+                }
                 if(!temp[1].isEmpty()){
                 minecraft.thePlayer.addChatMessage(temp[1]);
                 } if(!temp[2].isEmpty()){
                 minecraft.thePlayer.addChatMessage(temp[2]);
                 }
                 System.out.println("An update of " + "Minecraft+ (Version " + temp[0] + ") " + "is available!");
+                if(this.isDownloaded){
+                System.out.println("Located at: " + Minecraft.getMinecraftDir().getPath() + "/MinecraftPlus/updates");
+                }else{
                 System.out.println("http://bit.ly/MCPlus");
+                }
                 }
                 
                 counter++;
@@ -211,7 +277,7 @@ public class ClientTickHandler implements ITickHandler
             }
             } 
             // For internal testing:
-            else if(isBetaVersion){
+            else if(getVersionType == PlusModType.BETA){
             int counter2 = 0;
               try {
                 // Create a URL for the desired page
@@ -234,6 +300,8 @@ public class ClientTickHandler implements ITickHandler
                 	}
                 	
                     System.out.println("Latest beta mod version found: Minecraft+ " + temp[0] + ".");
+                    
+                    this.modverFull = temp[0];
                     
                     if(!MinecraftPlusBase.isOutdated(Integer.parseInt(temp[3]), Integer.parseInt(temp[4]))){
                     	System.out.println("[MC+] Mod up to date!");
@@ -282,9 +350,9 @@ public class ClientTickHandler implements ITickHandler
         }
         }
     
-    public void armorSpecial(Minecraft minecraft)
+    public void armorSpecial(Minecraft minecraft, EntityPlayer Player)
     {
-        ItemStack boots = minecraft.thePlayer.inventory.armorInventory[0];
+    	ItemStack boots = minecraft.thePlayer.inventory.armorInventory[0];
         ItemStack legs = minecraft.thePlayer.inventory.armorInventory[1];
         ItemStack chest = minecraft.thePlayer.inventory.armorInventory[2];
         ItemStack helm = minecraft.thePlayer.inventory.armorInventory[3];
@@ -300,38 +368,86 @@ public class ClientTickHandler implements ITickHandler
                     minecraft.thePlayer.setAir(300);
                 }
                 flag1 = true;
+        }else{
+        	flag1 = false;
         }
         if(boots != null && boots.itemID == MinecraftPlusBase.ironManBoots.shiftedIndex){
                 minecraft.thePlayer.fallDistance = 0.0F;
                 flag2 = true;
+        }else{
+        	flag2 = false;
         }
         if(chest != null && chest.itemID == MinecraftPlusBase.ironManChest.shiftedIndex){
-            minecraft.thePlayer.capabilities.setFlySpeed(0.04F);
+            minecraft.thePlayer.capabilities.setFlySpeed(0.06F);
             flag3 = true;
+        }else{
+        	flag3 = false;
+        	minecraft.thePlayer.capabilities.setFlySpeed(0.05F);
         }
         if(legs != null && legs.itemID == MinecraftPlusBase.ironManPants.shiftedIndex){
-        	minecraft.thePlayer.fireResistance = 200;
+        	minecraft.thePlayer.fireResistance = 180;
             flag4 = true;
+        }else{
+        	flag4 = false;
+        	EnumGameType gameType = minecraft.theWorld.getWorldInfo().getGameType();
+        	if(gameType != EnumGameType.CREATIVE){
+        		minecraft.thePlayer.fireResistance = 0;
+        	}
         }
         if(flag1 == true && flag2 == true && flag3 == true && flag4 == true){
             minecraft.thePlayer.capabilities.allowFlying = true;
-        }
-        else{
+        }else{
         	EnumGameType gameType = minecraft.theWorld.getWorldInfo().getGameType();
         	if(gameType != EnumGameType.CREATIVE){
             minecraft.thePlayer.capabilities.allowFlying = false;
-            minecraft.thePlayer.fireResistance = 0;
-        	}
-        	minecraft.thePlayer.capabilities.setFlySpeed(0.03F);
+            }
+        	
             isPlayerWearingSpecialArmor = false;
         }
         }
 	
+    public void downloadLatestModFile(){
+    	if(download){
+    	    String saveTo = Minecraft.getMinecraftDir().getPath() + "/MinecraftPlus/updates";
+    	    File saveFolder = new File(saveTo);
+    	    saveFolder.mkdirs();
+    	    try {
+    	        URL url = new URL(updateURL);
+    	        URLConnection conn = url.openConnection();
+    	        InputStream in = conn.getInputStream();
+    	        FileOutputStream out = new FileOutputStream(saveTo + "/minecraft+ "+ modverFull + " [Minecraft " + this.latestMCVer + "].zip");
+    	        byte[] b = new byte[1024];
+    	        int count;
+    	        while ((count = in.read(b)) >= 0) {
+    	            out.write(b, 0, count);
+    	        }
+    	        out.flush(); out.close(); in.close();                   
+    	        System.out.println("Latest mod version is downloaded!");
+    	        System.out.println("Located here: " + saveTo + "/minecraft+ "+ modverFull + " [Minecraft " + this.latestMCVer + "].zip");
+    	        System.out.println("Put in 'mods' folder & delete the old version.");
+    	        this.isDownloaded = true;
+    	    } catch (Exception e) {
+    	        e.printStackTrace();
+    	    }
+    	}else{
+    		isDownloaded = false;
+    	}
+    }
+    
+
 	public void onClientStartup(Minecraft minecraft) {}
 	
 	private void onTickInGUI(Minecraft minecraft, GuiScreen guiscreen) 
 	{
-		//Do stuff in Gui here
+		if(guiscreen instanceof GuiSplashscreen){
+			int time = splashScreenTotalTime;
+			time = time * 20;
+			if(splashScreenTimer > time){
+				minecraft.thePlayer.closeScreen();
+				splashScreenTimer = 0;
+			}
+			this.splashScreenTimer++;
+		}
 	}
 
 	private void onRenderTick() 

@@ -2,16 +2,18 @@ package net.minecraftplus_mod;
 
 import java.util.EnumSet;
 
+import net.minecraft.network.rcon.RConConsoleSource;
+import net.minecraft.server.MinecraftServer;
+
 import cpw.mods.fml.common.ITickHandler;
 import cpw.mods.fml.common.TickType;
 
 public class ServerTickHandler implements ITickHandler 
 {	
 	public boolean notServerSTARTUP = false;
-	private boolean notServerSTARTUP2 = false;
 	private static int serverTickCount = 0;
 	private static int serverSecondCount = 0;
-	private static int serverTickNumber = 1;
+	private static int serverTickNumber = 0;
 	
 	@Override
 	public void tickStart(EnumSet<TickType> type, Object... tickData) 
@@ -33,23 +35,33 @@ public class ServerTickHandler implements ITickHandler
     	//Example of using onTick methods such as is used in ModLoader's implementation
     	        if (type.equals(EnumSet.of(TickType.SERVER)))
     	        {
-    	        	if(!notServerSTARTUP){
     	            onTickInServer();
-    	        	}
-    	        	if(!notServerSTARTUP2){
-    	    			onServerSTARTUP();
-    	    			notServerSTARTUP2 = true;
-    	    		}
     	        }
 	}
 
 	private void onTickInServer() {
-		//MinecraftServer.getServer().executeCommand("say Minecraft+ Server Version Enabled!");
-		System.out.print("Minecraft+ " + MinecraftPlusBase.codever + " loaded!\n");
-		
+		if(!notServerSTARTUP){
+		initialize();
+		onServerSTARTUP();
 		notServerSTARTUP = true;
+		}
 	}
 
+	private void initialize() {
+			//MinecraftServer.getServer().executeCommand("say Minecraft+ Server Version Enabled!");
+			if(!MinecraftServer.getServer().isSinglePlayer()){
+				this.executeCommand("say Loading Minecraft+ " + MinecraftPlusBase.codever + "!");
+				this.executeCommand("/say Minecraft+ Server version enabled!");
+			}
+	}
+
+	public String executeCommand(String par1Str)
+    {
+        PlusConsoleBuffer.consoleBuffer.resetLog();
+        MinecraftServer.getServer().getCommandManager().executeCommand(PlusConsoleBuffer.consoleBuffer, par1Str);
+        return PlusConsoleBuffer.consoleBuffer.getChatBuffer();
+    }
+	
 	public void onServerSTARTUP() {}
 
 	@Override

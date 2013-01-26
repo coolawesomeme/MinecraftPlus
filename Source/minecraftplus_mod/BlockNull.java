@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
  
 import java.util.Random;
 
+
 import net.minecraft.block.BlockBreakable;
 import net.minecraft.block.material.Material;
 import net.minecraft.util.AxisAlignedBB;
@@ -16,7 +17,7 @@ public class BlockNull extends BlockBreakable
 
     public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_blocks.png";
+		return MinecraftPlusBase.block_texture;
 	}
     
     public void onBlockAdded(World par1World, int par2, int par3, int par4) {

@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 
 public class PlusItemPickaxe extends PlusItemTool
@@ -9,9 +10,9 @@ public class PlusItemPickaxe extends PlusItemTool
     /** an array of the blocks this pickaxe is effective against */
     private static Block[] blocksEffectiveAgainst = new Block[] {Block.cobblestone, Block.stoneDoubleSlab, Block.stoneSingleSlab, Block.stone, Block.sandStone, Block.cobblestoneMossy, Block.oreIron, Block.blockSteel, Block.oreCoal, Block.blockGold, Block.oreGold, Block.oreDiamond, Block.blockDiamond, Block.ice, Block.netherrack, Block.oreLapis, Block.blockLapis, Block.oreRedstone, Block.oreRedstoneGlowing, Block.rail, Block.railDetector, Block.railPowered};
 
-    protected PlusItemPickaxe(int par1, PlusToolMaterial par2PlusToolMaterial)
+    protected PlusItemPickaxe(int par1, EnumToolMaterial par2EnumToolMaterial)
     {
-        super(par1, 2, par2PlusToolMaterial, blocksEffectiveAgainst);
+        super(par1, 2, par2EnumToolMaterial, blocksEffectiveAgainst);
     }
 
     /**

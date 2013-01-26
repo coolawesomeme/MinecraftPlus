@@ -3,6 +3,7 @@ package net.minecraftplus_mod;
 import java.util.List;
 import java.util.Random;
 
+
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
@@ -28,7 +29,7 @@ public class BlockShield extends BlockPane
 
     public String getTextureFile()
 	{
-		return "/minecraftplus/spritesheet_blocks.png";
+		return MinecraftPlusBase.block_texture;
 	}
     
     public BlockShield(int par1, int par2, int par3, Material par4Material, boolean par5)

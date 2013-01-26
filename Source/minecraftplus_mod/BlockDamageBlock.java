@@ -2,6 +2,7 @@ package net.minecraftplus_mod;
 
 import java.util.Random;
 
+
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.AxisAlignedBB;
@@ -9,7 +10,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 public class BlockDamageBlock extends BlockNormal {
-    protected BlockDamageBlock(int i, int j) {
+    public BlockDamageBlock(int i, int j) {
         super(i, j, Material.wood);
     }
 

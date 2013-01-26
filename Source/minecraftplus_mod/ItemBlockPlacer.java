@@ -7,7 +7,7 @@ public class ItemBlockPlacer extends ItemReed
 {
 		public String getTextureFile()
 		{
-			return "/minecraftplus/spritesheet_items.png";
+			return MinecraftPlusBase.item_texture;
 		}
 		
         public ItemBlockPlacer(int par1, Block par2)
