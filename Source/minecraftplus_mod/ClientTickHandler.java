@@ -120,7 +120,7 @@ public class ClientTickHandler implements ITickHandler
 
 	private void splashScreen(Minecraft minecraft, MinecraftPlusBase instance, int i, World world) {
 		if(splashscreenEnabled){
-		minecraft.thePlayer.openGui(MinecraftPlusBase.instance, PlusGuiHandler.splashScreenID, minecraft.theWorld, (int)minecraft.thePlayer.posX, (int)minecraft.thePlayer.posY, (int)minecraft.thePlayer.posZ);
+		minecraft.thePlayer.openGui(MinecraftPlusBase.instance, PlusGuiHandler.splashScreenGUIID, minecraft.theWorld, (int)minecraft.thePlayer.posX, (int)minecraft.thePlayer.posY, (int)minecraft.thePlayer.posZ);
 		}
 	}
 
@@ -394,7 +394,7 @@ public class ClientTickHandler implements ITickHandler
         		minecraft.thePlayer.fireResistance = 0;
         	}
         }
-        if(flag1 == true && flag2 == true && flag3 == true && flag4 == true){
+        if(flag1 && flag2 && flag3 && flag4){
             minecraft.thePlayer.capabilities.allowFlying = true;
         }else{
         	EnumGameType gameType = minecraft.theWorld.getWorldInfo().getGameType();
@@ -441,7 +441,7 @@ public class ClientTickHandler implements ITickHandler
 	{
 		if(guiscreen instanceof GuiSplashscreen){
 			int time = splashScreenTotalTime;
-			time = time * 20;
+			time *= 20;
 			if(splashScreenTimer > time){
 				minecraft.thePlayer.closeScreen();
 				splashScreenTimer = 0;

@@ -72,7 +72,7 @@ public class MinecraftPlusBase
 	@Instance()
 	public static MinecraftPlusBase instance;
     
-	public static CreativeTabs plusTab = new PlusTab("plusTab");
+	public static CreativeTabs plusTab = new PlusTab("minecraftPlusTab");
 	
     /** Version Codename. Changed every release.*/
     public static String codename = "Caramel";
@@ -81,7 +81,7 @@ public class MinecraftPlusBase
 	public static final int modverrelease = 3;
 	
 	/** Mod build version. +1 every compile. */
-    public static final int modverbuild = 1;
+    public static final int modverbuild = 2;
     
     /** Is this a beta version? */
     public static PlusModType versionType = PlusModType.BETA;
@@ -101,7 +101,7 @@ public class MinecraftPlusBase
 	/**Addon Base Instance */
 	public static PlusAddonBase addon;
 	
-	public static MinecraftPlusBase plusBase;
+	public static MinecraftPlusBase plusBase = new MinecraftPlusBase();
 	
 	/**Addon Registerer Instance */
 	public static PlusAddonRegister addonRegister;
@@ -118,6 +118,8 @@ public class MinecraftPlusBase
 	protected static int splashScreenTime;
 	
 	protected static boolean download;
+	
+	protected static String uniqueUID;
 	
 	@SideOnly(Side.CLIENT)
 	public static Minecraft minecraft;
@@ -161,10 +163,10 @@ public class MinecraftPlusBase
     public static Block ironTrapdoor;
     public static Block ironFence;
     public static Block ironFenceGate;
-    //public static Block neonOre;
-    //public static Block neonBlock;
-    //public static Block neonBlockBlue;
-    //public static Block neonBlockRed;
+    public static Block neonOre;
+    public static Block neonBlock;
+    public static Block neonBlockBlue;
+    public static Block neonBlockRed;
 	
 	//Items
 	public static Item embroniumIngot;
@@ -174,10 +176,10 @@ public class MinecraftPlusBase
     public static Item bulbRed;
     public static Item bulbBlue;
     public static Item bulbGreen;
-    //public static Item neonDust;
-    //public static Item neonIngot;
-    //public static Item neonIngotBlue;
-    //public static Item neonIngotRed;
+    public static Item neonDust;
+    public static Item neonIngot;
+    public static Item neonIngotBlue;
+    public static Item neonIngotRed;
 
     //Food
     public static Item itemBandage; 
@@ -220,6 +222,11 @@ public class MinecraftPlusBase
     public static Item daggerGold;
     public static Item daggerDiamond;
     public static Item daggerEmbronium;
+    public static Item daggerNeon;
+    
+    public static Item neonSword;
+    public static Item neonSwordBlue;
+    public static Item neonSwordRed;
     
     //IDs
     public static int embroniumBlockID;
@@ -299,19 +306,28 @@ public class MinecraftPlusBase
 	public static int ironTrapdoorID;
 	public static int ironFenceID;
 	public static int ironFenceGateID;
-    //public static int neonOreID;
-    //public static int neonBlockID;
-    //public static int neonBlockBlueID;
-    //public static int neonBlockRedID;
-	//public static int neonDustID;
-    //public static int neonIngotID;
-    //public static int neonIngotBlueID;
-    //public static int neonIngotRedID;
+    public static int neonOreID;
+    public static int neonBlockID;
+    public static int neonBlockBlueID;
+    public static int neonBlockRedID;
+	public static int neonDustID;
+    public static int neonIngotID;
+    public static int neonIngotBlueID;
+    public static int neonIngotRedID;
+    public static int neonSwordID;
+    public static int neonBlueSwordID;
+    public static int neonRedSwordID;
+    public static int daggerNeonID;
 	
 	//The pre initialization step is not required for a mod to run, but it is excellent for establishing Configuration files before the Mod is loaded (Great for Item/Block ID's)
 	@PreInit
 	public void preInit(FMLPreInitializationEvent event)
 	{
+		try{
+		this.uniqueUID = MinecraftPlus.getRandomString(8);
+		}catch(Exception e){
+			this.uniqueUID = "null";
+		}
 		configFile(event);
 		MinecraftForge.EVENT_BUS.register(new PlusBonemealHandler());
 		if(event.getSide() == Side.CLIENT){
@@ -436,19 +452,7 @@ public class MinecraftPlusBase
 			char date4 = date1.charAt(1);
 			String fullDate = dateandtime.replace('*', date3);
 			fullDate = fullDate.replace('^', date4);
-			String randString = "";
-			Random random = new Random();
-			int randInt = random.nextInt(5);
-			if(randInt <= 1)
-				randString = "Come with me if you want to live.";
-			if(randInt == 2)
-				randString = "Help me Obi-Wan, you're my only hope.";
-			if(randInt == 3)
-				randString = "Hasta la Vista, baby.";
-			if(randInt == 4)
-				randString = "The name's Bond. James Bond.";
-			if(randInt >= 5)
-				randString = "I'm the king of the world!";
+			String randString = RandomMessage.getRandomMessage();
 			String loaded = "False";
 			if(Loader.instance().isModLoaded("MinecraftPlus") || Loader.instance().isModLoaded("Minecraft+")){
 				loaded = "True";
@@ -477,9 +481,10 @@ public class MinecraftPlusBase
 			fwrite.write("LastUsedFMLVersion: " + Loader.instance().getFMLVersionString() + "  " + "\n");
 			fwrite.write("LastUsedMinecraftVersion: " + Loader.instance().getMCVersionString() + "  " + "\n");
 			fwrite.write("WasMinecraft+Loaded: " + loaded + "  " + "\n");
-			fwrite.write("LadtNumberOfModsUsed: " + modslist.size() + "  " + "\n");
+			fwrite.write("LastNumberOfModsUsed: " + modslist.size() + "  " + "\n");
 			fwrite.write("LastModsUsed:" + "  " + "\n");
 			fwrite.write(Loader.instance().getIndexedModList().keySet() + "  " + "\n");
+			//fwrite.write("LastUID: " + this.uniqueUID + "  " + "\n");
 			fwrite.write("\n" + "// " + randString + "  ");
 			fwrite.write("\n" + "~[|\\O/|]~" + "  ");
 			fwrite.flush();
@@ -631,8 +636,8 @@ public class MinecraftPlusBase
 	private void addOreDictionaryEntries() 
 	{
 		//Register Ore params (Ore Dictionary Type, Item to register this Type for)
-		OreDictionary.registerOre("Embronium Ingot", embroniumIngot);
-		OreDictionary.registerOre("Embronium Ore", embroniumOre);
+		OreDictionary.registerOre("ingotEmbronium", embroniumIngot);
+		OreDictionary.registerOre("oreEmbronium", embroniumOre);
 	}
 	
 	//I have created this method to initialize the blocks to prevent errors when using a Configuration file for the ID's
@@ -662,7 +667,7 @@ public class MinecraftPlusBase
 		trapBlockFire = new BlockTrapFire(trapBlockFireID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFire");
 		trapBlockFireSpread = new BlockTrapFireSpread(trapBlockFireSpreadID,0).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("trapBlockFireSpread");
 		palmWood = new BlockPalmWood(palmWoodID,21).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmWood");
-		palmLeaves = new BlockPalmLeaves(palmLeavesID,22).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmLeaves");
+		palmLeaves = new BlockPalmLeaves(palmLeavesID,23).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmLeaves");
 		palmSapling = new BlockPalmSapling(palmSaplingID,25).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("palmSapling");
 		holidaylights_1Idle = new BlockHolidayLight(holidaylights_1IdleID, false).setCreativeTab(plusTab).setBlockName("holidayLight_1Idle");
 		holidaylights_1Active = new BlockHolidayLight(holidaylights_1ActiveID, true).setBlockName("holidayLight_1Active");
@@ -676,10 +681,10 @@ public class MinecraftPlusBase
 		ironTrapdoor = new BlockIronTrapDoor(ironTrapdoorID, 37, Material.iron).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("ironTrapdoor");
 		ironFence = new BlockIronFence(ironFenceID, 38, Material.iron).setHardness(2.0F).setResistance(5.0F).setCreativeTab(plusTab).setBlockName("ironFence");
 		ironFenceGate = new BlockIronFenceGate(ironFenceGateID, 38).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("ironFenceGate");
-		//neonBlock = new BlockStorageOre(neonBlockID, 39, Material.iron).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("neonBlock");
-		//neonBlockRed = new BlockStorageOre(neonBlockRedID,42, Material.iron).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("neonBlockRed");
-		//neonBlockBlue = new BlockStorageOre(neonBlockBlueID, 41, Material.iron).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("neonBlockBlue");
-		//neonOre = new BlockNormal(neonOreID,40, Material.iron).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("neonOre");
+		neonBlock = new BlockStorageOre(neonBlockID, 39, Material.iron).setLightValue(0.4F).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("neonBlock");
+		neonBlockRed = new BlockStorageOre(neonBlockRedID,42, Material.iron).setLightValue(0.4F).setCreativeTab(plusTab).setHardness(2.0F).setResistance(5.0F).setBlockName("neonBlockRed");
+		neonBlockBlue = new BlockStorageOre(neonBlockBlueID, 41, Material.iron).setLightValue(0.4F).setHardness(2.0F).setCreativeTab(plusTab).setBlockName("neonBlockBlue");
+		neonOre = new BlockNormal(neonOreID,40, Material.iron).setCreativeTab(plusTab).setLightValue(0.2F).setHardness(2.0F).setResistance(5.0F).setBlockName("neonOre");
 		
 		//Items
 		embroniumIngot = new ItemOre(embroniumIngotID).setIconCoord(1, 0).setCreativeTab(plusTab).setItemName("embroniumIngot");
@@ -691,10 +696,10 @@ public class MinecraftPlusBase
 		bulbBlue = new ItemNormal(bulbBlueID).setIconCoord(13, 15).setCreativeTab(plusTab).setItemName("bulbBlue");
 		bulbGreen = new ItemNormal(bulbGreenID).setIconCoord(14, 15).setCreativeTab(plusTab).setItemName("bulbGreen");
 		
-		//neonIngot = new ItemOre(neonIngotID).setIconCoord(7, 1).setCreativeTab(plusTab).setItemName("neonIngot");
-		//neonIngotBlue = new ItemOre(neonIngotBlueID).setIconCoord(9, 1).setCreativeTab(plusTab).setItemName("neonIngotBlue");
-		//neonIngotRed = new ItemOre(neonIngotRedID).setIconCoord(10, 1).setCreativeTab(plusTab).setItemName("neonIngotRed");
-		//neonDust = new ItemOre(neonDustID).setIconCoord(8, 1).setCreativeTab(plusTab).setItemName("neonDust");
+		neonIngot = new ItemOre(neonIngotID).setIconCoord(7, 1).setCreativeTab(plusTab).setItemName("neonIngot");
+		neonIngotBlue = new ItemOre(neonIngotBlueID).setIconCoord(9, 1).setCreativeTab(plusTab).setItemName("neonIngotBlue");
+		neonIngotRed = new ItemOre(neonIngotRedID).setIconCoord(10, 1).setCreativeTab(plusTab).setItemName("neonIngotRed");
+		neonDust = new ItemOre(neonDustID).setIconCoord(8, 1).setCreativeTab(plusTab).setItemName("neonDust");
 		
 		//Food
 		itemBandage = new ItemPlusFood(itemBandageID, 8, 1F, false).setIconCoord(3, 0).setCreativeTab(plusTab).setItemName("bandage"); 
@@ -728,7 +733,9 @@ public class MinecraftPlusBase
 		ironManBoots = new PlusItemArmor(ironManBootsID, IRONMAN, 3 ,3).setCreativeTab(plusTab).setIconCoord(15, 3).setItemName("ironManBoots");  
 		
 		//Toolset
+		//harvestLevel, maxUses, efficiencyOnProperMaterial, damageVsEntity, enchantibility
 		EnumToolMaterial embronium = EnumHelper.addToolMaterial("EMBRONIUM", 3, 1400, 7F, 3, 10);
+		EnumToolMaterial neon = EnumHelper.addToolMaterial("NEON", 3, 1000, 4F, 2, 10);
 		
 		embroniumPickaxe = (new PlusItemPickaxe (embroniumPickaxeID, embronium)).setCreativeTab(plusTab).setIconCoord(14, 5).setItemName("embroniumPickaxe");
 		embroniumSpade = (new PlusItemSpade (embroniumSpadeID, embronium)).setCreativeTab(plusTab).setIconCoord(14, 7).setItemName("embroniumSpade");
@@ -742,6 +749,12 @@ public class MinecraftPlusBase
 		daggerGold = (new PlusItemSword (daggerGoldID, EnumToolMaterial.GOLD, 1)).setCreativeTab(plusTab).setIconCoord(15, 7).setItemName("daggerGold");
 		daggerDiamond = (new PlusItemSword (daggerDiamondID, EnumToolMaterial.EMERALD, 1)).setCreativeTab(plusTab).setIconCoord(15, 8).setItemName("daggerDiamond");
 		daggerEmbronium = (new PlusItemSword (daggerEmbroniumID, embronium, 1)).setCreativeTab(plusTab).setIconCoord(15, 9).setItemName("daggerEmbronium");
+		daggerNeon = (new PlusItemSword (daggerNeonID, neon, 1)).setCreativeTab(plusTab).setIconCoord(15, 10).setItemName("daggerNeon");
+		
+		neonSword = (new PlusItemSword (neonSwordID, neon, 1)).setCreativeTab(plusTab).setIconCoord(14, 9).setItemName("neonSword");
+		neonSwordBlue = (new PlusItemNeonBlueSword (neonBlueSwordID, neon, 1)).setCreativeTab(plusTab).setIconCoord(14, 10).setItemName("neonSwordBlue");
+		neonSwordRed = (new PlusItemNeonRedSword (neonRedSwordID, neon, 1)).setCreativeTab(plusTab).setIconCoord(14, 11).setItemName("neonSwordRed");
+		
 		//exampleSmeltingAchievementBlock = new BlockExampleBlock(exampleSmeltingAchievementBlockID, 1).setHardness(2.0F).setBlockName("Example Smelting Achievement Block");
 	}
 
@@ -790,10 +803,10 @@ public class MinecraftPlusBase
 		this.ironTrapdoorID = config.getBlock("ironTrapdoor", 1213).getInt();
 		this.ironFenceID = config.getBlock("ironFence", 1214).getInt();
 		this.ironFenceGateID = config.getBlock("ironFenceGate", 1215).getInt();
-		//this.neonBlockID = config.getBlock("neonBlock", 1216).getInt();
-		//this.neonBlockBlueID = config.getBlock("neonBlockBlue", 1217).getInt();
-		//this.neonBlockRedID = config.getBlock("neonBlockRed", 1218).getInt();
-		//this.neonDustID = config.getBlock("neonDust", 1219).getInt();
+		this.neonBlockID = config.getBlock("neonBlock", 1216).getInt();
+		this.neonBlockBlueID = config.getBlock("neonBlockBlue", 1217).getInt();
+		this.neonBlockRedID = config.getBlock("neonBlockRed", 1218).getInt();
+		this.neonOreID = config.getBlock("neonOre", 1219).getInt();
 		
 		//Items
 		embroniumIngotID = config.getItem("embroniumIngot", 31000).getInt();
@@ -837,11 +850,14 @@ public class MinecraftPlusBase
 		mintID = config.getItem("Mint", 31037).getInt();
 		candyCaneID = config.getItem("candyCane", 31038).getInt();
 		tomatoSeedsID = config.getItem("tomatoSeeds", 31039).getInt();
-		//neonIngotID = config.getItem("neonIngot", 31040).getInt();
-		//neonIngotBlueID = config.getItem("neonIngotBlue", 31041).getInt();
-		//neonIngotRedID = config.getItem("neonIngotRed", 31042).getInt();
-		//neonDustID = config.getItem("neonDust", 31043).getInt();
-		
+		neonIngotID = config.getItem("neonIngot", 31040).getInt();
+		neonIngotBlueID = config.getItem("neonIngotBlue", 31041).getInt();
+		neonIngotRedID = config.getItem("neonIngotRed", 31042).getInt();
+		neonDustID = config.getItem("neonDust", 31043).getInt();
+		neonSwordID = config.getItem("neonSword", 31044).getInt();
+		neonBlueSwordID = config.getItem("neonSwordBlue", 31045).getInt();
+		neonRedSwordID = config.getItem("neonSwordRed", 31046).getInt();
+		daggerNeonID = config.getItem("daggerNeon", 31047).getInt();
 		config.save();
 		System.out.println("[MC+] Config file made/ updated.");
 	}
@@ -867,7 +883,7 @@ public class MinecraftPlusBase
 			"F", Character.valueOf('F'), exampleBlock	
 			});*/
 		GameRegistry.addSmelting(embroniumOre.blockID, (new ItemStack(embroniumIngot)), 2);
-		//GameRegistry.addSmelting(neonOre.blockID, (new ItemStack(neonDust)), 2);
+		GameRegistry.addSmelting(neonOre.blockID, (new ItemStack(neonDust)), 2);
 		GameRegistry.addRecipe(new ItemStack(embroniumBlock), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), embroniumIngot});
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumDust), new Object[] { /*ingredients*/ embroniumIngot});
 		GameRegistry.addRecipe(new ItemStack (embroniumHelmet, 1), (new Object[] {"XXX", "X X","   ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot}));
@@ -879,16 +895,16 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack (ironManPants, 1), (new Object[] {"XXX", "X X", "X X", Character.valueOf('X'), MinecraftPlusBase.vortexCrystal}));
 		GameRegistry.addRecipe(new ItemStack (ironManBoots, 1), (new Object[] {"X X", "X X", Character.valueOf('X'), MinecraftPlusBase.vortexCrystal}));
 
-		//GameRegistry.addRecipe(new ItemStack(neonBlock), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngot});
-		//GameRegistry.addRecipe(new ItemStack(neonBlockBlue), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngotBlue});
-		//GameRegistry.addRecipe(new ItemStack(neonBlockRed), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngotRed});
+		GameRegistry.addRecipe(new ItemStack(neonBlock), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngot});
+		GameRegistry.addRecipe(new ItemStack(neonBlockBlue), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngotBlue});
+		GameRegistry.addRecipe(new ItemStack(neonBlockRed), new Object [] {"$$$", "$$$", "$$$", Character.valueOf('$'), neonIngotRed});
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(embroniumIngot), new Object[] { /*ingredients*/ embroniumDust});
 		
 		ItemStack redDye = new ItemStack(Item.dyePowder, 1, 1);
 		ItemStack blueDye = new ItemStack(Item.dyePowder, 1, 4);
-		//GameRegistry.addShapelessRecipe(new ItemStack(neonIngotBlue), new Object[] { /*ingredients*/ neonIngot, blueDye});
-		//GameRegistry.addShapelessRecipe(new ItemStack(neonIngotRed), new Object[] { /*ingredients*/ neonIngot, redDye});
+		GameRegistry.addShapelessRecipe(new ItemStack(neonIngotBlue), new Object[] { /*ingredients*/ neonIngot, blueDye});
+		GameRegistry.addShapelessRecipe(new ItemStack(neonIngotRed), new Object[] { /*ingredients*/ neonIngot, redDye});
 		
 		
 		//Toolset
@@ -897,9 +913,23 @@ public class MinecraftPlusBase
 		GameRegistry.addRecipe(new ItemStack (embroniumHoe, 1), (new Object[] {"XX ", " @ "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.stick}));
 		GameRegistry.addRecipe(new ItemStack (embroniumSword, 1), (new Object[] {" X ", " X "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.stick}));
 		GameRegistry.addRecipe(new ItemStack (embroniumSpade, 1), (new Object[] {" X ", " @ "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.stick}));
+		
+		GameRegistry.addRecipe(new ItemStack (neonSword, 1), (new Object[] {" X ", " X "," @ ", Character.valueOf('X'), MinecraftPlusBase.neonIngot, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (embroniumSpade, 1), (new Object[] {" X ", " O "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('O'), MinecraftPlusBase.neonIngotBlue, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (embroniumSpade, 1), (new Object[] {" X ", " O "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('O'), MinecraftPlusBase.neonIngotRed, Character.valueOf('@'), Item.stick}));
+		
 		//GameRegistry.addShapelessRecipe(new ItemStack(embroniumPickaxe), new Object[] { /*ingredients*/ Block.dirt});
 		//^^ For testing purposes
 
+		GameRegistry.addRecipe(new ItemStack (daggerWood, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), Block.planks, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (daggerStone, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), Block.cobblestone, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (daggerIron, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), Item.ingotIron, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (daggerGold, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), Item.ingotGold, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (daggerDiamond, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), Item.diamond, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (daggerEmbronium, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), MinecraftPlusBase.embroniumIngot, Character.valueOf('@'), Item.stick}));
+		GameRegistry.addRecipe(new ItemStack (daggerNeon, 1), (new Object[] {"   ", " X "," @ ", Character.valueOf('X'), MinecraftPlusBase.neonIngot, Character.valueOf('@'), Item.stick}));
+		
+		
 		//Blocks
 		GameRegistry.addRecipe(new ItemStack(redstoneLampThinIdle, 16), new Object [] {"   ", "###", "###", Character.valueOf('#'), Block.redstoneLampIdle});
 		GameRegistry.addRecipe(new ItemStack(trapBlockFire, 1), new Object [] {"$@$", "$#$", "$$$", Character.valueOf('#'), Item.redstone, Character.valueOf('@'), Item.flintAndSteel, Character.valueOf('$'), Block.stone});
@@ -1000,10 +1030,10 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(ironTrapdoor, "Iron Trapdoor");
 		LanguageRegistry.addName(ironFence, "Iron Fence");
 		LanguageRegistry.addName(ironFenceGate, "Iron Fence Gate");
-		//LanguageRegistry.addName(neonBlock, "Neon Block");
-		//LanguageRegistry.addName(neonBlockBlue, "Blue Neon Block");
-		//LanguageRegistry.addName(neonBlockRed, "Red Neon Block");
-		//LanguageRegistry.addName(neonOre, "Neon Ore");
+		LanguageRegistry.addName(neonBlock, "Neon Block");
+		LanguageRegistry.addName(neonBlockBlue, "Blue Neon Block");
+		LanguageRegistry.addName(neonBlockRed, "Red Neon Block");
+		LanguageRegistry.addName(neonOre, "Neon Ore");
 		
 		//Items
 		LanguageRegistry.addName(embroniumIngot, "Embronium Ingot");
@@ -1015,10 +1045,10 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(bulbRed, "Red Bulb");
 		LanguageRegistry.addName(bulbBlue, "Blue Bulb");
 		LanguageRegistry.addName(bulbGreen, "Green Bulb");
-		//LanguageRegistry.addName(neonIngot, "Neon Ingot");
-		//LanguageRegistry.addName(neonIngotBlue, "Blue Neon Dust");
-		//LanguageRegistry.addName(neonIngotRed, "Red Neon Ingot");
-		//LanguageRegistry.addName(neonDust, "Neon Dust");
+		LanguageRegistry.addName(neonIngot, "Neon Ingot");
+		LanguageRegistry.addName(neonIngotBlue, "Blue Neon Dust");
+		LanguageRegistry.addName(neonIngotRed, "Red Neon Ingot");
+		LanguageRegistry.addName(neonDust, "Neon Dust");
 		//Food
 		LanguageRegistry.addName(itemBandage, "Bandage");
 		LanguageRegistry.addName(Cheese, "Cheese");
@@ -1056,11 +1086,16 @@ public class MinecraftPlusBase
 		LanguageRegistry.addName(daggerGold, "Golden Dagger");
 		LanguageRegistry.addName(daggerDiamond, "Diamond Dagger");
 		LanguageRegistry.addName(daggerEmbronium, "Embronium Dagger");
+		LanguageRegistry.addName(daggerNeon, "Neon Dagger");
+		
+		LanguageRegistry.addName(neonSword, "Neon Sword");
+		LanguageRegistry.addName(neonSwordBlue, "Blue Neon Sword");
+		LanguageRegistry.addName(neonSwordRed, "Red Neon Sword");
 		
 		LanguageRegistry.addName(candyCane, "Candy Cane");
 		LanguageRegistry.addName(Mint, "Mint");
 		
-		LanguageRegistry.instance().addStringLocalization("itemGroup.plusTab", "en_US", "Minecraft+");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.minecraftPlusTab", "en_US", "Minecraft+");
 		
 		//Entities
         LanguageRegistry.instance().addStringLocalization("entity.Human.name", "en_US", "Human");
@@ -1127,10 +1162,10 @@ public class MinecraftPlusBase
 		GameRegistry.registerBlock(ironTrapdoor);
 		GameRegistry.registerBlock(ironFence);
 		GameRegistry.registerBlock(ironFenceGate);
-		//GameRegistry.registerBlock(neonBlock);
-		//GameRegistry.registerBlock(neonBlockBlue);
-		//GameRegistry.registerBlock(neonBlockRed);
-		//GameRegistry.registerBlock(neonOre);
+		GameRegistry.registerBlock(neonBlock);
+		GameRegistry.registerBlock(neonBlockBlue);
+		GameRegistry.registerBlock(neonBlockRed);
+		GameRegistry.registerBlock(neonOre);
 		//GameRegistry.registerBlock(exampleSmeltingAchievementBlock);
 	}
 
@@ -1140,6 +1175,7 @@ public class MinecraftPlusBase
 	public void postInit(FMLPostInitializationEvent event)
 	{
 	System.out.println("[MC+] Mod Initialized");
+	System.out.println("UID: " + uniqueUID);
 	}
 	
 	//This allows you to do Certain things once a server with the mod installed is started 

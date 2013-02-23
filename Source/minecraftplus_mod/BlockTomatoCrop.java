@@ -5,18 +5,20 @@ import java.util.Random;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStem;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
 
 public class BlockTomatoCrop extends BlockNormal {
-
 	private int Texture;
 	
     public BlockTomatoCrop(int id, int texture) {
         super(id, texture, Material.plants);
-        this.setBlockBounds(0.05F, 0.0F, 0.05F, 0.95F , 1.0F, 0.95F);
+        //this.setBlockBounds(0.25F, 0F, 0.25F, 0.75F, 1.0F, 0.75F);
+        //this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, 0.95F, 0.7F);
+        this.setBlockBounds(0.4F, 0.0F, 0.4F, 0.6F , 1.0F, 0.6F);
         Texture = texture;
         setTickRandomly(true);
     }
@@ -26,10 +28,18 @@ public class BlockTomatoCrop extends BlockNormal {
     }
         
     public int getRenderType() {
-        return 6; // Magic number.
+        return 1; // Magic number.
     }
     
     public boolean isOpaqueCube() {
+        return false;
+    }
+    
+    /**
+     * If this block doesn't render as an ordinary block it will return False (examples: signs, buttons, stairs, etc)
+     */
+    public boolean renderAsNormalBlock()
+    {
         return false;
     }
     

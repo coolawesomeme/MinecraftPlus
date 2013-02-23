@@ -30,7 +30,7 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
 
     protected BlockPalmLeaves(int par1, int par2)
     {
-        super(par1, par2, Material.leaves, !Minecraft.isFancyGraphicsEnabled());
+        super(par1, par2, Material.leaves, false);
         this.baseIndexInPNG = par2;
         this.setTickRandomly(true);
     }
@@ -259,8 +259,16 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
 
     private void removeLeaves(World par1World, int par2, int par3, int par4)
     {
-        this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
-        par1World.setBlockWithNotify(par2, par3, par4, 0);
+    	boolean woodNearby = false;
+    	for(int i = 0; i < 0; i++){
+    		
+    	}
+    	if(woodNearby){
+    		
+    	}else{
+    		this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
+    		par1World.setBlockWithNotify(par2, par3, par4, 0);
+    	}
     }
 
     /**
@@ -344,7 +352,7 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
         	return baseIndexInPNG + 1;
         }
     }
-
+    
     @SideOnly(Side.CLIENT)
 
     /**
@@ -353,11 +361,7 @@ public class BlockPalmLeaves extends BlockLeavesBase implements IShearable
     public void setGraphicsLevel(boolean par1)
     {
         this.graphicsLevel = par1;
-        if(!par1){
-        	blockIndexInTexture = baseIndexInPNG;
-        }else{
-        	blockIndexInTexture = baseIndexInPNG + 1;
-        }
+        this.blockIndexInTexture = this.baseIndexInPNG + (par1 ? 0 : 1);
     }
     
     @Override

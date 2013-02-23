@@ -52,13 +52,13 @@ public class PlusWorldGenerator implements IWorldGenerator {
                 (new WorldGenMinable(MinecraftPlusBase.embroniumOre.blockID, 9)).generate(world, random, randPosX, randPosY, randPosZ);
         }
 		
-		/*for(int q = 0; q < 2; q++)
+		for(int q = 0; q < 2; q++)
         {
                 int randPosX = i + random.nextInt(15);
                 int randPosY = random.nextInt(80);
                 int randPosZ = j + random.nextInt(16);
                 (new WorldGenMinable(MinecraftPlusBase.neonOre.blockID, 4)).generate(world, random, randPosX, randPosY, randPosZ);
-        }*/
+        }
         
 		int number = random.nextInt(16);
         if(number == 10){

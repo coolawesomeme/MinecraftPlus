@@ -1,5 +1,12 @@
 Changelog
 =============
+r3b2
+-------------
+- Fixed bugs
+- Changed shape of tomato crop
+- Changed texture of tomato crop
+- Added (Blue/ Red) Neon blocks, swords, ingots, dusts & daggers
+
 r3b1
 -------------
 - Fixed some bugs

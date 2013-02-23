@@ -14,11 +14,11 @@ public class MinecraftPlus {
 	public static PlusAddonBase addonBase;
 	
 	/** The instance for this class. Use to access methods without making an instance in your own class. */
-	public static MinecraftPlus getPlusInstance;
+	public static MinecraftPlus getPlusInstance = new MinecraftPlus();
 	
 	/** Truth. 
 	 * @return true*/
-	public boolean isCoolawesomemeAwesome(){
+	public static boolean isCoolawesomemeAwesome(){
     	return true;
     }
 	
@@ -26,38 +26,25 @@ public class MinecraftPlus {
 	/** Inverts the boolean you supply.
 	 * @param 
 	 * @return Inverted Boolean */
-	public boolean invertBoolean(boolean par1Boolean){
-		boolean par2Boolean = (Boolean)null;
-		if(par1Boolean == false){
-			return par2Boolean = true;
-		}
-		else if(par1Boolean == true){
-			return par2Boolean = false;
-		}
-		return par2Boolean;
+	public static boolean invertBoolean(boolean par1Boolean){
+		return !par1Boolean;
 	}
 	
 	/** Returns a random boolean.
 	 * @return Inverted Boolean */
-	public boolean getRandomBoolean(){
+	public static boolean getRandomBoolean(){
 		Random random = new Random();
-		int i = random.nextInt(2);
-		boolean randomBoolean;
-		if(i == 0){
-			randomBoolean = false;
-		}else{
-			randomBoolean = true;
-		}
-		return randomBoolean;
+		int i = random.nextInt(3);
+		return !(i <= 1);
 	}
 	
 	/**Returns a random letter.
 	 * @return Random Letter */
-	public String getRandomLetter(){
+	public static String getRandomLetter(){
 		String letter = "";
 		Random random = new Random();
 		int i = random.nextInt(26);
-		if(i == 0){
+		if(i <= 0){
 			letter = "a";
 		}else if(i == 1){
 			letter = "b";
@@ -107,7 +94,7 @@ public class MinecraftPlus {
 			letter = "x";
 		}else if(i == 24){
 			letter = "y";
-		}else if(i == 25){
+		}else if(i >= 25){
 			letter = "z";
 		}
 		return letter;
@@ -115,30 +102,32 @@ public class MinecraftPlus {
 	
 	/**Returns a random number (1 - 9)
 	 * @return Random Number */
-	public String getRandomNumber(){
+	public static String getRandomNumber(){
 		Random random = new Random();
 		int randomInt = random.nextInt(9);
 		randomInt++;
-		String number = "" + randomInt;
-		return number;
+		return "" + randomInt;
 	}
 	
-	/** Returns a random string under the parameter & above 4.
+	/**Returns a random number (1 - 9)
+	 * @return Random Int */
+	public static int getRandomInt(){
+		Random random = new Random();
+		int randomInt = random.nextInt(9);
+		return randomInt++;
+	}
+	
+	/** Returns a random string under the parameter.
 	 * @param
 	 * @return Random String */
-	public String getRandomString(int par1CharactersNumber){
+	public static String getRandomString(int par1CharactersNumber){
 		int length = 0;
 		String finalString = "";
 		for(int i = 0; i < par1CharactersNumber; i++){
 			boolean keepOnGoing = getRandomBoolean();
 			boolean number = getRandomBoolean();
-			if(par1CharactersNumber < 4 || par1CharactersNumber == 4){
-				par1CharactersNumber = 5;
-			}else if(par1CharactersNumber > 21 || par1CharactersNumber == 21){
-				par1CharactersNumber = 20;
-			}
 			
-			if(length > ((int) 0.75 * par1CharactersNumber) || length == ((int) 0.75 * par1CharactersNumber)){
+			if(length >= ((int) 0.75 * par1CharactersNumber)){
 				if(keepOnGoing){
 					if(number){
 						String k = getRandomNumber();
